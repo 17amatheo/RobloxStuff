@@ -1,0 +1,212 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local TimeControl = Instance.new("ScreenGui")
+local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+
+--Properties:
+
+TimeControl.Name = "Time Control"
+TimeControl.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+TimeControl.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+TimeControl.ResetOnSpawn = false
+
+TextButton.Parent = TimeControl
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 165, 62)
+TextButton.Position = UDim2.new(0.0155367227, 0, 0.512468815, 0)
+TextButton.Size = UDim2.new(0, 114, 0, 49)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "Freeze Time"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 21.000
+TextButton.TextWrapped = true
+
+UICorner.Parent = TextButton
+
+-- Scripts:
+
+local function TKDD_fake_script() -- TextButton.LocalScript 
+	local script = Instance.new('LocalScript', TextButton)
+
+	local val = false
+	script.Parent.Parent.ResetOnSpawn = false
+	script.Parent.Text = "Freeze Time"
+	script.Parent.MouseButton1Click:Connect(function()
+		if val == false then
+			val = true
+			script.Parent.Text = "Unfreeze Time"
+			---ssssssssssssssssssssss
+			
+			local function recur(m)
+				local pname = game.Players.LocalPlayer.Name
+				for i,v in pairs(m:GetChildren()) do
+					if v:IsA("BasePart") and v.Name ~= "Baseplate" and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Anchored == false then
+						v.Anchored = true
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Script") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true and v.Parent ~= script.Parent and v.Parent ~= script then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("LocalScript") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true and v.Parent ~= script.Parent and v.Parent ~= script then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Sound") and v.Parent ~= script.Parent and v.Parent ~= script then
+						v.Playing = false
+						v.Volume = 0
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("ParticleEmitter") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Sparkles") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Fire") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Smoke") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Trail") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					if v:IsA("Beam") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname and v.Enabled == true then
+						v.Enabled = false
+						local mark = Instance.new("StringValue")
+						mark.Name = "IsActuallyFrozenByScript123"
+						mark.Parent = v
+					end
+					recur(v)
+				end
+			end
+			recur(game:GetService("Workspace"))
+			recur(game:GetService("Lighting"))
+			recur(game:GetService("StarterGui"))
+			recur(game:GetService("Players"))
+			recur(game:GetService("Chat"))
+			recur(game:GetService("ServerScriptService"))
+			recur(game:GetService("ServerStorage"))
+			recur(game:GetService("StarterPack"))
+			recur(game:GetService("StarterPlayer"))
+			recur(game:GetService("ReplicatedFirst"))
+			recur(game:GetService("ReplicatedStorage"))
+			recur(game:GetService("MaterialService"))
+			recur(game:GetService("MarketplaceService"))
+			recur(game:GetService("MouseService"))
+			recur(game:GetService("SoundService"))
+			recur(game:GetService("Chat"))
+			recur(game:GetService("Teams"))
+			recur(game:GetService("LocalizationService"))
+			recur(game:GetService("TestService"))
+			recur(game:GetService("AssetService"))
+			recur(game)
+		else
+			val = false
+			script.Parent.Text = "Freeze Time"
+			---nnnnnnnnnnnnnnnnnnnnnnn
+			
+			
+			local function recur(m)
+				for i,v in pairs(m:GetChildren()) do
+					if v:IsA("BasePart") and v.Name ~= "Baseplate" and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						if v:FindFirstChild("IsActuallyFrozenByScript123") then
+							v.Anchored= false
+							v.IsActuallyFrozenByScript123:Destroy()
+						end
+					end
+					if v:IsA("Script") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("LocalScript") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Sound") and v:FindFirstChild("IsActuallyFrozenByScript123") then
+						v.Playing= true
+						v.Volume = 0.5
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("ParticleEmitter") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Sparkles") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Fire") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Smoke") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Trail") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					if v:IsA("Beam") and v:FindFirstChild("IsActuallyFrozenByScript123") and v.Parent.Name ~= pname and v.Parent.Parent.Name ~= pname then
+						v.Enabled= true
+						v.IsActuallyFrozenByScript123:Destroy()
+					end
+					recur(v)
+				end
+	
+			end
+			recur(game:GetService("Workspace"))
+			recur(game:GetService("Lighting"))
+			recur(game:GetService("StarterGui"))
+			recur(game:GetService("Players"))
+			recur(game:GetService("Chat"))
+			recur(game:GetService("ServerScriptService"))
+			recur(game:GetService("ServerStorage"))
+			recur(game:GetService("StarterPack"))
+			recur(game:GetService("StarterPlayer"))
+			recur(game:GetService("ReplicatedFirst"))
+			recur(game:GetService("ReplicatedStorage"))
+			recur(game:GetService("MaterialService"))
+			recur(game:GetService("MarketplaceService"))
+			recur(game:GetService("MouseService"))
+			recur(game:GetService("SoundService"))
+			recur(game:GetService("Chat"))
+			recur(game:GetService("Teams"))
+			recur(game:GetService("LocalizationService"))
+			recur(game:GetService("TestService"))
+			recur(game:GetService("AssetService"))
+			recur(game)
+		end
+	end)
+	
+end
+coroutine.wrap(TKDD_fake_script)()
