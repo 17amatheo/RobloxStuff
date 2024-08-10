@@ -152,7 +152,7 @@ selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
 
 
-local Admins = {911404169}
+local Admins = {"Amynuv"}
 
 function randomString()
 	local length = math.random(10,20)
@@ -3832,7 +3832,7 @@ end
 
 local function isadmins(player)
 	for _, v in pairs(Admins) do
-		if v == player.UserId then
+		if v == player.Name then
 			return true
 		end
 	end
@@ -3865,23 +3865,27 @@ ChatLog = function(plr)
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
-				local fp = findPlayer(toop)
-				table.insert(Admins, fp.UserId)
-				do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+				
+				if toop == "all" then
+					for i,v in pairs(game.Players:GetChildren()) do
+						if not Admins[v.Name] then
+							local fp = findPlayer(v.Name)
+							if fp ~= nil then
+								table.insert(Admins, fp.Name)
+								do_exec(";say "..tostring(fp.Name).." has been ranked.")
+								wait(2)
+							end
+						end
+					end
+				else
+					local fp = findPlayer(toop)
+					table.insert(Admins, fp.Name)
+					do_exec(";say "..tostring(fp.Name).." has been ranked.")
+				end
+				
+				
 			end
 			
-			
-			if splitted[1] == "@idop" then
-				local toop = (Message:sub(7))
-				table.insert(Admins, tonumber(toop))
-				do_exec(";say "..tostring(toop).." id has been ranked.")
-			end
-			
-			if splitted[1] == "@iddeop" then
-				local toop = (Message:sub(9))
-				table.remove(Admins, table.find(Admins,tonumber(toop)))
-				do_exec(";say "..tostring(toop).." id has been unranked.")
-			end
 			
 			
 			
@@ -3899,10 +3903,6 @@ ChatLog = function(plr)
 				wait(2)
 				do_exec(";say @run --Run a string")
 				wait(2)
-				do_exec(";say @idop --Rank a userId")
-				wait(2)
-				do_exec(";say @iddeop --Unrank a userId")
-				wait(2)
 				do_exec(";say @op --Rank a player name")
 				wait(2)
 				do_exec(";say @deop --Unrank a player name")
@@ -3915,28 +3915,42 @@ ChatLog = function(plr)
 			
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.0")
+				do_exec(";say v1.3")
 			end
 			
 			
 			if splitted[1] == "@deop" then
 				local toup = (Message:sub(7))
-				local fps = findPlayer(toup)
-				table.remove(Admins, table.find(Admins,fps.UserId))
-				do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fps.UserId))).." has been unranked.")
+				
+				if toup == "all" then
+					for i,v in pairs(game.Players:GetChildren()) do
+						if Admins[v.Name] then
+							local fp = findPlayer(v.Name)
+							
+							if fp ~= nil then
+								table.remove(Admins, table.find(Admins,fp.Name))
+								do_exec(";say "..tostring(fp.Name).." has been unranked.")
+								wait(2)
+							end
+						end
+					end
+				
+				
+				
+				else
+					local fps = findPlayer(toup)
+					table.remove(Admins, table.find(Admins,fps.Name))
+					do_exec(";say "..tostring(fps.Name).." has been unranked.")
+				end
+				
 			end
 			
 			if splitted[1] == "@admins" then
 				
 				for i, v in pairs(Admins) do
 					wait(2)
-					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(v))).." is ranked.")
+					do_exec(";say "..tostring(v).." is ranked.")
 				end
-				
-				
-				local toup = (Message:sub(7))
-				local fps = findPlayer(toup)
-				table.remove(Admins, table.find(Admins,fps.UserId))
 			end
 			
 			
