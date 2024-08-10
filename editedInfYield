@@ -3870,7 +3870,7 @@ ChatLog = function(plr)
 					for i,v in pairs(game.Players:GetChildren()) do
 						if not Admins[v.UserId] then
 							local fp = findPlayer(v.Name)
-							table.insert(Admins, fp.UserId)
+							table.insert(Admins, v.UserId)
 							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
 							wait(2)
 						end
@@ -3880,7 +3880,6 @@ ChatLog = function(plr)
 					table.insert(Admins, fp.UserId)
 					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
 				end
-				
 				
 				
 			end
@@ -3914,7 +3913,7 @@ ChatLog = function(plr)
 			
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.0")
+				do_exec(";say v1.1")
 			end
 			
 			
@@ -3925,7 +3924,7 @@ ChatLog = function(plr)
 					for i,v in pairs(game.Players:GetChildren()) do
 						if Admins[v.UserId] then
 							local fp = findPlayer(v.Name)
-							table.remove(Admins, table.find(Admins,fp.UserId))
+							table.remove(Admins, table.find(Admins,v.UserId))
 							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been unranked.")
 							wait(2)
 						end
@@ -3947,11 +3946,6 @@ ChatLog = function(plr)
 					wait(2)
 					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(v))).." is ranked.")
 				end
-				
-				
-				local toup = (Message:sub(7))
-				local fps = findPlayer(toup)
-				table.remove(Admins, table.find(Admins,fps.UserId))
 			end
 			
 			
