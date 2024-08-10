@@ -152,7 +152,7 @@ selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
 
 
-local Admins = {911404169}
+local Admins = {"Amynuv"}
 
 function randomString()
 	local length = math.random(10,20)
@@ -3832,7 +3832,7 @@ end
 
 local function isadmins(player)
 	for _, v in pairs(Admins) do
-		if v == player.UserId then
+		if v == player.Name then
 			return true
 		end
 	end
@@ -3868,17 +3868,17 @@ ChatLog = function(plr)
 				
 				if toop == "all" then
 					for i,v in pairs(game.Players:GetChildren()) do
-						if not Admins[v.UserId] then
+						if not Admins[v.Name] then
 							local fp = findPlayer(v.Name)
-							table.insert(Admins, v.UserId)
-							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+							table.insert(Admins, fp.Name)
+							do_exec(";say "..tostring(fp.Name).." has been ranked.")
 							wait(2)
 						end
 					end
 				else
 					local fp = findPlayer(toop)
-					table.insert(Admins, fp.UserId)
-					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+					table.insert(Admins, fp.Name)
+					do_exec(";say "..tostring(fp.Name).." has been ranked.")
 				end
 				
 				
@@ -3913,7 +3913,7 @@ ChatLog = function(plr)
 			
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.1")
+				do_exec(";say v1.2")
 			end
 			
 			
@@ -3922,10 +3922,10 @@ ChatLog = function(plr)
 				
 				if toup == "all" then
 					for i,v in pairs(game.Players:GetChildren()) do
-						if Admins[v.UserId] then
+						if Admins[v.Name] then
 							local fp = findPlayer(v.Name)
-							table.remove(Admins, table.find(Admins,v.UserId))
-							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been unranked.")
+							table.remove(Admins, table.find(Admins,fp.Name))
+							do_exec(";say "..tostring(fp.Name).." has been unranked.")
 							wait(2)
 						end
 					end
@@ -3934,8 +3934,8 @@ ChatLog = function(plr)
 				
 				else
 					local fps = findPlayer(toup)
-					table.remove(Admins, table.find(Admins,fps.UserId))
-					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fps.UserId))).." has been unranked.")
+					table.remove(Admins, table.find(Admins,fps.Name))
+					do_exec(";say "..tostring(fps.Name).." has been unranked.")
 				end
 				
 			end
@@ -3944,7 +3944,7 @@ ChatLog = function(plr)
 				
 				for i, v in pairs(Admins) do
 					wait(2)
-					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(v))).." is ranked.")
+					do_exec(";say "..tostring(v).." is ranked.")
 				end
 			end
 			
