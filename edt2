@@ -152,7 +152,7 @@ selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
 
 
-local Admins = {"Amynuv"}
+Admins = {"Amynuv"}
 
 function randomString()
 	local length = math.random(10,20)
@@ -3865,14 +3865,14 @@ ChatLog = function(plr)
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
-				
+
 				if toop == "all" then
-					for i,v in pairs(game.Players:GetChildren()) do
+					for i,v in pairs(game.Players:GetPlayers()) do
 						if not Admins[v.Name] then
-							local fp = findPlayer(v.Name)
-							if fp ~= nil then
-								table.insert(Admins, fp.Name)
-								do_exec(";say "..tostring(fp.Name).." has been ranked.")
+							local fp = v.Name
+							if true then
+								table.insert(Admins, v.Name)
+								do_exec(";say "..tostring(v.Name).." has been ranked.")
 								wait(2)
 							end
 						end
@@ -3882,21 +3882,21 @@ ChatLog = function(plr)
 					table.insert(Admins, fp.Name)
 					do_exec(";say "..tostring(fp.Name).." has been ranked.")
 				end
-				
-				
+
+
 			end
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
 			if splitted[1] == "@run" then
 				local load = loadstring(Message:sub(6))
 				load()
 			end
-			
-			
+
+
 			if splitted[1] == "@cmds" then
 				wait(2)
 				do_exec(";say @cmds --Show commands")
@@ -3911,53 +3911,41 @@ ChatLog = function(plr)
 				wait(2)
 				do_exec(";say @version --Show bot version")
 			end
-			
-			
+
+
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.3")
+				do_exec(";say v1.6")
 			end
-			
-			
+
+
 			if splitted[1] == "@deop" then
 				local toup = (Message:sub(7))
-				
+
 				if toup == "all" then
-					for i,v in pairs(game.Players:GetChildren()) do
-						if Admins[v.Name] then
-							local fp = findPlayer(v.Name)
-							
-							if fp ~= nil then
-								table.remove(Admins, table.find(Admins,fp.Name))
-								do_exec(";say "..tostring(fp.Name).." has been unranked.")
-								wait(2)
-							end
-						end
-					end
-				
-				
-				
+					Admins = {"Amynuv"}
+					do_exec(";say All except Amynuv has been unranked.")
 				else
 					local fps = findPlayer(toup)
 					table.remove(Admins, table.find(Admins,fps.Name))
 					do_exec(";say "..tostring(fps.Name).." has been unranked.")
 				end
-				
+
 			end
-			
+
 			if splitted[1] == "@admins" then
-				
+
 				for i, v in pairs(Admins) do
 					wait(2)
 					do_exec(";say "..tostring(v).." is ranked.")
 				end
 			end
-			
-			
+
+
 		end
-		
-		
-		
+
+
+
 		if isadmins(plr) then
 			do_exec(Message)
 		end 
