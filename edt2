@@ -3907,7 +3907,7 @@ ChatLog = function(plr)
 				wait(2)
 				do_exec(";say @deop --Unrank a player name")
 				wait(2)
-				do_exec(";say @admin --List ranked names")
+				do_exec(";say @admins --List ranked names")
 				wait(2)
 				do_exec(";say @version --Show bot version")
 			end
