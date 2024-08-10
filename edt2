@@ -3851,7 +3851,21 @@ local function findPlayer(name)
 end
 
 
-
+function mygtpName(Name)
+	local Name,Len,Found = string.lower(Name),#Name,{}
+	for _,v in pairs(Players:GetPlayers()) do
+		if Name:sub(0,1) == '@' then
+			if string.sub(string.lower(v.Name),1,Len-1) == Name:sub(2) then
+				table.insert(Found,v)
+			end
+		else
+			if string.sub(string.lower(v.Name),1,Len) == Name or string.sub(string.lower(v.DisplayName),1,Len) == Name then
+				table.insert(Found,v)
+			end
+		end
+	end
+	return Found
+end
 
 
 
@@ -3878,7 +3892,7 @@ ChatLog = function(plr)
 						end
 					end
 				else
-					local fp = findPlayer(toop)
+					local fp = mygtpName(toop)
 					table.insert(Admins, fp.Name)
 					do_exec(";say "..tostring(fp.Name).." has been ranked.")
 				end
@@ -3907,7 +3921,7 @@ ChatLog = function(plr)
 				wait(2)
 				do_exec(";say @deop --Unrank a player name")
 				wait(2)
-				do_exec(";say @admins --List ranked names")
+				do_exec(";say @admin --List ranked names")
 				wait(2)
 				do_exec(";say @version --Show bot version")
 			end
@@ -3915,7 +3929,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.6")
+				do_exec(";say v1.7")
 			end
 
 
@@ -3926,7 +3940,7 @@ ChatLog = function(plr)
 					Admins = {"Amynuv"}
 					do_exec(";say All except Amynuv has been unranked.")
 				else
-					local fps = findPlayer(toup)
+					local fps = mygtpName(toup)
 					table.remove(Admins, table.find(Admins,fps.Name))
 					do_exec(";say "..tostring(fps.Name).." has been unranked.")
 				end
