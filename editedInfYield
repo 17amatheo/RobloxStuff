@@ -3865,23 +3865,26 @@ ChatLog = function(plr)
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
-				local fp = findPlayer(toop)
-				table.insert(Admins, fp.UserId)
-				do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+				
+				if toop == "all" then
+					for i,v in pairs(game.Players:GetChildren()) do
+						if not Admins[v.UserId] then
+							local fp = findPlayer(v.Name)
+							table.insert(Admins, fp.UserId)
+							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+							wait(2)
+						end
+					end
+				else
+					local fp = findPlayer(toop)
+					table.insert(Admins, fp.UserId)
+					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been ranked.")
+				end
+				
+				
+				
 			end
 			
-			
-			if splitted[1] == "@idop" then
-				local toop = (Message:sub(7))
-				table.insert(Admins, tonumber(toop))
-				do_exec(";say "..tostring(toop).." id has been ranked.")
-			end
-			
-			if splitted[1] == "@iddeop" then
-				local toop = (Message:sub(9))
-				table.remove(Admins, table.find(Admins,tonumber(toop)))
-				do_exec(";say "..tostring(toop).." id has been unranked.")
-			end
 			
 			
 			
@@ -3898,10 +3901,6 @@ ChatLog = function(plr)
 				do_exec(";say @cmds --Show commands")
 				wait(2)
 				do_exec(";say @run --Run a string")
-				wait(2)
-				do_exec(";say @idop --Rank a userId")
-				wait(2)
-				do_exec(";say @iddeop --Unrank a userId")
 				wait(2)
 				do_exec(";say @op --Rank a player name")
 				wait(2)
@@ -3921,9 +3920,25 @@ ChatLog = function(plr)
 			
 			if splitted[1] == "@deop" then
 				local toup = (Message:sub(7))
-				local fps = findPlayer(toup)
-				table.remove(Admins, table.find(Admins,fps.UserId))
-				do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fps.UserId))).." has been unranked.")
+				
+				if toup == "all" then
+					for i,v in pairs(game.Players:GetChildren()) do
+						if Admins[v.UserId] then
+							local fp = findPlayer(v.Name)
+							table.remove(Admins, table.find(Admins,fp.UserId))
+							do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fp.UserId))).." has been unranked.")
+							wait(2)
+						end
+					end
+				
+				
+				
+				else
+					local fps = findPlayer(toup)
+					table.remove(Admins, table.find(Admins,fps.UserId))
+					do_exec(";say "..tostring(game.Players:GetNameFromUserIdAsync(tonumber(fps.UserId))).." has been unranked.")
+				end
+				
 			end
 			
 			if splitted[1] == "@admins" then
