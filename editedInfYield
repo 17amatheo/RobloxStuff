@@ -3911,17 +3911,17 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@cmds" then
 				wait(2)
-				do_exec(";say @cmds --Show commands")
+				do_exec(";say @cmds  --Show commands")
 				wait(2)
-				do_exec(";say @run --Run a string")
+				do_exec(";say @run  --Run a string")
 				wait(2)
-				do_exec(";say @op --Rank a player name")
+				do_exec(";say @op  --Rank a player name")
 				wait(2)
-				do_exec(";say @deop --Unrank a player name")
+				do_exec(";say @deop  --Unrank a player name")
 				wait(2)
-				do_exec(";say @admin --List ranked names")
+				do_exec(";say @admins  --List ranked names")
 				wait(2)
-				do_exec(";say @version --Show bot version")
+				do_exec(";say @version  --Show bot version")
 			end
 
 
