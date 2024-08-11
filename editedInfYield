@@ -3884,15 +3884,15 @@ ChatLog = function(plr)
 					for i,v in pairs(game.Players:GetPlayers()) do
 						if not Admins[v.Name] then
 							table.insert(Admins, v.Name)
-							do_exec(";say All has been ranked.")
 						end
 					end
+					do_exec(";say All has been ranked.")
 				else
 					local fp = mygtpName(toop)
 					for i,v in pairs(fp) do
 						table.insert(Admins, v.Name)
-						do_exec(";say "..tostring(v.Name).." has been ranked.")
 					end
+					do_exec(";say "..tostring(v.Name).." has been ranked.")
 				end
 
 
@@ -3927,7 +3927,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.9")
+				do_exec(";say v1.09")
 			end
 
 
