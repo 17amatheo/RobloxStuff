@@ -152,7 +152,7 @@ selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
 
 
-Admins = {"Amynuv"}
+Admins = {"Potage898"}
 
 function randomString()
 	local length = math.random(10,20)
@@ -3875,7 +3875,7 @@ end
 
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
-		if plr.UserId == 911404169 then
+		if plr.UserId == 2613898759 then
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
@@ -3884,6 +3884,7 @@ ChatLog = function(plr)
 					for i,v in pairs(game.Players:GetPlayers()) do
 						if not Admins[v.Name] then
 							table.insert(Admins, v.Name)
+							do_exec(";say All has been ranked.")
 						end
 					end
 					do_exec(";say All has been ranked.")
@@ -3891,8 +3892,8 @@ ChatLog = function(plr)
 					local fp = mygtpName(toop)
 					for i,v in pairs(fp) do
 						table.insert(Admins, v.Name)
+						do_exec(";say "..tostring(v.Name).." has been ranked.")
 					end
-					do_exec(";say "..tostring(v.Name).." has been ranked.")
 				end
 
 
@@ -3927,7 +3928,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.09")
+				do_exec(";say v1.10")
 			end
 
 
@@ -3935,8 +3936,8 @@ ChatLog = function(plr)
 				local toup = (Message:sub(7))
 
 				if toup == "all" then
-					Admins = {"Amynuv"}
-					do_exec(";say All except Amynuv has been unranked.")
+					Admins = {"Potage898"}
+					do_exec(";say All except Potage898 has been unranked.")
 				else
 					local fps = mygtpName(toup)
 					for i,v in pairs(fps) do
