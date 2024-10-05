@@ -191,7 +191,7 @@ shade3 = {}
 text1 = {}
 text2 = {}
 scroll = {}
-
+Holder.Visible = false
 Holder.Name = randomString()
 Holder.Parent = PARENT
 Holder.Active = true
@@ -2939,7 +2939,7 @@ function saves()
 					if json.logsEnabled ~= nil then logsEnabled = json.logsEnabled else logsEnabled = false end
 					if json.jLogsEnabled ~= nil then jLogsEnabled = json.jLogsEnabled else jLogsEnabled = false end
 					if json.aliases ~= nil then aliases = json.aliases else aliases = {} end
-					if json.binds ~= nil then binds = (json.binds or {}) else binds = {} end
+					--if json.binds ~= nil then binds = (json.binds or {}) else binds = {} end
 					if json.spawnCmds ~= nil then spawnCmds = json.spawnCmds end
 					if json.WayPoints ~= nil then AllWaypoints = json.WayPoints else WayPoints = {} AllWaypoints = {} end
 					if json.PluginsTable ~= nil then PluginsTable = json.PluginsTable else PluginsTable = {} end
@@ -4064,7 +4064,7 @@ Keybinds.MouseButton1Click:Connect(function()
 end)
 
 Close.MouseButton1Click:Connect(function()
-	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
 	KeybindsFrame:TweenPosition(UDim2.new(0, 0, 0, 175), "InOut", "Quart", 0.5, true, nil)
 end)
 
@@ -4086,7 +4086,7 @@ Delete.MouseButton1Click:Connect(function()
 end)
 
 Close_2.MouseButton1Click:Connect(function()
-	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
 	AliasesFrame:TweenPosition(UDim2.new(0, 0, 0, 175), "InOut", "Quart", 0.5, true, nil)
 end)
 
@@ -4097,7 +4097,7 @@ Aliases.MouseButton1Click:Connect(function()
 end)
 
 Close_3.MouseButton1Click:Connect(function()
-	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
 	PositionsFrame:TweenPosition(UDim2.new(0, 0, 0, 175), "InOut", "Quart", 0.5, true, nil)
 end)
 
@@ -5581,7 +5581,7 @@ Players.LocalPlayer.Chatted:Connect(function()
 	if lastEnteredString then
 		local message = lastEnteredString
 		lastEnteredString = nil
-		do_exec(message, Players.LocalPlayer)
+		--do_exec(message, Players.LocalPlayer)
 	end
 end)
 
@@ -6411,7 +6411,7 @@ Plugins.MouseButton1Click:Connect(function()
 end)
 
 Close_4.MouseButton1Click:Connect(function()
-	SettingsHolder.Visible = true
+	SettingsHolder.Visible = false
 	PluginsFrame:TweenPosition(UDim2.new(0, 0, 0, 175), "InOut", "Quart", 0.5, true, nil)
 end)
 
