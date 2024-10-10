@@ -59,7 +59,11 @@ function killplayer(name)
 			v.Parent = game.Players.LocalPlayer.Character
 		end
 	end
-	wait(1.5)
+	wait(0.1)
+    	lplayer.Character.HumanoidRootPart.CFrame = (victim.Character.HumanoidRootPart.CFrame) + Vector3.new(0,-0.5,0)
+    	wait(0.1)
+    	lplayer.Character.HumanoidRootPart.CFrame = (victim.Character.HumanoidRootPart.CFrame) + Vector3.new(0,-0.5,0)
+	wait(0.5)
 	lplayer.Character.HumanoidRootPart.CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
 	wait(1)
 	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
@@ -95,7 +99,6 @@ cmds.kill = function(sender,arguments)
 end
 
 lplayer.Chatted:Connect(function(message,recipient)
-	message = string.lower(message)
 	local str = message:gsub('/e ', '')
 	local splitString = str:split(" ")
 	local slashCommand = splitString[1]
