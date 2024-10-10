@@ -79,7 +79,8 @@ cmds.kill = function(sender,arguments)
 	if givecouch() == true then
 		if tokl == "all" then
 			for i,v in pairs(game.Players:GetPlayers()) do
-				print("Not yet!")
+				killplayer(v.Name)
+				wait(0.5)
 			end
 		else
 			local fp = mygtpName(tokl)
