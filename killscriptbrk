@@ -96,7 +96,7 @@ end
 lplayer.Chatted:Connect(function(message,recipient)
 	message = string.lower(message)
 	local str = message:gsub('/e ', '')
-	local splitString = message:split(" ")
+	local splitString = str:split(" ")
 	local slashCommand = splitString[1]
 	local cmd = slashCommand:split(prefix)
 	local cmdName = cmd[2]
