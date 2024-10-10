@@ -1,0 +1,111 @@
+local cmds = {}
+
+local prefix = "@" 
+
+local lplayer = game.Players.LocalPlayer
+
+local Players = game:GetService("Players")
+
+local hascouch = false
+
+local cf = CFrame.new(-82.6004486, 19.570406, -129.909119, -0.987681627, -1.38684593e-08, -0.156477019, -5.14115728e-09, 1, -5.61784255e-08, 0.156477019, -5.46819265e-08, -0.987681627)
+
+function mygtpName(Name)
+	local Name,Len,Found = string.lower(Name),#Name,{}
+	for _,v in pairs(Players:GetPlayers()) do
+		if Name:sub(0,1) == '@' then
+			if string.sub(string.lower(v.Name),1,Len-1) == Name:sub(2) then
+				table.insert(Found,v)
+			end
+		else
+			if string.sub(string.lower(v.Name),1,Len) == Name or string.sub(string.lower(v.DisplayName),1,Len) == Name then
+				table.insert(Found,v)
+			end
+		end
+	end
+	return Found
+end
+
+
+function givecouch()
+	if hascouch == false then
+		for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
+			if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+				hascouch = true
+				return true
+			end
+		end
+		hascouch = false
+		game.StarterGui:SetCore("SendNotification", {Title="Couch warning"; Text="Be sure to take Couch BEFORE starting the command !"; Duration=5;})
+		local pos = CFrame.new(lplayer.Character.HumanoidRootPart.Position)
+		lplayer.Character.HumanoidRootPart.CFrame = cf
+		wait(5)
+		game.Players.LocalPlayer.Character.Humanoid.Sit = false
+		lplayer.Character.HumanoidRootPart.CFrame = pos
+		return false
+	else
+		return true
+	end
+end
+
+
+function killplayer(name)
+	local victim = game:GetService("Players"):FindFirstChild(name)
+	local position = victim.Character.HumanoidRootPart.Position
+	local pos = CFrame.new(lplayer.Character.HumanoidRootPart.Position)
+	lplayer.Character.HumanoidRootPart.CFrame = (victim.Character.HumanoidRootPart.CFrame) + Vector3.new(0,-0.5,0)
+	for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
+		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+			v.Parent = game.Players.LocalPlayer.Character
+		end
+	end
+	wait(1.5)
+	lplayer.Character.HumanoidRootPart.CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
+	wait(1)
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+			v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
+		end
+	end
+	lplayer.Character.HumanoidRootPart.CFrame = pos
+end
+
+
+
+
+cmds.kill = function(sender,arguments)
+	local victim = arguments[1]
+	local tokl = victim
+	if givecouch() == true then
+		if tokl == "all" then
+			for i,v in pairs(game.Players:GetPlayers()) do
+				print("Not yet!")
+			end
+		else
+			local fp = mygtpName(tokl)
+			for i,v in pairs(fp) do
+				killplayer(v.Name)
+			end
+		end
+	else
+		givecouch()
+	end
+	
+end
+
+lplayer.Chatted:Connect(function(message,recipient)
+	message = string.lower(message)
+	local str = message:gsub('/e ', '')
+	local splitString = message:split(" ")
+	local slashCommand = splitString[1]
+	local cmd = slashCommand:split(prefix)
+	local cmdName = cmd[2]
+	if cmds[cmdName] then
+		local arguments = {}
+		for i = 2, #splitString, 1 do
+			table.insert(arguments,splitString[i])
+		end
+		cmds[cmdName](lplayer,arguments)
+	end
+end)
+game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="The Amynuv's @kill command ready, type @kill {username} to kill someone!"; Duration=5;})
