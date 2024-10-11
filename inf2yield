@@ -152,7 +152,7 @@ selectChat = Instance.new("TextButton")
 selectJoin = Instance.new("TextButton")
 
 
-Admins = {"Potage898"}
+Admins = {"Potage898","Amynuv","Potage666"}
 
 function randomString()
 	local length = math.random(10,20)
@@ -3935,8 +3935,8 @@ ChatLog = function(plr)
 				local toup = (Message:sub(7))
 
 				if toup == "all" then
-					Admins = {"Potage898"}
-					do_exec(";say All except Potage898 has been unranked.")
+					Admins = {"Potage898","Amynuv","Potage666"}
+					do_exec(";say All except Potage898, Amynuv and Potage666 has been unranked.")
 				else
 					local fps = mygtpName(toup)
 					for i,v in pairs(fps) do
