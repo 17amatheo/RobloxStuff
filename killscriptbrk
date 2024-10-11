@@ -84,7 +84,7 @@ cmds.kill = function(sender,arguments)
 		if tokl == "all" then
 			for i,v in pairs(game.Players:GetPlayers()) do
 				killplayer(v.Name)
-				wait(0.5)
+				wait(1)
 			end
 		else
 			local fp = mygtpName(tokl)
