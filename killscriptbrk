@@ -154,4 +154,4 @@ lplayer.Chatted:Connect(function(message,recipient)
 		cmds[cmdName](lplayer,arguments)
 	end
 end)
-game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="The Amynuv's @kill command ready, type @kill {username} to kill someone!"; Duration=5;})
+game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="The Amynuv's @kill command ready, type @kill {username} to kill someone! (v1.2)"; Duration=5;})
