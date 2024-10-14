@@ -15,6 +15,9 @@ local hascouch = false
 
 local cf = CFrame.new(-82.6004486, 19.570406, -129.909119, -0.987681627, -1.38684593e-08, -0.156477019, -5.14115728e-09, 1, -5.61784255e-08, 0.156477019, -5.46819265e-08, -0.987681627)
 
+
+
+
 function mygtpName(Name)
 	local Name,Len,Found = string.lower(Name),#Name,{}
 	for _,v in pairs(Players:GetPlayers()) do
@@ -110,6 +113,65 @@ end
 
 
 
+function voidplayer(name)
+	local victim = game:GetService("Players"):FindFirstChild(name)
+	local position = getRoot(victim.Character).CFrame
+	local pos = lplayer.Character.HumanoidRootPart.CFrame
+	getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
+	for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
+		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+			v.Parent = game.Players.LocalPlayer.Character
+		end
+	end
+	start_spin()
+	wait(0.1)
+	getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
+	wait(0.1)
+	getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-1,0.7)
+	wait(0.5)
+	getRoot(lplayer.Character).CFrame = CFrame.new(-867453824, 3173377.25, 71196704, -7.6317906e-07, 0.99461931, 0.103597544, 2.06824467e-07, 0.103597544, -0.99461931, -1, -7.37646133e-07, -2.84775098e-07)
+	wait(1)
+	stop_spin()
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+			v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
+		end
+	end
+	wait(2)
+	lplayer.Character.HumanoidRootPart.CFrame = pos
+end
+
+
+cmds.void = function(sender,arguments)
+	local victim = arguments[1]
+	local tokl = victim
+	if givecouch() == true then
+		if tokl == "all" then
+			for i,v in pairs(game.Players:GetPlayers()) do
+				if v.Character.Humanoid.Sit == false then
+					voidplayer(v.Name)
+					game.Players.LocalPlayer.Character.Humanoid.Sit = false
+					wait(1)
+				end
+
+			end
+		else
+			local fp = mygtpName(tokl)
+			for i,v in pairs(fp) do
+				if v.Character.Humanoid.Sit == false and v.UserId ~= lplayer.UserId then
+					voidplayer(v.Name)
+					game.Players.LocalPlayer.Character.Humanoid.Sit = false
+					wait(1)
+				end
+			end
+		end
+	else
+		givecouch()
+	end
+
+end
+
+
 
 cmds.kill = function(sender,arguments)
 	local victim = arguments[1]
@@ -154,4 +216,9 @@ lplayer.Chatted:Connect(function(message,recipient)
 		cmds[cmdName](lplayer,arguments)
 	end
 end)
-game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="The Amynuv's @kill command ready, type @kill {username} to kill someone! (v1.2)"; Duration=5;})
+local showtime = 5
+game.StarterGui:SetCore("SendNotification", {Title="Commands Ready!"; Text="The Amynuv's commands are ready!   (v1.3)"; Duration=showtime;})
+wait(showtime)
+game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="type @kill {username} / all to kill someone or everyone!"; Duration=showtime;})
+wait(showtime)
+game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} / all to void someone or everyone!"; Duration=showtime;})
