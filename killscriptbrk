@@ -137,7 +137,10 @@ function voidplayer(name)
 			v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
 		end
 	end
-	wait(2)
+	lplayer.Character.HumanoidRootPart.CFrame = pos
+	wait(0.5)
+	lplayer.Character.HumanoidRootPart.CFrame = pos
+	wait(0.5)
 	lplayer.Character.HumanoidRootPart.CFrame = pos
 end
 
@@ -147,25 +150,31 @@ cmds.void = function(sender,arguments)
 	local tokl = victim
 	if givecouch() == true then
 		if tokl == "all" then
-			for i,v in pairs(game.Players:GetPlayers()) do
-				if v.Character.Humanoid.Sit == false then
-					voidplayer(v.Name)
-					game.Players.LocalPlayer.Character.Humanoid.Sit = false
-					wait(1)
-				end
+			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="Void command not allowed on 'all' !"; Duration=5;})
+			--for i,v in pairs(game.Players:GetPlayers()) do
+				--if v.Character.Humanoid.Sit == false then
+					--local pos = lplayer.Character.HumanoidRootPart.CFrame
+					--voidplayer(v.Name)
+					--game.Players.LocalPlayer.Character.Humanoid.Sit = false
+					--wait(1)
+					--lplayer.Character.HumanoidRootPart.CFrame = pos
+				--end
 
-			end
+			--end
 		else
 			local fp = mygtpName(tokl)
 			for i,v in pairs(fp) do
 				if v.Character.Humanoid.Sit == false and v.UserId ~= lplayer.UserId then
+					local pos = lplayer.Character.HumanoidRootPart.CFrame
 					voidplayer(v.Name)
 					game.Players.LocalPlayer.Character.Humanoid.Sit = false
 					wait(1)
+					lplayer.Character.HumanoidRootPart.CFrame = pos
 				end
 			end
 		end
 	else
+		--game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="Void command not allowed on 'all' !"; Duration=5;})
 		givecouch()
 	end
 
@@ -221,4 +230,4 @@ game.StarterGui:SetCore("SendNotification", {Title="Commands Ready!"; Text="The 
 wait(showtime)
 game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="type @kill {username} / all to kill someone or everyone!"; Duration=showtime;})
 wait(showtime)
-game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} / all to void someone or everyone!"; Duration=showtime;})
+game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} to void someone!"; Duration=showtime;})
