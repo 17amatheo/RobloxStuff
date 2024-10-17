@@ -2,9 +2,11 @@ local cmds = {}
 
 local prefix = "@" 
 
-local v = "1.3.4"
+local v = "1.3.5"
 
 local showtime = 5
+
+local do_killall = false
 
 local lplayer = game.Players.LocalPlayer
 
@@ -131,8 +133,11 @@ function killplayer(name)
 			end
 		end
 		lplayer.Character.HumanoidRootPart.CFrame = pos
+		wait(0.5)
+		lplayer.Character.HumanoidRootPart.CFrame = pos
+		wait(0.5)
+		lplayer.Character.HumanoidRootPart.CFrame = pos
 	end
-
 
 
 end
@@ -224,14 +229,19 @@ cmds.kill = function(sender,arguments)
 	local tokl = victim
 	if givecouch() == true then
 		if tokl == "all" then
+            do_killall = true
 			for i,v in pairs(game.Players:GetPlayers()) do
-				if v.Character.Humanoid.Sit == false and v.Name ~= lplayer.Name then
+
+				if v and v.Character and getRoot(v.Character) and v.Character.Humanoid and not v.Character.Humanoid.Sit and v.Character.Humanoid.Sit == false and v.Name ~= lplayer.Name then
 					killplayer(v.Name)
 					game.Players.LocalPlayer.Character.Humanoid.Sit = false
 					wait(2)
+                    if do_killall == false then
+                        break
+                    end
 				end
-
 			end
+            do_killall = false
 		else
 			local fp = mygtpName(tokl)
 			for i,v in pairs(fp) do
@@ -288,6 +298,7 @@ end
 cmds.stop = function(sender,arguments)
 	lpk = false
 	chasing = false
+    do_killall = false
 	stop_spin()
 end
 
@@ -296,6 +307,8 @@ cmds.version = function(sender,arguments)
 end
 
 cmds.help = function(sender,arguments)
+	game.StarterGui:SetCore("SendNotification", {Title="@help"; Text="type @help to show help!"; Duration=showtime;})
+	wait(showtime)
 	game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="type @kill {username} / all to kill someone or everyone!"; Duration=showtime;})
 	wait(showtime)
 	game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} to void someone!"; Duration=showtime;})
