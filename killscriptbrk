@@ -2,6 +2,10 @@ local cmds = {}
 
 local prefix = "@" 
 
+local v = "1.3.4"
+
+local showtime = 5
+
 local lplayer = game.Players.LocalPlayer
 
 local Players = game:GetService("Players")
@@ -17,6 +21,9 @@ local cf = CFrame.new(-82.6004486, 19.570406, -129.909119, -0.987681627, -1.3868
 
 
 local lpk = false
+
+local chasing = false
+
 
 local lpk_name = ""
 
@@ -63,6 +70,10 @@ function stop_spin()
 end
 
 
+local function decimalRandom(minimum, maximum)
+	return math.random()*(maximum-minimum) + minimum
+end
+
 
 
 
@@ -75,7 +86,7 @@ function givecouch()
 			end
 		end
 		hascouch = false
-		game.StarterGui:SetCore("SendNotification", {Title="Couch warning"; Text="Be sure to take Couch BEFORE starting the command !"; Duration=5;})
+		game.StarterGui:SetCore("SendNotification", {Title="Couch warning"; Text="Be sure to take Couch BEFORE starting the command !"; Duration=showtime;})
 		local pos = getRoot(lplayer.Character).CFrame
 		getRoot(lplayer.Character).CFrame = cf
 		wait(5)
@@ -100,11 +111,17 @@ function killplayer(name)
 			end
 		end
 		start_spin()
-		wait(0.1)
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
-		wait(0.1)
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-1,0.7)
-		wait(0.5)
+		chasing = true
+
+		while chasing and victim.Character.Humanoid.Sit == false do
+			wait(0.1)
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
+			wait(0.1)
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-decimalRandom(0.2, 1.2),decimalRandom(0.2, 0.9))
+			wait(0.1)
+		end
+		
+		chasing = false
 		getRoot(lplayer.Character).CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
 		wait(1)
 		stop_spin()
@@ -115,17 +132,17 @@ function killplayer(name)
 		end
 		lplayer.Character.HumanoidRootPart.CFrame = pos
 	end
-	
-	
-	
+
+
+
 end
 
 
 
 function voidplayer(name)
 	local victim = game:GetService("Players"):FindFirstChild(name)
-	
-	if (getRoot(victim.Character).CFrame) then
+
+	if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
 		local position = getRoot(victim.Character).CFrame
 		local pos = lplayer.Character.HumanoidRootPart.CFrame
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
@@ -135,11 +152,17 @@ function voidplayer(name)
 			end
 		end
 		start_spin()
-		wait(0.1)
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
-		wait(0.1)
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-1,0.7)
-		wait(0.5)
+		chasing = true
+		
+		while chasing and victim.Character.Humanoid.Sit == false do
+			wait(0.1)
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
+			wait(0.1)
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-decimalRandom(0.2, 1.2),decimalRandom(0.2, 0.9))
+			wait(0.1)
+		end
+		
+		chasing = false
 		getRoot(lplayer.Character).CFrame = CFrame.new(-867453824, 3173377.25, 71196704, -7.6317906e-07, 0.99461931, 0.103597544, 2.06824467e-07, 0.103597544, -0.99461931, -1, -7.37646133e-07, -2.84775098e-07)
 		wait(0.5)
 		stop_spin()
@@ -154,7 +177,7 @@ function voidplayer(name)
 		wait(0.5)
 		lplayer.Character.HumanoidRootPart.CFrame = pos
 	end
-	
+
 end
 
 
@@ -163,7 +186,7 @@ cmds.void = function(sender,arguments)
 	local tokl = victim
 	if givecouch() == true then
 		if tokl == "all" then
-			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="void command not allowed on 'all' !"; Duration=5;})
+			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="void command not allowed on 'all' !"; Duration=showtime;})
 			--for i,v in pairs(game.Players:GetPlayers()) do
 			--if v.Character.Humanoid.Sit == false then
 			--local pos = lplayer.Character.HumanoidRootPart.CFrame
@@ -183,11 +206,12 @@ cmds.void = function(sender,arguments)
 					game.Players.LocalPlayer.Character.Humanoid.Sit = false
 					wait(1)
 					lplayer.Character.HumanoidRootPart.CFrame = pos
+				else
+					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!."; Duration=showtime;})
 				end
 			end
 		end
 	else
-		--game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="Void command not allowed on 'all' !"; Duration=5;})
 		givecouch()
 	end
 
@@ -201,7 +225,7 @@ cmds.kill = function(sender,arguments)
 	if givecouch() == true then
 		if tokl == "all" then
 			for i,v in pairs(game.Players:GetPlayers()) do
-				if v.Character.Humanoid.Sit == false then
+				if v.Character.Humanoid.Sit == false and v.Name ~= lplayer.Name then
 					killplayer(v.Name)
 					game.Players.LocalPlayer.Character.Humanoid.Sit = false
 					wait(2)
@@ -215,6 +239,8 @@ cmds.kill = function(sender,arguments)
 					killplayer(v.Name)
 					game.Players.LocalPlayer.Character.Humanoid.Sit = false
 					wait(2)
+				else
+					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
 				end
 			end
 		end
@@ -237,15 +263,18 @@ cmds.lpk = function(sender,arguments)
 			for i,v in pairs(fp) do
 				lpk = true
 				while lpk do
-					if v.Character.Humanoid.Sit == false and v.UserId ~= lplayer.UserId then
+					if v.Character.Humanoid.Sit == false and v.UserId ~= lplayer.UserId and chasing == false then
 						killplayer(v.Name)
 						game.Players.LocalPlayer.Character.Humanoid.Sit = false
-						wait(4)
+						wait(3)
+					else
+						game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
 					end
+					wait(1)
 				end
 			end
 		end
-        wait(0.5)
+		wait(0.5)
 	else
 		givecouch()
 	end
@@ -256,6 +285,29 @@ cmds.unlpk = function(sender,arguments)
 end
 --Functions to loopkill players
 
+cmds.stop = function(sender,arguments)
+	lpk = false
+	chasing = false
+	stop_spin()
+end
+
+cmds.version = function(sender,arguments)
+	game.StarterGui:SetCore("SendNotification", {Title="Version :"; Text=v; Duration=5;})
+end
+
+cmds.help = function(sender,arguments)
+	game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="type @kill {username} / all to kill someone or everyone!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} to void someone!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@lpk"; Text="type @lpk {username} to loopkill someone!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@unlpk"; Text="type @unlpk to unloopkill!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@version"; Text="type @version to show version!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@stop"; Text="type @stop to stop all killing process!"; Duration=showtime;})
+end
 
 
 lplayer.Chatted:Connect(function(message,recipient)
@@ -272,13 +324,7 @@ lplayer.Chatted:Connect(function(message,recipient)
 		cmds[cmdName](lplayer,arguments)
 	end
 end)
-local showtime = 5
-game.StarterGui:SetCore("SendNotification", {Title="Commands Ready!"; Text="The Amynuv's commands are ready!   (v1.3.4)"; Duration=showtime;})
+
+game.StarterGui:SetCore("SendNotification", {Title="Commands Ready!"; Text="The Amynuv's commands are ready!, execute @help to get help!"; Duration=showtime;})
 wait(showtime)
-game.StarterGui:SetCore("SendNotification", {Title="@kill"; Text="type @kill {username} / all to kill someone or everyone!"; Duration=showtime;})
-wait(showtime)
-game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @void {username} to void someone!"; Duration=showtime;})
-wait(showtime)
-game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @lpk {username} to loopkill someone!"; Duration=showtime;})
-wait(showtime)
-game.StarterGui:SetCore("SendNotification", {Title="@void"; Text="type @unlpk to unloopkill"; Duration=showtime;})
+game.StarterGui:SetCore("SendNotification", {Title="Informations :"; Text=("Version: "..v); Duration=showtime;})
