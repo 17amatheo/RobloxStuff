@@ -2,7 +2,7 @@ local cmds = {}
 
 local prefix = "@" 
 
-local v = "1.3.7"
+local v = "1.3.8"
 
 local showtime = 5
 
@@ -192,6 +192,52 @@ function voidplayer(name)
 end
 
 
+
+function getplayer(name)
+	local victim = game:GetService("Players"):FindFirstChild(name)
+
+	if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
+		local position = getRoot(victim.Character).CFrame
+		local pos = lplayer.Character.HumanoidRootPart.CFrame
+		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
+		for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
+			if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+				v.Parent = game.Players.LocalPlayer.Character
+			end
+		end
+		start_spin()
+		chasing = true
+
+		while chasing and victim.Character.Humanoid.Sit == false do
+			wait(0.1)
+			game.Players.LocalPlayer.Character.Humanoid.Sit = false
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
+			wait(0.1)
+			game.Players.LocalPlayer.Character.Humanoid.Sit = false
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-decimalRandom(0.2, 1.2),decimalRandom(0.2, 0.9))
+			wait(0.1)
+		end
+
+		chasing = false
+		game.Players.LocalPlayer.Character.Humanoid.Sit = false
+	end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 cmds.void = function(sender,arguments)
 	local victim = arguments[1]
 	local tokl = victim
@@ -276,6 +322,53 @@ cmds.kill = function(sender,arguments)
 end
 
 
+
+cmds.bring = function(sender,arguments)
+	local victim = arguments[1]
+	local desti = arguments[2]
+	local pos
+	if desti then
+		local fdesti = mygtpName(desti)
+		for i,v in pairs(fdesti) do
+			pos = getRoot(v.Character).CFrame
+		end
+	else
+		pos = getRoot(lplayer.Character).CFrame
+	end
+	if givecouch() == true then
+		if victim == "all" then
+			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="bring command not allowed on 'all' !"; Duration=showtime;})
+		else
+			local fp = mygtpName(victim)
+			for i,v in pairs(fp) do
+				if v.Character.Humanoid.Sit == false and v.UserId ~= lplayer.UserId then
+					getplayer(v.Name)
+					wait(0.15)
+					getRoot(lplayer.Character).CFrame = pos
+					wait(0.15)
+					stop_spin()
+					getRoot(lplayer.Character).CFrame = pos
+					wait(0.55)
+					for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+						if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
+							v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
+						end
+					end
+					game.Players.LocalPlayer.Character.Humanoid.Sit = false
+					wait(1)
+				else
+					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
+				end
+			end
+		end
+	else
+		givecouch()
+	end
+
+end
+
+
+
 --Functions to loopkill players
 cmds.lpk = function(sender,arguments)
 	local victim = arguments[1]
@@ -333,6 +426,8 @@ cmds.help = function(sender,arguments)
 	game.StarterGui:SetCore("SendNotification", {Title="@unlpk"; Text="type @unlpk to unloopkill!"; Duration=showtime;})
 	wait(showtime)
 	game.StarterGui:SetCore("SendNotification", {Title="@goto"; Text="type @goto {username} to teleport to someone!"; Duration=showtime;})
+	wait(showtime)
+	game.StarterGui:SetCore("SendNotification", {Title="@bring"; Text="type @bring {username} {username2} to teleport someone to you or to teleport someone to someone else ({username2} is not necessary)!"; Duration=showtime;})
 	wait(showtime)
 	game.StarterGui:SetCore("SendNotification", {Title="@version"; Text="type @version to show version!"; Duration=showtime;})
 	wait(showtime)
