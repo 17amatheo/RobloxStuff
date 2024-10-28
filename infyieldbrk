@@ -1881,7 +1881,7 @@ local function copyavatar(player)
 
 	--Applique la forme du corp
 
-	wait(0.1)
+	wait(0.2)
 	--Applique le visage et les animations
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
 	wait(0.2)
@@ -1918,8 +1918,7 @@ local function copyavatar(player)
 
 
 	--Applique les tshirt et pantalon:
-	wait(0.2)
-
+	wait(0.3)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Shirt)
 	wait(0.1)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Pants)
