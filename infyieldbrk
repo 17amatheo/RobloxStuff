@@ -1871,7 +1871,7 @@ local function copyavatar(player)
 	elseif game.Players.LocalPlayer.PlayersBag.Job.Value == true then
 		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,true)
 	end
-	
+
 	wait(0.2)
 	--Applique les noms rp et le travail
 
@@ -2089,6 +2089,46 @@ local cf = CFrame.new(-82.6004486, 19.570406, -129.909119, -0.987681627, -1.3868
 local lpk = false
 
 local chasing = false
+
+local rbname = false
+local rbbio = false
+local rbjob = false
+
+
+local ids = {
+	5650351691,
+	5183368377,
+	9893743955,
+	5183367120,
+	5183367388,
+	5183367647,
+	5183367956,
+	5183368649,
+	5214218197,
+	5220910709,
+	5220911077,
+	5220911388,
+	5220911689,
+	5220912396,
+	5183366461,
+	9893355840,
+	5221907149,
+	5288268854,
+	5288269506,
+	5288269991,
+	5288270536,
+	18124980670,
+	9790259496,
+	18124970215,
+	8416982159,
+	8770936346,
+	7607407475,
+	7592172566,
+	7592172291,
+	9893355528,
+	7490972344,
+	7592171638
+}
 
 
 local lpk_name = ""
@@ -5111,7 +5151,13 @@ CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a pl
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
-CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar [player]', DESC = 'Copy a player avatar'}
+CMDs[#CMDs + 1] = {NAME = 'rbname / rainbowname', DESC = 'Turn your name into rainbow'}
+CMDs[#CMDs + 1] = {NAME = 'unrbname / unrainbowname', DESC = 'Bring name to normal'}
+CMDs[#CMDs + 1] = {NAME = 'rbbio / rainbowbio', DESC = 'Turn your bio into rainbow'}
+CMDs[#CMDs + 1] = {NAME = 'unrbbio / unrainbobio', DESC = 'Bring bio to normal'}
+CMDs[#CMDs + 1] = {NAME = 'rbjob / rainbowjob', DESC = 'Turn your job into rainbow'}
+CMDs[#CMDs + 1] = {NAME = 'unrbjob / unrainbowjob', DESC = 'Bring job to normal'}
+CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'void [player] (COUCH)', DESC = 'Send a player into the void  (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'stop', DESC = 'Stop all killing process'}
 CMDs[#CMDs + 1] = {NAME = 'fastkill [player] (TOOL) NOT WORKING', DESC = 'Kills a player (less reliable) (YOU NEED A TOOL)'}
@@ -12291,6 +12337,73 @@ addcmd('kill',{'fekill'},function(args, speaker)
 		givecouch()
 	end
 end)
+
+
+
+
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RE = ReplicatedStorage:WaitForChild("RE")
+
+
+addcmd('unrbname',{'unrainbowname'},function(args, speaker)
+	rbname = false
+end)
+
+
+
+
+addcmd('rbname',{'rainbowname'},function(args, speaker)
+	rbname = true
+	local function randomColor()
+		return Color3.new(math.random(), math.random(), math.random())
+	end
+	while rbname do
+		wait(0.5)
+		RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor", randomColor())
+	end
+end)
+
+
+addcmd('unrbbio',{'unrainbowbio'},function(args, speaker)
+	rbbio = false
+end)
+
+
+
+
+addcmd('rbbio',{'rainbowbio'},function(args, speaker)
+	rbbio = true
+	local function randomColor()
+		return Color3.new(math.random(), math.random(), math.random())
+	end
+	while rbbio do
+		wait(0.5)
+		RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor", randomColor())
+	end
+end)
+
+
+addcmd('rbjob',{'rainbowjob'},function(args, speaker)
+	rbjob = true
+	local function randomColor()
+		return Color3.new(math.random(), math.random(), math.random())
+	end
+	while rbjob do
+		wait(0.5)
+		local randomId = tostring(ids[math.random(1, #ids)])
+		if game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value ~= randomId then
+			RE["1Jo1b"]:FireServer("GiveJobUIMenu", randomId, randomId, true)
+		end
+	end
+end)
+
+addcmd('unrbjob',{'unrainbowjob'},function(args, speaker)
+	rbjob = false
+end)
+
+
+
 
 addcmd('copy',{'copyavatar'},function(args, speaker)
 	local victim = args[1]
