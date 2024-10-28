@@ -1821,7 +1821,264 @@ local lplayer = game.Players.LocalPlayer
 local Players = game:GetService("Players")
 
 
+local function copyavatar(player)
+	local victim = "accfortestsa"
 
+	local Players = game:GetService("Players")
+
+	local findVict = player
+
+
+
+	-- Fonction pour extraire l'ID de l'URL
+	local function getImageIdFromUrl(url)
+		if type(url) ~= "string" then
+			warn("L'URL fournie n'est pas une chaîne de caractères.")
+			return nil
+		end
+
+		local imageId = string.match(url, "id=(%d+)")
+		return imageId
+	end
+	local function extractAssetId(assetString)
+		if type(assetString) ~= "string" then
+			warn("La chaîne fournie n'est pas valide.")
+			return nil
+		end
+
+		-- Utilise le pattern matching pour extraire l'ID
+		local assetId = string.match(assetString, "rbxassetid://(%d+)")
+		return assetId
+	end
+
+
+	local function hasProperty(object, prop)
+		local t = object[prop] --this is just done to check if the property existed, if it did nothing would happen, if it didn't an error will pop, the object[prop] is a different way of writing object.prop, (object.Transparency or object["Transparency"])
+	end
+
+
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",findVict.PlayersBag.RPName.Value)
+	wait(0.1)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",findVict.PlayersBag.RPBio.Value)
+	wait(0.1)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",findVict.PlayersBag.RPNameColor.Value)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",findVict.PlayersBag.RPBioColor.Value)
+	wait(0.2)
+	--Ne pas oublier de remttre cette ligne :
+	if findVict.PlayersBag.Job.Value == true then
+		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",findVict.PlayersBag.Job.JobTitlePic.Value,findVict.PlayersBag.Job.JobTitlePic.Value,true)
+	elseif game.Players.LocalPlayer.PlayersBag.Job.Value == true then
+		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,true)
+	end
+	
+	wait(0.2)
+	--Applique les noms rp et le travail
+
+
+	local descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
+	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
+
+	--Applique la forme du corp
+
+	wait(0.1)
+	--Applique le visage et les animations
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.IdleAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.ClimbAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.FallAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.JumpAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.MoodAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.RunAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.SwimAnimation)
+	wait(0.2)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.WalkAnimation)
+	wait(0.2)
+
+	local descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
+
+	-- Appliquer une couleur BrickColor spécifique
+	local skinColor = BrickColor.new(descriptionClone.HeadColor)  -- ou la couleur souhaitée
+	wait(0.1)
+
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("skintone",tostring(skinColor))
+
+
+
+
+	local humanoidDescription = findVict.Character.Humanoid:GetAppliedDescription()  
+
+
+
+	--Applique les tshirt et pantalon:
+	wait(0.2)
+
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Shirt)
+	wait(0.1)
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Pants)
+	wait(0.1)
+
+
+
+	local function getsize(humanoidrootpart)
+		return humanoidrootpart.Size.Z
+	end
+
+	local function arrondirADecimale(nombre)
+		return math.floor(nombre * 10 + 0.5) / 10
+	end
+
+	local function arrondirADecimale2(nombre)
+		return math.floor(nombre * 100 + 0.5) / 100
+	end
+
+	-- Variables pour stocker les tailles des personnages
+	local playerRootPart = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+	local targetRootPart = findVict.Character:FindFirstChild("HumanoidRootPart")
+
+	if not playerRootPart or not targetRootPart then
+		warn("HumanoidRootPart introuvable pour le joueur ou la cible.")
+		return
+	end
+
+	local playerSize = getsize(playerRootPart)
+	local targetSize = getsize(targetRootPart)
+
+	-- Boucle de réduction de taille si le joueur est plus grand
+	if playerSize > targetSize then
+		local i = 10
+		while playerSize > targetSize and i > 0 do
+
+			-- Calculer la nouvelle taille et envoyer la demande
+			playerSize = arrondirADecimale(playerSize-0.05)
+			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown", arrondirADecimale2(playerSize-0.05))
+
+			-- Attendre que la taille se mette à jour pour le personnage
+			wait(0.5)
+
+			-- Mettre à jour `playerSize` avec la taille actuelle après modification
+			playerSize = getsize(playerRootPart)
+
+			i = i - 1
+		end
+
+		-- Boucle d'augmentation de taille si le joueur est plus petit
+	elseif playerSize < targetSize then
+		local i = 10
+		while playerSize < targetSize and i > 0 do
+
+			-- Ajouter 0.05 pour augmenter la taille
+			playerSize = playerSize + 0.05
+
+			-- Arrondir à deux décimales après l'ajout
+			playerSize = arrondirADecimale2(playerSize)
+
+
+			-- Envoyer la taille arrondie au serveur
+			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp", playerSize)
+
+			-- Attendre que la taille se mette à jour pour le personnage
+			wait(0.5)
+
+			-- Mettre à jour `playerSize` avec la taille actuelle après modification
+			playerSize = getsize(playerRootPart)
+
+			i = i - 1
+		end
+	end
+
+
+
+
+	local function unequipelements(descelement)
+		local description = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		--print(description.HatAccessory)
+
+		local elements = {}
+
+		-- Séparer la chaîne en éléments et les stocker dans une table
+		for element in description[(descelement)]:gmatch("[^,]+") do
+			table.insert(elements, element)
+		end
+
+		-- Itérer sur chaque élément et faire quelque chose avec
+		for i, element in ipairs(elements) do
+			wait(0.3)
+			print(element)
+			game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
+		end
+
+	end
+
+
+
+	local function equip_elements(descelement)
+		local description = descriptionClone
+		--print(description.HatAccessory)
+
+		local elements = {}
+
+		-- Séparer la chaîne en éléments et les stocker dans une table
+		for element in description[(descelement)]:gmatch("[^,]+") do
+			table.insert(elements, element)
+		end
+
+		-- Itérer sur chaque élément et faire quelque chose avec
+		for i, element in ipairs(elements) do
+			wait(0.3)
+			game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
+		end
+
+	end
+	wait(0.1)
+
+	unequipelements("HatAccessory")
+	wait(0.2)
+	unequipelements("HairAccessory")
+	wait(0.2)
+	unequipelements("BackAccessory")
+	wait(0.2)
+	unequipelements("FaceAccessory")
+	wait(0.2)
+	unequipelements("FrontAccessory")
+	wait(0.2)
+	unequipelements("NeckAccessory")
+	wait(0.2)
+	unequipelements("ShouldersAccessory")
+	wait(0.2)
+	unequipelements("WaistAccessory")
+	wait(0.3)
+
+
+
+
+	equip_elements("HatAccessory")
+	wait(0.1)
+	equip_elements("HairAccessory")
+	wait(0.1)
+	equip_elements("BackAccessory")
+	wait(0.1)
+	equip_elements("FaceAccessory")
+	wait(0.1)
+	equip_elements("FrontAccessory")
+	wait(0.1)
+	equip_elements("NeckAccessory")
+	wait(0.1)
+	equip_elements("ShouldersAccessory")
+	wait(0.1)
+	equip_elements("WaistAccessory")
+
+	wait(0.2)
+
+
+end
 
 
 
@@ -4855,6 +5112,7 @@ CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a pl
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
+CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar [player]', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'void [player] (COUCH)', DESC = 'Send a player into the void  (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'stop', DESC = 'Stop all killing process'}
 CMDs[#CMDs + 1] = {NAME = 'fastkill [player] (TOOL) NOT WORKING', DESC = 'Kills a player (less reliable) (YOU NEED A TOOL)'}
@@ -6600,7 +6858,7 @@ local TeleportCheck = false
 Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if KeepInfYield and (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
-		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/Amynuv/RobloxStuff/refs/heads/main/infyieldbrk'))()")
+		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()")
 	end
 end)
 
@@ -12034,6 +12292,18 @@ addcmd('kill',{'fekill'},function(args, speaker)
 		givecouch()
 	end
 end)
+
+addcmd('copy',{'copyavatar'},function(args, speaker)
+	local victim = args[1]
+	local tokl = victim
+	local fp = getPlayer(tokl,speaker)
+	for i,v in pairs(fp) do
+		copyavatar(Players[v])
+	end
+end)
+
+
+
 
 
 
