@@ -5160,6 +5160,7 @@ CMDs[#CMDs + 1] = {NAME = 'unrbjob / unrainbowjob', DESC = 'Bring job to normal'
 CMDs[#CMDs + 1] = {NAME = 'unrb / unrainbow', DESC = 'Disable rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
+CMDs[#CMDs + 1] = {NAME = 'large / huge', DESC = 'Make you very large'}
 CMDs[#CMDs + 1] = {NAME = 'void [player] (COUCH)', DESC = 'Send a player into the void  (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'stop', DESC = 'Stop all killing process'}
 CMDs[#CMDs + 1] = {NAME = 'fastkill [player] (TOOL) NOT WORKING', DESC = 'Kills a player (less reliable) (YOU NEED A TOOL)'}
@@ -12362,7 +12363,9 @@ end)
 addcmd('tiny',{'small'},function(args, speaker)
 	game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown",0.55000000001)
 end)
-
+addcmd('large',{'huge'},function(args, speaker)
+	game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp",1)
+end)
 
 
 
