@@ -12,12 +12,12 @@ Players = cloneref(game:GetService("Players"))
 if not game:IsLoaded() then
 	local notLoaded = Instance.new("Message")
 	notLoaded.Parent = COREGUI
-	notLoaded.Text = "Infinite Yield is waiting for the game to load"
+	notLoaded.Text = "Brookhaven Yield is waiting for the game to load"
 	game.Loaded:Wait()
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.1"
+currentVersion = "6.22"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -1815,6 +1815,7 @@ table.insert(text1,selectJoin)
 local showtime = 5
 
 local evtime = 1
+local evtimecopy = 0.2
 
 local do_killall = false
 
@@ -1862,13 +1863,13 @@ local function copyavatar(player)
 
 
 	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",findVict.PlayersBag.RPName.Value)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",findVict.PlayersBag.RPBio.Value)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",findVict.PlayersBag.RPNameColor.Value)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",findVict.PlayersBag.RPBioColor.Value)
-	wait(evtime)
+	wait(evtimecopy)
 	--Ne pas oublier de remttre cette ligne :
 	if findVict.PlayersBag.Job.Value == true then
 		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",findVict.PlayersBag.Job.JobTitlePic.Value,findVict.PlayersBag.Job.JobTitlePic.Value,true)
@@ -1876,7 +1877,7 @@ local function copyavatar(player)
 		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,true)
 	end
 
-	wait(evtime)
+	wait(evtimecopy)
 	--Applique les noms rp et le travail
 
 
@@ -1885,32 +1886,32 @@ local function copyavatar(player)
 
 	--Applique la forme du corp
 
-	wait(evtime)
+	wait(evtimecopy)
 	--Applique le visage et les animations
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.IdleAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.ClimbAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.FallAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.JumpAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.MoodAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.RunAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.SwimAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.WalkAnimation)
-	wait(evtime)
+	wait(evtimecopy)
 
 	local descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
 
 	-- Appliquer une couleur BrickColor spécifique
 	local skinColor = BrickColor.new(descriptionClone.HeadColor)  -- ou la couleur souhaitée
-	wait(evtime)
+	wait(evtimecopy)
 
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("skintone",tostring(skinColor))
 
@@ -1922,11 +1923,11 @@ local function copyavatar(player)
 
 
 	--Applique les tshirt et pantalon:
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Shirt)
-	wait(evtime)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Pants)
-	wait(evtime)
+	wait(evtimecopy)
 
 
 
@@ -1964,7 +1965,7 @@ local function copyavatar(player)
 			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown", arrondirADecimale2(playerSize-0.05))
 
 			-- Attendre que la taille se mette à jour pour le personnage
-			wait(evtime)
+			wait(evtimecopy)
 
 			-- Mettre à jour `playerSize` avec la taille actuelle après modification
 			playerSize = getsize(playerRootPart)
@@ -1988,7 +1989,7 @@ local function copyavatar(player)
 			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp", playerSize)
 
 			-- Attendre que la taille se mette à jour pour le personnage
-			wait(evtime)
+			wait(evtimecopy)
 
 			-- Mettre à jour `playerSize` avec la taille actuelle après modification
 			playerSize = getsize(playerRootPart)
@@ -2013,7 +2014,7 @@ local function copyavatar(player)
 
 		-- Itérer sur chaque élément et faire quelque chose avec
 		for i, element in ipairs(elements) do
-			wait(evtime)
+			wait(evtimecopy)
 			print(element)
 			game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
 		end
@@ -2035,50 +2036,50 @@ local function copyavatar(player)
 
 		-- Itérer sur chaque élément et faire quelque chose avec
 		for i, element in ipairs(elements) do
-			wait(evtime)
+			wait(evtimecopy)
 			game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
 		end
 
 	end
-	wait(evtime)
+	wait(evtimecopy)
 
 	unequipelements("HatAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("HairAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("BackAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("FaceAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("FrontAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("NeckAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("ShouldersAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	unequipelements("WaistAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 
 
 
 
 	equip_elements("HatAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("HairAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("BackAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("FaceAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("FrontAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("NeckAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("ShouldersAccessory")
-	wait(evtime)
+	wait(evtimecopy)
 	equip_elements("WaistAccessory")
 
-	wait(evtime)
+	wait(evtimecopy)
 
 
 end
@@ -5183,6 +5184,7 @@ CMDs[#CMDs + 1] = {NAME = 'staffwatch', DESC = 'Notify if a staff member of the 
 CMDs[#CMDs + 1] = {NAME = 'unstaffwatch', DESC = 'Disable Staffwatch'}
 CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'evtime [time]', DESC = 'Change the time beetween every RemoteEvents'}
+CMDs[#CMDs + 1] = {NAME = 'evtimecopy [time]', DESC = 'Change the time beetween every RemoteEvents used in the copy command.'}
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
@@ -12395,12 +12397,21 @@ end)
 addcmd('sevtime',{'showeventtime'},function(args, speaker)
 	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Current event time is "..tostring(tonumber(evtime).."s."); Duration=showtime;})
 end)
+addcmd('sevtimecopy',{'showeventtimecopy'},function(args, speaker)
+	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Current event time is "..tostring(tonumber(evtimecopy).."s."); Duration=showtime;})
+end)
 
 
 addcmd('evtime',{'eventtime'},function(args, speaker)
 	local newtime = args[1]
 	evtime = tonumber(newtime)
-	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Event time changed to "..tostring(tonumber(newtime)); Duration=showtime;})
+	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Event time changed to "..tostring(tonumber(newtime)).."s."; Duration=showtime;})
+end)
+
+addcmd('evtimecopy',{'eventtimecopy'},function(args, speaker)
+	local newtime = args[1]
+	evtimecopy = tonumber(newtime)
+	game.StarterGui:SetCore("SendNotification", {Title="Event time copy"; Text="Event time to copy avatar changed to "..tostring(tonumber(newtime)).."s."; Duration=showtime;})
 end)
 
 addcmd('unrb',{'unrainbow'},function(args, speaker)
