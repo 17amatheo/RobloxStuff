@@ -5184,6 +5184,8 @@ CMDs[#CMDs + 1] = {NAME = 'staffwatch', DESC = 'Notify if a staff member of the 
 CMDs[#CMDs + 1] = {NAME = 'unstaffwatch', DESC = 'Disable Staffwatch'}
 CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'evtime [time]', DESC = 'Change the time beetween every RemoteEvents'}
+CMDs[#CMDs + 1] = {NAME = 'sevtime', DESC = 'Show current evtime'}
+CMDs[#CMDs + 1] = {NAME = 'sevtimecopy', DESC = 'Show current evtimecopy'}
 CMDs[#CMDs + 1] = {NAME = 'evtimecopy [time]', DESC = 'Change the time beetween every RemoteEvents used in the copy command.'}
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
@@ -12398,7 +12400,7 @@ addcmd('sevtime',{'showeventtime'},function(args, speaker)
 	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Current event time is "..tostring(tonumber(evtime).."s."); Duration=showtime;})
 end)
 addcmd('sevtimecopy',{'showeventtimecopy'},function(args, speaker)
-	game.StarterGui:SetCore("SendNotification", {Title="Event time"; Text="Current event time is "..tostring(tonumber(evtimecopy).."s."); Duration=showtime;})
+	game.StarterGui:SetCore("SendNotification", {Title="Event time copy"; Text="Current copy event time is "..tostring(tonumber(evtimecopy).."s."); Duration=showtime;})
 end)
 
 
