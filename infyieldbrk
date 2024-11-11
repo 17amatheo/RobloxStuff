@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.22"
+currentVersion = "6.23"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -1822,6 +1822,89 @@ local do_killall = false
 local lplayer = game.Players.LocalPlayer
 
 local Players = game:GetService("Players")
+
+function unpropesp()
+	local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+	-- Parcours des éléments dans PlayerGui
+	for _, folder in pairs(playerGui:GetChildren()) do
+		if folder:IsA("Folder") and folder.Name:match("_PropESP$") then
+			-- Si le nom du dossier correspond au format "_PropESP"
+			--print("Suppression de l'ESP pour", folder.Name)
+
+			-- Détruire tous les éléments dans le dossier (BillboardGui et autres objets)
+			folder:Destroy()
+		end
+	end
+end
+
+
+
+
+function propesp()
+	local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	local cones = game.Workspace.WorkspaceCom:FindFirstChild("001_TrafficCones")
+	if not cones then
+		print("001_TrafficCones n'existe pas dans WorkspaceCom.")
+		return
+	end
+
+	for _, cone in pairs(cones:GetChildren()) do
+		if cone.Name:sub(1, 4) == "Prop" then
+			local playerName = cone.Name:gsub("Prop", "")
+			local propOwner = cone:FindFirstChild("PropOwner")
+
+			if propOwner and propOwner:IsA("BasePart") then
+				-- Vérifier si un ESP existe déjà pour ce joueur, sinon créer un nouveau
+				local existingEspFolder = playerGui:FindFirstChild(playerName.."_PropESP")
+				if not existingEspFolder then
+					-- Si aucun ESP n'existe, on crée un dossier pour les ESPs du joueur
+					existingEspFolder = Instance.new("Folder")
+					existingEspFolder.Name = playerName.."_PropESP"
+					existingEspFolder.Parent = playerGui
+				end
+
+				-- Créer un nouvel ESP pour ce cône spécifique
+				local esp = Instance.new("BillboardGui")
+				local nameLabel = Instance.new("TextLabel")
+				esp.Adornee = propOwner
+				esp.Name = "ESP_" .. cone.Name  -- Ajout d'un identifiant unique pour chaque ESP
+				esp.Parent = existingEspFolder
+				esp.Size = UDim2.new(0, 100, 0, 150)
+				esp.StudsOffset = Vector3.new(0, 1, 0)
+				esp.AlwaysOnTop = true
+
+				nameLabel.Parent = esp
+				nameLabel.BackgroundTransparency = 1
+				nameLabel.Position = UDim2.new(0, 0, 0, -50)
+				nameLabel.Size = UDim2.new(0, 100, 0, 100)
+				nameLabel.Font = Enum.Font.SourceSansSemibold
+				nameLabel.TextSize = 20
+				nameLabel.TextColor3 = Color3.new(1, 0, 0)  -- Couleur rouge
+				nameLabel.TextStrokeTransparency = 0
+				nameLabel.TextYAlignment = Enum.TextYAlignment.Bottom
+				nameLabel.Text = "PropOwner:   " .. playerName
+				nameLabel.ZIndex = 10
+			else
+				print("PropOwner n'est pas un BasePart dans", cone.Name)
+			end
+		else
+			print("Nom du modèle ne commence pas par 'Prop':", cone.Name)
+		end
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5204,6 +5287,8 @@ CMDs[#CMDs + 1] = {NAME = 'unrb / unrainbow', DESC = 'Disable rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
 CMDs[#CMDs + 1] = {NAME = 'large / huge', DESC = 'Make you very large'}
+CMDs[#CMDs + 1] = {NAME = 'propesp', DESC = 'Show props on map and their oner'}
+CMDs[#CMDs + 1] = {NAME = 'unpropesp', DESC = 'Hide prop esp.'}
 CMDs[#CMDs + 1] = {NAME = 'void [player] (COUCH)', DESC = 'Send a player into the void  (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'stop', DESC = 'Stop all killing process'}
 CMDs[#CMDs + 1] = {NAME = 'fastkill [player] (TOOL) NOT WORKING', DESC = 'Kills a player (less reliable) (YOU NEED A TOOL)'}
@@ -12532,7 +12617,13 @@ addcmd('copy',{'copyavatar'},function(args, speaker)
 end)
 
 
+addcmd('propesp',{'propowneresp'},function(args, speaker)
+	propesp()
+end)
 
+addcmd('unpropesp',{'unpropowneresp'},function(args, speaker)
+	unpropesp()
+end)
 
 
 
