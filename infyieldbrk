@@ -1815,7 +1815,7 @@ table.insert(text1,selectJoin)
 local showtime = 5
 
 local evtime = 1
-local evtimecopy = 0.2
+local evtimecopy = 0.4
 
 local do_killall = false
 
