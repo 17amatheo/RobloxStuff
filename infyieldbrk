@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.25"
+currentVersion = "6.26"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -2254,13 +2254,33 @@ local pant_ids = {
 local lpk_name = ""
 
 
+
+function waitForCharacter(player)
+	while not player.Character or not player.Character:FindFirstChild("Humanoid") or player.Character.Humanoid.Health <= 0 or player.Character.Humanoid.Health <= 10 do
+		--couch_off()
+		player.CharacterAdded:Wait() -- Attend la recréation du Character
+		wait(0.5) -- Petit délai pour garantir une initialisation complète
+		print("Debuggggggg")
+	end
+	--couch_on()
+end
+
+
+
+
+
+
+
+
 function start_spin()
+	waitForCharacter(game.Players.LocalPlayer)
 	local spinSpeed = 30
 	for i,v in pairs(getRoot(lplayer.Character):GetChildren()) do
 		if v.Name == "Spinning_am123" and v:IsA("BodyAngularVelocity") then
 			return
 		end
 	end
+	waitForCharacter(game.Players.LocalPlayer)
 	local Spin = Instance.new("BodyAngularVelocity")
 	Spin.Name = "Spinning_am123"
 	Spin.Parent = getRoot(lplayer.Character)
@@ -2275,6 +2295,7 @@ end
 
 
 function stop_spin()
+	waitForCharacter(game.Players.LocalPlayer)
 	for i,v in pairs(getRoot(lplayer.Character):GetChildren()) do
 		if v.Name == "Spinning_am123" and v:IsA("BodyAngularVelocity") then
 			v:Destroy()
@@ -2286,6 +2307,7 @@ end
 
 
 function couch_off()
+	waitForCharacter(game.Players.LocalPlayer)
 	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
 			v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
@@ -2294,6 +2316,7 @@ function couch_off()
 end
 
 function couch_on()
+	waitForCharacter(game.Players.LocalPlayer)
 	for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
 		if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
 			v.Parent = game.Players.LocalPlayer.Character
@@ -2308,6 +2331,7 @@ local function decimalRandom(minimum, maximum)
 end
 
 local function antisit()
+	waitForCharacter(game.Players.LocalPlayer)
 	if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
 		game.Players.LocalPlayer.Character.Humanoid.Sit = false
 	end
@@ -2319,24 +2343,30 @@ function chase_player(victim, pos)
 	local counter = maxch // exec_time
 	chasing = true
 	while chasing and victim.Character.Humanoid.Sit == false do
+		waitForCharacter(lplayer)
+		waitForCharacter(victim)
 		start_spin()
-		
+
 		if counter <= 0 then
 			couch_off()
 			wait(0.05)
 			stop_spin()
+			waitForCharacter(lplayer)
 			wait(0.05)
+			waitForCharacter(lplayer)
 			lplayer.Character.HumanoidRootPart.CFrame = pos
 			wait(1)
 			counter = maxch // exec_time
 			couch_on()
 		end
-		
-		
+
+
 		wait(0.1)
+		waitForCharacter(lplayer)
 		antisit()
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
 		wait(0.1)
+		waitForCharacter(lplayer)
 		antisit()
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,- decimalRandom(0.2, 2.2),decimalRandom(0.2, 2.9))
 		counter = counter - 1
@@ -2374,12 +2404,15 @@ function killplayer(name)
 	local victim = game:GetService("Players"):FindFirstChild(name)
 	local pos = lplayer.Character.HumanoidRootPart.CFrame
 	if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
+		waitForCharacter(lplayer)
+		waitForCharacter(victim)
 		stop_spin()
 		local position = getRoot(victim.Character).CFrame
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
 		couch_on()
 		chase_player(victim, pos)
 		antisit()
+		waitForCharacter(lplayer)
 		getRoot(lplayer.Character).CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
 		wait(0.5)
 		chasing = true
@@ -2390,7 +2423,7 @@ function killplayer(name)
 		local has_passed_time = false
 		while chasing and has_passed_time do
 			local playerHeight = (getRoot(victim.Character).Position.Y)
-
+			waitForCharacter(lplayer)
 			if playerHeight < limitHeight then
 				belowLimitTime = belowLimitTime + 0.01 -- Incrémenter le temps sous la limite
 			else
@@ -2403,23 +2436,29 @@ function killplayer(name)
 
 			if belowLimitTime < 0.4 then
 				-- Appeler la fonction si le joueur n'a pas passé 0.5 secondes sous la limite
+				waitForCharacter(lplayer)
 				chase_player(victim, pos)
 			end
-
+			waitForCharacter(lplayer)
 			wait(0.01)
+			waitForCharacter(lplayer)
 		end
 		chasing = false
 		wait(0.3)
 		couch_off()
+		waitForCharacter(lplayer)
 		wait(0.5)
+		waitForCharacter(lplayer)
 		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
 			lplayer.Character.HumanoidRootPart.CFrame = pos
 		end
 		wait(0.4)
+		waitForCharacter(lplayer)
 		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
 			lplayer.Character.HumanoidRootPart.CFrame = pos
 		end
 		wait(0.6)
+		waitForCharacter(lplayer)
 		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
 			lplayer.Character.HumanoidRootPart.CFrame = pos
 		end
@@ -2442,16 +2481,20 @@ function voidplayer(name)
 		local pos = lplayer.Character.HumanoidRootPart.CFrame
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
 		couch_on()
+		waitForCharacter(lplayer)
 		chase_player(victim, pos)
 
 		antisit()
 		getRoot(lplayer.Character).CFrame = CFrame.new(-867453824, 3173377.25, 71196704, -7.6317906e-07, 0.99461931, 0.103597544, 2.06824467e-07, 0.103597544, -0.99461931, -1, -7.37646133e-07, -2.84775098e-07)
 		wait(0.5)
 		couch_off()
+		waitForCharacter(lplayer)
 		lplayer.Character.HumanoidRootPart.CFrame = pos
 		wait(0.4)
+		waitForCharacter(lplayer)
 		lplayer.Character.HumanoidRootPart.CFrame = pos
 		wait(0.6)
+		waitForCharacter(lplayer)
 		lplayer.Character.HumanoidRootPart.CFrame = pos
 	end
 
@@ -12736,29 +12779,24 @@ addcmd('lpk', {'loopkill'}, function(args, speaker)
 			for i, v in pairs(fp) do
 				lpk = true
 				repeat
-					-- Vérification si le joueur local est en vie
-					if not game.Players.LocalPlayer.Character or game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
-						-- Le joueur local est mort, on attend le respawn
-						game.StarterGui:SetCore("SendNotification", {Title="Warning"; Text="Local player is dead, waiting to respawn..."; Duration=showtime;})
-
-						-- Attendre le respawn du joueur local
-						repeat
-							wait(0.5)
-						until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.Health > 0
-
-						-- Le joueur local a respawn, on reprend la boucle
-						game.StarterGui:SetCore("SendNotification", {Title="Info"; Text="Local player respawned, restarting loop..."; Duration=showtime;})
-					end
+					-- Vérification si le joueur local est mort
+					waitForCharacter(lplayer)
 
 					-- Exécution de la commande si le joueur est vivant
 					if Players[v].Character.Humanoid.Sit == false and Players[v].UserId ~= lplayer.UserId and chasing == false then
+						waitForCharacter(lplayer)
 						killplayer(Players[v].Name)
-						game.Players.LocalPlayer.Character.Humanoid.Sit = false
+						antisit()
+						waitForCharacter(lplayer)
 						wait(2)
+						waitForCharacter(lplayer)
 					else
 						game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sitting or in chase!"; Duration=showtime;})
+						waitForCharacter(lplayer)
 					end
+					waitForCharacter(lplayer)
 					wait(1)
+					waitForCharacter(lplayer)
 				until lpk == false
 			end
 		end
