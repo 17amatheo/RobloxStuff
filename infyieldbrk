@@ -2260,7 +2260,6 @@ function waitForCharacter(player)
 		--couch_off()
 		player.CharacterAdded:Wait() -- Attend la recréation du Character
 		wait(0.5) -- Petit délai pour garantir une initialisation complète
-		print("Debuggggggg")
 	end
 	--couch_on()
 end
@@ -12488,26 +12487,11 @@ function bringplayer(name)
 		local position = getRoot(victim.Character).CFrame
 		local pos = lplayer.Character.HumanoidRootPart.CFrame
 		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
-		for i,v in pairs(game.Players.LocalPlayer:FindFirstChildOfClass("Backpack"):GetChildren()) do
-			if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
-				v.Parent = game.Players.LocalPlayer.Character
-			end
-		end
+		couch_on()
 		start_spin()
-		chasing = true
+		chase_player(victim, pos)
 
-		while chasing and victim.Character.Humanoid.Sit == false do
-			wait(0.1)
-			game.Players.LocalPlayer.Character.Humanoid.Sit = false
-			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
-			wait(0.1)
-			game.Players.LocalPlayer.Character.Humanoid.Sit = false
-			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-decimalRandom(0.2, 1.2),decimalRandom(0.2, 0.9))
-			wait(0.1)
-		end
-
-		chasing = false
-		game.Players.LocalPlayer.Character.Humanoid.Sit = false
+		antisit()
 	end
 
 end
@@ -12909,7 +12893,7 @@ addcmd('bring',{'febring'},function(args, speaker)
 	if desti then
 		local fdesti = getPlayer(desti,speaker)
 		for i,v in pairs(fdesti) do
-			pos = getRoot(v.Character).CFrame
+			pos = getRoot(Players[v].Character).CFrame
 		end
 	else
 		pos = getRoot(lplayer.Character).CFrame
@@ -12918,6 +12902,9 @@ addcmd('bring',{'febring'},function(args, speaker)
 		if victim == "all" then
 			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="bring command not allowed on 'all' !"; Duration=showtime;})
 		else
+			print(pos)
+			print(desti)
+			print(victim)
 			local fp = getPlayer(victim,speaker)
 			for i,v in pairs(fp) do
 				if Players[v].Character.Humanoid.Sit == false and Players[v].UserId ~= lplayer.UserId then
@@ -12928,12 +12915,8 @@ addcmd('bring',{'febring'},function(args, speaker)
 					stop_spin()
 					getRoot(lplayer.Character).CFrame = pos
 					wait(0.55)
-					for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-						if (v:IsA("Tool") or v:IsA("HopperBin")) and v.Name == "Couch" then
-							v.Parent = game.Players.LocalPlayer:FindFirstChildOfClass("Backpack")
-						end
-					end
-					game.Players.LocalPlayer.Character.Humanoid.Sit = false
+					couch_off()
+					antisit()
 					wait(1)
 				else
 					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
