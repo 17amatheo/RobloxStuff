@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.26"
+currentVersion = "6.27"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -4620,7 +4620,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.10")
+				do_exec(";say v1.11")
 			end
 
 
@@ -5374,6 +5374,10 @@ CMDs[#CMDs + 1] = {NAME = 'evtimecopy [time]', DESC = 'Change the time beetween 
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
+CMDs[#CMDs + 1] = {NAME = 'name / setname [new_name]', DESC = 'Change your name to [new_name]'}
+CMDs[#CMDs + 1] = {NAME = 'bio / setbio [new_bio]', DESC = 'Change your bio to [new_bio]'}
+CMDs[#CMDs + 1] = {NAME = 'couch / couch_on', DESC = 'Take couch if in your inventory'}
+CMDs[#CMDs + 1] = {NAME = 'uncouch / couch_off', DESC = 'Take couch off if in your inventory'}
 CMDs[#CMDs + 1] = {NAME = 'rbname / rainbowname', DESC = 'Turn your name into rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'unrbname / unrainbowname', DESC = 'Bring name to normal'}
 CMDs[#CMDs + 1] = {NAME = 'rbpant / rainbowpant', DESC = 'Turn your pants into rainbow'}
@@ -12746,6 +12750,29 @@ addcmd('void',{'fevoid'},function(args, speaker)
 	else
 		givecouch()
 	end
+end)
+
+
+
+addcmd('couch', {'couch_on'}, function(args, speaker)
+	couch_on()
+end)
+
+addcmd('uncouch', {'couch_off'}, function(args, speaker)
+	couch_off()
+end)
+
+addcmd('name', {'setname'}, function(args, speaker)
+	local newname = args[1]
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(newname))
+	wait(evtimecopy)
+	
+end)
+
+addcmd('bio', {'setbio'}, function(args, speaker)
+	local newname = args[1]
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",tostring(newname))
+	wait(evtimecopy)
 end)
 
 
