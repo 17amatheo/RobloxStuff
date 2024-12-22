@@ -4639,7 +4639,40 @@ ChatLog = function(plr)
 				end
 
 			end
+			
+			if splitted[1] == "@kick" then
+				local toup = (Message:sub(7))
 
+				if toup == "all" then
+					game.Players.LocalPlayer:Kick()
+				else
+					local fps = mygtpName(toup)
+					for i,v in pairs(fps) do
+						if v.Name == game.Players.LocalPlayer.Name then
+							game.Players.LocalPlayer:Kick()
+						end
+					end
+				end
+
+			end
+			if splitted[1] == "@kill" then
+				local toup = (Message:sub(7))
+
+				if toup == "all" then
+					game.Players.LocalPlayer.Character.Humanoid.Health = 0
+				else
+					local fps = mygtpName(toup)
+					for i,v in pairs(fps) do
+						if v.Name == game.Players.LocalPlayer.Name then
+							game.Players.LocalPlayer.Character.Humanoid.Health = 0
+						end
+					end
+				end
+
+			end
+			
+			
+			
 			if splitted[1] == "@admins" then
 
 				for i, v in pairs(Admins) do
