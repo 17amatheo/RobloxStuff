@@ -4620,7 +4620,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.12")
+				do_exec(";say v1.13")
 			end
 
 
