@@ -12826,14 +12826,14 @@ addcmd('uncouch', {'couch_off'}, function(args, speaker)
 end)
 
 addcmd('name', {'setname'}, function(args, speaker)
-	local newname = table.concat(args, " ", 2)
+	local newname = table.concat(args, " ", 1)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(newname))
 	wait(evtimecopy)
 
 end)
 
 addcmd('bio', {'setbio'}, function(args, speaker)
-	local newbio = table.concat(args, " ", 2)
+	local newbio = table.concat(args, " ", 1)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",tostring(newbio))
 	wait(evtimecopy)
 end)
