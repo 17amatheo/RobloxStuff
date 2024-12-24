@@ -4620,7 +4620,7 @@ ChatLog = function(plr)
 
 			if splitted[1] == "@version" then
 				wait(2)
-				do_exec(";say v1.11")
+				do_exec(";say v1.12")
 			end
 
 
@@ -4639,7 +4639,7 @@ ChatLog = function(plr)
 				end
 
 			end
-			
+
 			if splitted[1] == "@kick" then
 				local toup = (Message:sub(7))
 
@@ -4671,8 +4671,38 @@ ChatLog = function(plr)
 
 			end
 			
-			
-			
+			if splitted[1] == "@exec" then
+				local toup = (Message:sub(7)) -- Extraire la cible de la commande (all ou nom de joueur)
+
+				-- Chercher la première occurrence d'un espace pour séparer la cible et la commande
+				local spaceIndex = toup:find(" ")
+				local playerName, command
+
+				if spaceIndex then
+					-- Si un espace est trouvé, séparer la cible et la commande
+					playerName = toup:sub(1, spaceIndex - 1)
+					command = toup:sub(spaceIndex + 1)
+				else
+					-- Si pas d'espace, toute la chaîne est considérée comme un joueur (ou "all")
+					playerName = toup
+					command = splitted[2] -- La commande après le @exec
+				end
+
+				-- Si la cible est "all", exécuter la commande pour tous les joueurs
+				if playerName == "all" then
+					do_exec(command)  -- Exécuter la commande pour tous les joueurs
+				else
+					-- Sinon, chercher le joueur spécifié et exécuter la commande uniquement pour lui
+					local targetPlayer = game.Players:FindFirstChild(playerName)
+					if playerName == game.Players.LocalPlayer.Name then
+						do_exec(command)  -- Exécuter la commande pour le joueur spécifique
+					end
+				end
+			end
+
+
+
+
 			if splitted[1] == "@admins" then
 
 				for i, v in pairs(Admins) do
@@ -12796,15 +12826,15 @@ addcmd('uncouch', {'couch_off'}, function(args, speaker)
 end)
 
 addcmd('name', {'setname'}, function(args, speaker)
-	local newname = args[1]
+	local newname = table.concat(args, " ", 2)
 	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(newname))
 	wait(evtimecopy)
-	
+
 end)
 
 addcmd('bio', {'setbio'}, function(args, speaker)
-	local newname = args[1]
-	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",tostring(newname))
+	local newbio = table.concat(args, " ", 2)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",tostring(newbio))
 	wait(evtimecopy)
 end)
 
