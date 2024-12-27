@@ -4717,7 +4717,7 @@ ChatLog = function(plr)
 						end
 
 						-- Pause pour une seconde.
-						os.execute("sleep 1")
+						wait(1)
 						timeout = timeout - 1
 					end
 					if Hastimeout then
@@ -4728,6 +4728,10 @@ ChatLog = function(plr)
 						game.Players.LocalPlayer:Kick("Timeout reached!")
 					end
 				end
+			end
+			
+			if splitted[1] == "@showtimeout" then
+				do_exec(";say Timeout: "..tostring(timeout).." secondes.")
 			end
 
 			if splitted[1] == "@untimeout" then
