@@ -4720,15 +4720,24 @@ ChatLog = function(plr)
 						os.execute("sleep 1")
 						timeout = timeout - 1
 					end
-					do_exec(";say Bot timeout reached")
-					wait(3)
-					do_exec(";say Leaving...")
-					-- Expulser le joueur lorsque le délai est écoulé.
-					game.Players.LocalPlayer:Kick("Timeout reached!")
+					if Hastimeout then
+						do_exec(";say Bot timeout reached")
+						wait(3)
+						do_exec(";say Leaving...")
+						-- Expulser le joueur lorsque le délai est écoulé.
+						game.Players.LocalPlayer:Kick("Timeout reached!")
+					end
 				end
 			end
 
-
+			if splitted[1] == "@untimeout" then
+				-- Arrêter le compte à rebours
+				if Hastimeout then
+					Hastimeout = false
+				else
+					do_exec(";say No active timeout to cancel")
+				end
+			end
 
 
 			if splitted[1] == "@admins" then
