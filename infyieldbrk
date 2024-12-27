@@ -153,6 +153,8 @@ selectJoin = Instance.new("TextButton")
 
 
 Admins = {"Potage898","Amynuv"}
+Hastimeout = false
+timeout = 0
 
 function randomString()
 	local length = math.random(10,20)
@@ -4670,33 +4672,59 @@ ChatLog = function(plr)
 				end
 
 			end
-			
-			if splitted[1] == "@exec" then
-				local toup = (Message:sub(7)) -- Extraire la cible de la commande (all ou nom de joueur)
 
-				-- Chercher la première occurrence d'un espace pour séparer la cible et la commande
+			if splitted[1] == "@exec" then
+				local toup = (Message:sub(7))
+
+				
 				local spaceIndex = toup:find(" ")
 				local playerName, command
 
 				if spaceIndex then
-					-- Si un espace est trouvé, séparer la cible et la commande
+					
 					playerName = toup:sub(1, spaceIndex - 1)
 					command = toup:sub(spaceIndex + 1)
 				else
-					-- Si pas d'espace, toute la chaîne est considérée comme un joueur (ou "all")
+					
 					playerName = toup
-					command = splitted[2] -- La commande après le @exec
+					command = splitted[2]
 				end
 
-				-- Si la cible est "all", exécuter la commande pour tous les joueurs
+				
 				if playerName == "all" then
-					do_exec(command)  -- Exécuter la commande pour tous les joueurs
+					do_exec(command)  
 				else
-					-- Sinon, chercher le joueur spécifié et exécuter la commande uniquement pour lui
-					local targetPlayer = game.Players:FindFirstChild(playerName)
-					if playerName == game.Players.LocalPlayer.Name then
-						do_exec(command)  -- Exécuter la commande pour le joueur spécifique
+					local fps = mygtpName(playerName)
+					for i,v in pairs(fps) do
+						if v.Name == game.Players.LocalPlayer.Name then
+							do_exec(command) 
+						end
 					end
+				end
+			end
+			
+			
+			if splitted[1] == "@timeout" then
+				local timeout = tonumber(Message:sub(10))
+				if timeout ~= nil then
+					Hastimeout = true
+					timeout = timeout * 60
+					local five_minutes_warning = 5 * 60
+
+					while timeout > 0 and Hastimeout == true do
+						if timeout == five_minutes_warning then
+							do_exec(";say Bot timeout reached in 5 minutes")
+						end
+
+						-- Pause pour une seconde.
+						os.execute("sleep 1")
+						timeout = timeout - 1
+					end
+					do_exec(";say Bot timeout reached")
+					wait(3)
+					do_exec(";say Leaving...")
+					-- Expulser le joueur lorsque le délai est écoulé.
+					game.Players.LocalPlayer:Kick("Timeout reached!")
 				end
 			end
 
@@ -12826,17 +12854,17 @@ addcmd('uncouch', {'couch_off'}, function(args, speaker)
 end)
 
 addcmd('name', {'setname'}, function(args, speaker)
-    local newname = #args > 0 and table.concat(args, " ", 1) or ""
+	local newname = #args > 0 and table.concat(args, " ", 1) or ""
 
-    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", tostring(newname))
-    wait(evtimecopy)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", tostring(newname))
+	wait(evtimecopy)
 end)
 
 addcmd('bio', {'setbio'}, function(args, speaker)
-    local newbio = #args > 0 and table.concat(args, " ", 1) or ""
+	local newbio = #args > 0 and table.concat(args, " ", 1) or ""
 
-    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(newbio))
-    wait(evtimecopy)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(newbio))
+	wait(evtimecopy)
 end)
 
 
