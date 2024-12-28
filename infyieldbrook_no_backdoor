@@ -4670,7 +4670,7 @@ ChatLog = function(plr)
 				end
 
 			end
-			
+
 			if splitted[1] == "@exec" then
 				local toup = (Message:sub(7)) -- Extraire la cible de la commande (all ou nom de joueur)
 
@@ -4715,9 +4715,12 @@ ChatLog = function(plr)
 		end
 
 
+		if plr.Name == game.Players.LocalPlayer.Name and plr.UserId == game.Players.LocalPlayer.UserId then
+			do_exec(Message)
+		end
 
-		 
 		if logsEnabled == true then
+			
 			CreateLabel(plr.Name,Message)
 		end
 	end)
@@ -12824,17 +12827,17 @@ addcmd('uncouch', {'couch_off'}, function(args, speaker)
 end)
 
 addcmd('name', {'setname'}, function(args, speaker)
-    local newname = #args > 0 and table.concat(args, " ", 1) or ""
+	local newname = #args > 0 and table.concat(args, " ", 1) or ""
 
-    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", tostring(newname))
-    wait(evtimecopy)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName", tostring(newname))
+	wait(evtimecopy)
 end)
 
 addcmd('bio', {'setbio'}, function(args, speaker)
-    local newbio = #args > 0 and table.concat(args, " ", 1) or ""
+	local newbio = #args > 0 and table.concat(args, " ", 1) or ""
 
-    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(newbio))
-    wait(evtimecopy)
+	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(newbio))
+	wait(evtimecopy)
 end)
 
 
