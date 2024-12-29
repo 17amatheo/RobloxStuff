@@ -4720,7 +4720,7 @@ ChatLog = function(plr)
 		end
 
 		if logsEnabled == true then
-			
+
 			CreateLabel(plr.Name,Message)
 		end
 	end)
@@ -12768,6 +12768,13 @@ addcmd('copy',{'copyavatar'},function(args, speaker)
 	for i,v in pairs(fp) do
 		copyavatar(Players[v])
 	end
+end)
+
+
+
+addcmd('headless',{'nohead'},function(args, speaker)
+	local descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,tonumber(134082579)},"ClassicMale")
 end)
 
 
