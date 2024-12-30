@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.28"
+currentVersion = "6.29"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -1909,62 +1909,69 @@ end
 
 
 
-local function copyavatar(player)
+local function copyavatar(player,id)
 	local victim = "accfortestsa"
 
 	local Players = game:GetService("Players")
 
 	local findVict = player
 
+	if not id then
+		local function getImageIdFromUrl(url)
+			if type(url) ~= "string" then
+				warn("L'URL fournie n'est pas une chaîne de caractères.")
+				return nil
+			end
 
+			local imageId = string.match(url, "id=(%d+)")
+			return imageId
+		end
+		local function extractAssetId(assetString)
+			if type(assetString) ~= "string" then
+				warn("La chaîne fournie n'est pas valide.")
+				return nil
+			end
+
+			-- Utilise le pattern matching pour extraire l'ID
+			local assetId = string.match(assetString, "rbxassetid://(%d+)")
+			return assetId
+		end
+
+
+		local function hasProperty(object, prop)
+			local t = object[prop] --this is just done to check if the property existed, if it did nothing would happen, if it didn't an error will pop, the object[prop] is a different way of writing object.prop, (object.Transparency or object["Transparency"])
+		end
+
+
+		game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",findVict.PlayersBag.RPName.Value)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",findVict.PlayersBag.RPBio.Value)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",findVict.PlayersBag.RPNameColor.Value)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",findVict.PlayersBag.RPBioColor.Value)
+		wait(evtimecopy)
+		--Ne pas oublier de remttre cette ligne :
+		if findVict.PlayersBag.Job.Value == true then
+			game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",findVict.PlayersBag.Job.JobTitlePic.Value,findVict.PlayersBag.Job.JobTitlePic.Value,true)
+		elseif game.Players.LocalPlayer.PlayersBag.Job.Value == true then
+			game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,true)
+		end
+
+		wait(evtimecopy)
+	end
 
 	-- Fonction pour extraire l'ID de l'URL
-	local function getImageIdFromUrl(url)
-		if type(url) ~= "string" then
-			warn("L'URL fournie n'est pas une chaîne de caractères.")
-			return nil
-		end
-
-		local imageId = string.match(url, "id=(%d+)")
-		return imageId
-	end
-	local function extractAssetId(assetString)
-		if type(assetString) ~= "string" then
-			warn("La chaîne fournie n'est pas valide.")
-			return nil
-		end
-
-		-- Utilise le pattern matching pour extraire l'ID
-		local assetId = string.match(assetString, "rbxassetid://(%d+)")
-		return assetId
-	end
-
-
-	local function hasProperty(object, prop)
-		local t = object[prop] --this is just done to check if the property existed, if it did nothing would happen, if it didn't an error will pop, the object[prop] is a different way of writing object.prop, (object.Transparency or object["Transparency"])
-	end
-
-
-	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",findVict.PlayersBag.RPName.Value)
-	wait(evtimecopy)
-	game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio",findVict.PlayersBag.RPBio.Value)
-	wait(evtimecopy)
-	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",findVict.PlayersBag.RPNameColor.Value)
-	wait(evtimecopy)
-	game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",findVict.PlayersBag.RPBioColor.Value)
-	wait(evtimecopy)
-	--Ne pas oublier de remttre cette ligne :
-	if findVict.PlayersBag.Job.Value == true then
-		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",findVict.PlayersBag.Job.JobTitlePic.Value,findVict.PlayersBag.Job.JobTitlePic.Value,true)
-	elseif game.Players.LocalPlayer.PlayersBag.Job.Value == true then
-		game:GetService("ReplicatedStorage").RE["1Jo1b"]:FireServer("GiveJobUIMenu",game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,game.Players.LocalPlayer.PlayersBag.Job.JobTitlePic.Value,true)
-	end
-
-	wait(evtimecopy)
+	
 	--Applique les noms rp et le travail
 
 
-	local descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
+	if not id then
+		descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
+	else
+		descriptionClone = Players:GetHumanoidDescriptionFromUserId(findVict)
+	end
+	
 	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
 
 	--Applique la forme du corp
@@ -1990,7 +1997,6 @@ local function copyavatar(player)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.WalkAnimation)
 	wait(evtimecopy)
 
-	local descriptionClone = findVict.Character.Humanoid:GetAppliedDescription()
 
 	-- Appliquer une couleur BrickColor spécifique
 	local skinColor = BrickColor.new(descriptionClone.HeadColor)  -- ou la couleur souhaitée
@@ -2001,7 +2007,6 @@ local function copyavatar(player)
 
 
 
-	local humanoidDescription = findVict.Character.Humanoid:GetAppliedDescription()  
 
 
 
@@ -2014,70 +2019,72 @@ local function copyavatar(player)
 
 
 
-	local function getsize(humanoidrootpart)
-		return humanoidrootpart.Size.Z
-	end
-
-	local function arrondirADecimale(nombre)
-		return math.floor(nombre * 10 + 0.5) / 10
-	end
-
-	local function arrondirADecimale2(nombre)
-		return math.floor(nombre * 100 + 0.5) / 100
-	end
-
-	-- Variables pour stocker les tailles des personnages
-	local playerRootPart = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-	local targetRootPart = findVict.Character:FindFirstChild("HumanoidRootPart")
-
-	if not playerRootPart or not targetRootPart then
-		warn("HumanoidRootPart introuvable pour le joueur ou la cible.")
-		return
-	end
-
-	local playerSize = getsize(playerRootPart)
-	local targetSize = getsize(targetRootPart)
-
-	-- Boucle de réduction de taille si le joueur est plus grand
-	if playerSize > targetSize then
-		local i = 10
-		while playerSize > targetSize and i > 0 do
-
-			-- Calculer la nouvelle taille et envoyer la demande
-			playerSize = arrondirADecimale(playerSize-0.05)
-			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown", arrondirADecimale2(playerSize-0.05))
-
-			-- Attendre que la taille se mette à jour pour le personnage
-			wait(evtimecopy)
-
-			-- Mettre à jour `playerSize` avec la taille actuelle après modification
-			playerSize = getsize(playerRootPart)
-
-			i = i - 1
+	if not id then
+		local function getsize(humanoidrootpart)
+			return humanoidrootpart.Size.Z
 		end
 
-		-- Boucle d'augmentation de taille si le joueur est plus petit
-	elseif playerSize < targetSize then
-		local i = 10
-		while playerSize < targetSize and i > 0 do
+		local function arrondirADecimale(nombre)
+			return math.floor(nombre * 10 + 0.5) / 10
+		end
 
-			-- Ajouter 0.05 pour augmenter la taille
-			playerSize = playerSize + 0.05
+		local function arrondirADecimale2(nombre)
+			return math.floor(nombre * 100 + 0.5) / 100
+		end
 
-			-- Arrondir à deux décimales après l'ajout
-			playerSize = arrondirADecimale2(playerSize)
+		-- Variables pour stocker les tailles des personnages
+		local playerRootPart = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+		local targetRootPart = findVict.Character:FindFirstChild("HumanoidRootPart")
+
+		if not playerRootPart or not targetRootPart then
+			warn("HumanoidRootPart introuvable pour le joueur ou la cible.")
+			return
+		end
+
+		local playerSize = getsize(playerRootPart)
+		local targetSize = getsize(targetRootPart)
+
+		-- Boucle de réduction de taille si le joueur est plus grand
+		if playerSize > targetSize then
+			local i = 10
+			while playerSize > targetSize and i > 0 do
+
+				-- Calculer la nouvelle taille et envoyer la demande
+				playerSize = arrondirADecimale(playerSize-0.05)
+				game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown", arrondirADecimale2(playerSize-0.05))
+
+				-- Attendre que la taille se mette à jour pour le personnage
+				wait(evtimecopy)
+
+				-- Mettre à jour `playerSize` avec la taille actuelle après modification
+				playerSize = getsize(playerRootPart)
+
+				i = i - 1
+			end
+
+			-- Boucle d'augmentation de taille si le joueur est plus petit
+		elseif playerSize < targetSize then
+			local i = 10
+			while playerSize < targetSize and i > 0 do
+
+				-- Ajouter 0.05 pour augmenter la taille
+				playerSize = playerSize + 0.05
+
+				-- Arrondir à deux décimales après l'ajout
+				playerSize = arrondirADecimale2(playerSize)
 
 
-			-- Envoyer la taille arrondie au serveur
-			game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp", playerSize)
+				-- Envoyer la taille arrondie au serveur
+				game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp", playerSize)
 
-			-- Attendre que la taille se mette à jour pour le personnage
-			wait(evtimecopy)
+				-- Attendre que la taille se mette à jour pour le personnage
+				wait(evtimecopy)
 
-			-- Mettre à jour `playerSize` avec la taille actuelle après modification
-			playerSize = getsize(playerRootPart)
+				-- Mettre à jour `playerSize` avec la taille actuelle après modification
+				playerSize = getsize(playerRootPart)
 
-			i = i - 1
+				i = i - 1
+			end
 		end
 	end
 
@@ -5455,6 +5462,7 @@ CMDs[#CMDs + 1] = {NAME = 'unrbjob / unrainbowjob', DESC = 'Bring job to normal'
 CMDs[#CMDs + 1] = {NAME = 'unrb / unrainbow', DESC = 'Disable rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
+CMDs[#CMDs + 1] = {NAME = 'headless / nohead', DESC = 'Give you headless'}
 CMDs[#CMDs + 1] = {NAME = 'large / huge', DESC = 'Make you very large'}
 CMDs[#CMDs + 1] = {NAME = 'propesp', DESC = 'Show props on map and their oner'}
 CMDs[#CMDs + 1] = {NAME = 'unpropesp', DESC = 'Hide prop esp.'}
@@ -12762,11 +12770,20 @@ end)
 
 
 addcmd('copy',{'copyavatar'},function(args, speaker)
+	
+	local function isValidNumber(input)
+		-- Vérifie que la chaîne est non nulle et contient uniquement des chiffres
+		return input ~= nil and tostring(input):match("^%d+$") ~= nil
+	end
 	local victim = args[1]
-	local tokl = victim
-	local fp = getPlayer(tokl,speaker)
-	for i,v in pairs(fp) do
-		copyavatar(Players[v])
+	if isValidNumber(victim) then
+		copyavatar(tonumber(victim),true)
+	else
+		local tokl = victim
+		local fp = getPlayer(tokl,speaker)
+		for i,v in pairs(fp) do
+			copyavatar(Players[v],false)
+		end
 	end
 end)
 
