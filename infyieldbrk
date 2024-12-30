@@ -9284,6 +9284,15 @@ addcmd('copyfreecamposition',{'copyfcpos'},function(args, speaker)
 	end
 end)
 
+addcmd('headless',{'nohead'},function(args, speaker)
+	local descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,tonumber(134082579)},"ClassicMale")
+end)
+
+
+
+
+
 addcmd('gotocamera',{'gotocam','tocam'},function(args, speaker)
 	getRoot(speaker.Character).CFrame = workspace.Camera.CFrame
 end)
