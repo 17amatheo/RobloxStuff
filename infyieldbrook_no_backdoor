@@ -5451,11 +5451,15 @@ CMDs[#CMDs + 1] = {NAME = 'unstaffwatch', DESC = 'Disable Staffwatch'}
 CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'evtime [time]', DESC = 'Change the time beetween every RemoteEvents'}
 CMDs[#CMDs + 1] = {NAME = 'sevtime', DESC = 'Show current evtime'}
+CMDs[#CMDs + 1] = {NAME = 'jailsize [size]', DESC = 'Change the size of the jail command in Vector3'}
+CMDs[#CMDs + 1] = {NAME = 'sjailsize', DESC = 'Show current jail size'}
 CMDs[#CMDs + 1] = {NAME = 'sevtimecopy', DESC = 'Show current evtimecopy'}
 CMDs[#CMDs + 1] = {NAME = 'evtimecopy [time]', DESC = 'Change the time beetween every RemoteEvents used in the copy command.'}
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
+CMDs[#CMDs + 1] = {NAME = 'jail / freeze [player] (COUCH)', DESC = 'Jail a player (YOU NEED THE COUCH)'}
+CMDs[#CMDs + 1] = {NAME = 'unjail / unfreeze', DESC = 'Unjail'}
 CMDs[#CMDs + 1] = {NAME = 'name / setname [new_name]', DESC = 'Change your name to [new_name]'}
 CMDs[#CMDs + 1] = {NAME = 'bio / setbio [new_bio]', DESC = 'Change your bio to [new_bio]'}
 CMDs[#CMDs + 1] = {NAME = 'couch / couch_on', DESC = 'Take couch if in your inventory'}
@@ -12663,6 +12667,9 @@ end)
 addcmd('sevtimecopy',{'showeventtimecopy'},function(args, speaker)
 	game.StarterGui:SetCore("SendNotification", {Title="Event time copy"; Text="Current copy event time is "..tostring(tonumber(evtimecopy).."s."); Duration=showtime;})
 end)
+addcmd('sjailsize',{'showjailsize'},function(args, speaker)
+	game.StarterGui:SetCore("SendNotification", {Title="Jail size"; Text="Current jail size time is "..tostring(tonumber(jailsize).."s."); Duration=showtime;})
+end)
 
 
 addcmd('evtime',{'eventtime'},function(args, speaker)
@@ -12675,6 +12682,12 @@ addcmd('evtimecopy',{'eventtimecopy'},function(args, speaker)
 	local newtime = args[1]
 	evtimecopy = tonumber(newtime)
 	game.StarterGui:SetCore("SendNotification", {Title="Event time copy"; Text="Event time to copy avatar changed to "..tostring(tonumber(newtime)).."s."; Duration=showtime;})
+end)
+
+addcmd('jailsize',{'freezesize'},function(args, speaker)
+	local newtime = args[1]
+	jailsize = tonumber(newtime)
+	game.StarterGui:SetCore("SendNotification", {Title="Jail size"; Text="Size of jail zone changed to "..tostring(tonumber(newtime)).."s."; Duration=showtime;})
 end)
 
 addcmd('unrb',{'unrainbow'},function(args, speaker)
