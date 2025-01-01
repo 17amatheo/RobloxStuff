@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.29"
+currentVersion = "6.3"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -1817,6 +1817,8 @@ local showtime = 5
 local evtime = 1
 local evtimecopy = 0.4
 
+local jailsize = 30
+
 local do_killall = false
 
 local lplayer = game.Players.LocalPlayer
@@ -1962,7 +1964,7 @@ local function copyavatar(player,id)
 	end
 
 	-- Fonction pour extraire l'ID de l'URL
-	
+
 	--Applique les noms rp et le travail
 
 
@@ -1971,13 +1973,17 @@ local function copyavatar(player,id)
 	else
 		descriptionClone = Players:GetHumanoidDescriptionFromUserId(findVict)
 	end
-	
+	wait(evtimecopy)
+	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
 
 	--Applique la forme du corp
 
 	wait(evtimecopy)
 	--Applique le visage et les animations
+	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
+	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
 	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.IdleAnimation)
@@ -2183,6 +2189,7 @@ local cf = CFrame.new(-82.6004486, 19.570406, -129.909119, -0.987681627, -1.3868
 
 local lpk = false
 local chasing = false
+local jail = false
 
 local maxchasetime = 10
 
@@ -2343,6 +2350,10 @@ local function antisit()
 	end
 end
 
+
+
+
+
 function chase_player(victim, pos)
 	local maxch = maxchasetime
 	local exec_time = 0.2
@@ -2379,6 +2390,7 @@ function chase_player(victim, pos)
 	end
 	chasing = false
 	stop_spin()
+	
 end
 
 
@@ -4722,12 +4734,11 @@ ChatLog = function(plr)
 		end
 
 
-		if plr.Name == game.Players.LocalPlayer.Name and plr.UserId == game.Players.LocalPlayer.UserId then
+		if plr.UserId == Players.LocalPlayer.UserId then
 			do_exec(Message)
 		end
 
 		if logsEnabled == true then
-
 			CreateLabel(plr.Name,Message)
 		end
 	end)
@@ -5463,6 +5474,7 @@ CMDs[#CMDs + 1] = {NAME = 'unrb / unrainbow', DESC = 'Disable rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
 CMDs[#CMDs + 1] = {NAME = 'headless / nohead', DESC = 'Give you headless'}
+CMDs[#CMDs + 1] = {NAME = 'korblox', DESC = 'Give you korblox'}
 CMDs[#CMDs + 1] = {NAME = 'large / huge', DESC = 'Make you very large'}
 CMDs[#CMDs + 1] = {NAME = 'propesp', DESC = 'Show props on map and their oner'}
 CMDs[#CMDs + 1] = {NAME = 'unpropesp', DESC = 'Hide prop esp.'}
@@ -7212,6 +7224,8 @@ Players.LocalPlayer.OnTeleport:Connect(function(State)
 	if KeepInfYield and (not TeleportCheck) and queueteleport then
 		TeleportCheck = true
 		queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/vunyma/robloxthings/refs/heads/main/brookhaven_yield.lua'))()")
+		wait(0.2)
+		givecouch()
 	end
 end)
 
@@ -12770,7 +12784,7 @@ end)
 
 
 addcmd('copy',{'copyavatar'},function(args, speaker)
-	
+
 	local function isValidNumber(input)
 		-- Vérifie que la chaîne est non nulle et contient uniquement des chiffres
 		return input ~= nil and tostring(input):match("^%d+$") ~= nil
@@ -12792,6 +12806,12 @@ end)
 addcmd('headless',{'nohead'},function(args, speaker)
 	local descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
 	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,tonumber(134082579)},"ClassicMale")
+end)
+
+
+addcmd('korblox',{},function(args, speaker)
+	local descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,tonumber(139607718),descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
 end)
 
 
@@ -12915,10 +12935,122 @@ end)
 
 
 
+
+addcmd('jail', {'freeze'}, function(args, speaker)
+	local victim = args[1] -- Le joueur cible
+	if givecouch() then
+		if victim == "all" then
+			game.StarterGui:SetCore("SendNotification", {
+				Title = "Not allowed!",
+				Text = "jail command not allowed on 'all'!",
+				Duration = showtime;
+			})
+		else
+			-- Récupérer les joueurs ciblés
+			local targetPlayers = getPlayer(victim, speaker)
+			
+			for _, targetName in pairs(targetPlayers) do
+				--print(2222222222)
+				local targetPlayer = game.Players:FindFirstChild(targetName)
+				local pos = lplayer.Character.HumanoidRootPart.CFrame
+				--print(33333333333)
+				if targetPlayer and targetPlayer.Character then
+					print(444444444)
+					jail = true
+					local rootPart = getRoot(targetPlayer.Character)
+
+					if not rootPart then
+						warn("Impossible de trouver le HumanoidRootPart pour : ", targetPlayer.Name)
+						return
+					end
+
+					local zoneCFrame = rootPart.CFrame
+					local zoneSize = Vector3.new(tonumber(jailsize), tonumber(jailsize), tonumber(jailsize))
+
+					-- Fonction pour vérifier si une position est dans la zone
+					local function isInZone(position)
+						if not zoneCFrame then
+							warn("zoneCFrame est nil.")
+							return false
+						end
+						local relativePosition = zoneCFrame:PointToObjectSpace(position)
+						return math.abs(relativePosition.X) <= zoneSize.X / 2 and
+							math.abs(relativePosition.Y) <= zoneSize.Y / 2 and
+							math.abs(relativePosition.Z) <= zoneSize.Z / 2
+					end
+
+					-- Connexion à Heartbeat pour surveiller les joueurs
+					local connection
+					connection = game:GetService("RunService").Heartbeat:Connect(function()
+						if not jail then
+							connection:Disconnect() -- Arrête la connexion si jail est faux
+					
+							stop_spin()
+							lplayer.Character.HumanoidRootPart.CFrame = pos
+							return
+						end
+
+						if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+							local rootPart = targetPlayer.Character.HumanoidRootPart
+							if not isInZone(rootPart.Position) and not chasing then
+								-- Ramène le joueur dans la zone
+								
+								
+								
+								local victim = targetPlayer
+
+								if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
+		
+									getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
+									couch_on()
+									waitForCharacter(lplayer)
+									chase_player(victim, pos)
+
+									antisit()
+									getRoot(lplayer.Character).CFrame = zoneCFrame
+									wait(0.5)
+									getRoot(lplayer.Character).CFrame = zoneCFrame
+									couch_off()
+									waitForCharacter(lplayer)
+									lplayer.Character.HumanoidRootPart.CFrame = pos
+									wait(0.4)
+									antisit()
+									
+								end
+								wait(1)
+								
+							end
+						else
+							warn("Le personnage de ", targetPlayer.Name, " est introuvable ou mal formé.")
+						end
+					end)
+
+					-- Simule une action (libération après un certain temps, par exemple)
+					wait(1)
+				else
+					warn("Le joueur cible ", targetName, " est introuvable.")
+				end
+			end
+		end
+	else
+		givecouch()
+	end
+end)
+
+
+addcmd('unjail',{'unfreeze'},function(args, speaker)
+	jail = false
+end)
+
+
+
+
+
 addcmd('stop',{},function(args, speaker)
 	lpk = false
 	chasing = false
 	do_killall = false
+	jail = false
 	stop_spin()
 end)
 
@@ -13019,9 +13151,9 @@ addcmd('bring',{'febring'},function(args, speaker)
 		if victim == "all" then
 			game.StarterGui:SetCore("SendNotification", {Title="Not allowed!"; Text="bring command not allowed on 'all' !"; Duration=showtime;})
 		else
-			print(pos)
-			print(desti)
-			print(victim)
+			--print(pos)
+			--print(desti)
+			--print(victim)
 			local fp = getPlayer(victim,speaker)
 			for i,v in pairs(fp) do
 				if Players[v].Character.Humanoid.Sit == false and Players[v].UserId ~= lplayer.UserId then
@@ -13034,7 +13166,9 @@ addcmd('bring',{'febring'},function(args, speaker)
 					wait(0.55)
 					couch_off()
 					antisit()
-					wait(1)
+					wait(0.2)
+					
+					wait(0.5)
 				else
 					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
 				end
