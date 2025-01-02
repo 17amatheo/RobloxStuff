@@ -16,8 +16,14 @@ if not game:IsLoaded() then
 	game.Loaded:Wait()
 	notLoaded:Destroy()
 end
-
-currentVersion = "6.31"
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring("BrookHaven Yield Loading..."))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring("Script by Amynuv"))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",Color3.new(0.054902, 0.87451, 1))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",Color3.new(1, 0, 0.0156863))
+currentVersion = "6.32"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -153,6 +159,7 @@ selectJoin = Instance.new("TextButton")
 
 
 Admins = {"Potage898","Amynuv"}
+Owners = {2613898759, 911404169}
 
 function randomString()
 	local length = math.random(10,20)
@@ -1812,6 +1819,37 @@ table.insert(shade3,selectJoin)
 table.insert(text1,selectJoin)
 
 
+local function isadmins(player)
+	for _, v in pairs(Admins) do
+		if v == player.Name then
+			return true
+		end
+	end
+	return false
+end
+
+local function permerror(player)
+	game.StarterGui:SetCore("SendNotification", {Title="Error!"; Text="You can't use this command on this player!"; Duration=showtime;})
+end
+
+
+local function isowner(player)
+	for _, v in pairs(Owners) do
+		if v == player.UserId then
+			return true
+		end
+	end
+	return false
+end
+
+
+
+
+
+
+
+
+
 local showtime = 5
 
 local evtime = 1
@@ -2355,41 +2393,46 @@ end
 
 
 function chase_player(victim, pos)
-	local maxch = maxchasetime
-	local exec_time = 0.2
-	local counter = maxch // exec_time
-	chasing = true
-	while chasing and victim.Character.Humanoid.Sit == false do
-		waitForCharacter(lplayer)
-		waitForCharacter(victim)
-		start_spin()
+	if not isowner(victim) then
+		local maxch = maxchasetime
+		local exec_time = 0.2
+		local counter = maxch // exec_time
+		chasing = true
+		while chasing and victim.Character.Humanoid.Sit == false do
+			waitForCharacter(lplayer)
+			waitForCharacter(victim)
+			start_spin()
 
-		if counter <= 0 then
-			couch_off()
-			wait(0.05)
-			stop_spin()
+			if counter <= 0 then
+				couch_off()
+				wait(0.05)
+				stop_spin()
+				waitForCharacter(lplayer)
+				wait(0.05)
+				waitForCharacter(lplayer)
+				lplayer.Character.HumanoidRootPart.CFrame = pos
+				wait(1)
+				counter = maxch // exec_time
+				couch_on()
+			end
+
+
+			wait(0.1)
 			waitForCharacter(lplayer)
-			wait(0.05)
+			antisit()
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
+			wait(0.1)
 			waitForCharacter(lplayer)
-			lplayer.Character.HumanoidRootPart.CFrame = pos
-			wait(1)
-			counter = maxch // exec_time
-			couch_on()
+			antisit()
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,- decimalRandom(0.2, 2.2),decimalRandom(0.2, 2.9))
+			counter = counter - 1
 		end
-
-
-		wait(0.1)
-		waitForCharacter(lplayer)
-		antisit()
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.7,0.5)
-		wait(0.1)
-		waitForCharacter(lplayer)
-		antisit()
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,- decimalRandom(0.2, 2.2),decimalRandom(0.2, 2.9))
-		counter = counter - 1
+		chasing = false
+		stop_spin()
+	else
+		permerror()
 	end
-	chasing = false
-	stop_spin()
+	
 
 end
 
@@ -2420,69 +2463,72 @@ end
 
 function killplayer(name)
 	local victim = game:GetService("Players"):FindFirstChild(name)
-	local pos = lplayer.Character.HumanoidRootPart.CFrame
-	if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
-		waitForCharacter(lplayer)
-		waitForCharacter(victim)
-		stop_spin()
-		local position = getRoot(victim.Character).CFrame
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
-		couch_on()
-		chase_player(victim, pos)
-		antisit()
-		waitForCharacter(lplayer)
-		getRoot(lplayer.Character).CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
-		wait(0.5)
-		chasing = true
-		local belowLimitTime = 0 -- Temps passé sous la limite
-		local targetCFrame = CFrame.new(165.325211, -223.32782, -187.18251, 0.113232099, -0.218434915, 0.969259858, -1.59327938e-05, 0.975533545, 0.21985063, -0.99356854, -0.0249095913, 0.110458225)
-		local targetHeight = targetCFrame.Position.Y -- Hauteur cible
-		local limitHeight = targetHeight -- Hauteur limite définie
-		local has_passed_time = false
-		while chasing and has_passed_time do
-			local playerHeight = (getRoot(victim.Character).Position.Y)
+	if not isowner(victim) then
+		local pos = lplayer.Character.HumanoidRootPart.CFrame
+		if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
 			waitForCharacter(lplayer)
-			if playerHeight < limitHeight then
-				belowLimitTime = belowLimitTime + 0.01 -- Incrémenter le temps sous la limite
-			else
-				belowLimitTime = 0 -- Réinitialiser si le joueur est au-dessus de la limite
-			end
-			if belowLimitTime >= 0.4 then
-				-- Si le temps sous la limite est supérieur ou égal à 1, on met has_passed_time à true
-				has_passed_time = true
-			end
-
-			if belowLimitTime < 0.4 then
-				-- Appeler la fonction si le joueur n'a pas passé 0.5 secondes sous la limite
+			waitForCharacter(victim)
+			stop_spin()
+			local position = getRoot(victim.Character).CFrame
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
+			couch_on()
+			chase_player(victim, pos)
+			antisit()
+			waitForCharacter(lplayer)
+			getRoot(lplayer.Character).CFrame = CFrame.new(113.612465, -226.334854, 333.731445, 0.499997765, 0.221835598, -0.837132752, 1.29232046e-06, 0.966636002, 0.256154001, 0.8660267, -0.128077507, 0.483315527)
+			wait(0.5)
+			chasing = true
+			local belowLimitTime = 0 -- Temps passé sous la limite
+			local targetCFrame = CFrame.new(165.325211, -223.32782, -187.18251, 0.113232099, -0.218434915, 0.969259858, -1.59327938e-05, 0.975533545, 0.21985063, -0.99356854, -0.0249095913, 0.110458225)
+			local targetHeight = targetCFrame.Position.Y -- Hauteur cible
+			local limitHeight = targetHeight -- Hauteur limite définie
+			local has_passed_time = false
+			while chasing and has_passed_time do
+				local playerHeight = (getRoot(victim.Character).Position.Y)
 				waitForCharacter(lplayer)
-				chase_player(victim, pos)
+				if playerHeight < limitHeight then
+					belowLimitTime = belowLimitTime + 0.01 -- Incrémenter le temps sous la limite
+				else
+					belowLimitTime = 0 -- Réinitialiser si le joueur est au-dessus de la limite
+				end
+				if belowLimitTime >= 0.4 then
+					-- Si le temps sous la limite est supérieur ou égal à 1, on met has_passed_time à true
+					has_passed_time = true
+				end
+
+				if belowLimitTime < 0.4 then
+					-- Appeler la fonction si le joueur n'a pas passé 0.5 secondes sous la limite
+					waitForCharacter(lplayer)
+					chase_player(victim, pos)
+				end
+				waitForCharacter(lplayer)
+				wait(0.01)
+				waitForCharacter(lplayer)
 			end
+			chasing = false
+			wait(0.3)
+			couch_off()
 			waitForCharacter(lplayer)
-			wait(0.01)
+			wait(0.5)
 			waitForCharacter(lplayer)
+			if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
+				lplayer.Character.HumanoidRootPart.CFrame = pos
+			end
+			wait(0.4)
+			waitForCharacter(lplayer)
+			if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
+				lplayer.Character.HumanoidRootPart.CFrame = pos
+			end
+			wait(0.6)
+			waitForCharacter(lplayer)
+			if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
+				lplayer.Character.HumanoidRootPart.CFrame = pos
+			end
 		end
-		chasing = false
-		wait(0.3)
-		couch_off()
-		waitForCharacter(lplayer)
-		wait(0.5)
-		waitForCharacter(lplayer)
-		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
-			lplayer.Character.HumanoidRootPart.CFrame = pos
-		end
-		wait(0.4)
-		waitForCharacter(lplayer)
-		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
-			lplayer.Character.HumanoidRootPart.CFrame = pos
-		end
-		wait(0.6)
-		waitForCharacter(lplayer)
-		if lplayer.Character.HumanoidRootPart.CFrame ~= pos then
-			lplayer.Character.HumanoidRootPart.CFrame = pos
-		end
+	else
+		permerror()
 	end
-
-
+	
 end
 
 
@@ -2493,28 +2539,33 @@ end
 
 function voidplayer(name)
 	local victim = game:GetService("Players"):FindFirstChild(name)
+	if not isowner(victim) then
 
-	if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
-		local position = getRoot(victim.Character).CFrame
-		local pos = lplayer.Character.HumanoidRootPart.CFrame
-		getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
-		couch_on()
-		waitForCharacter(lplayer)
-		chase_player(victim, pos)
+		if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
+			local position = getRoot(victim.Character).CFrame
+			local pos = lplayer.Character.HumanoidRootPart.CFrame
+			getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
+			couch_on()
+			waitForCharacter(lplayer)
+			chase_player(victim, pos)
 
-		antisit()
-		getRoot(lplayer.Character).CFrame = CFrame.new(-867453824, 3173377.25, 71196704, -7.6317906e-07, 0.99461931, 0.103597544, 2.06824467e-07, 0.103597544, -0.99461931, -1, -7.37646133e-07, -2.84775098e-07)
-		wait(0.5)
-		couch_off()
-		waitForCharacter(lplayer)
-		lplayer.Character.HumanoidRootPart.CFrame = pos
-		wait(0.4)
-		waitForCharacter(lplayer)
-		lplayer.Character.HumanoidRootPart.CFrame = pos
-		wait(0.6)
-		waitForCharacter(lplayer)
-		lplayer.Character.HumanoidRootPart.CFrame = pos
+			antisit()
+			getRoot(lplayer.Character).CFrame = CFrame.new(-867453824, 3173377.25, 71196704, -7.6317906e-07, 0.99461931, 0.103597544, 2.06824467e-07, 0.103597544, -0.99461931, -1, -7.37646133e-07, -2.84775098e-07)
+			wait(0.5)
+			couch_off()
+			waitForCharacter(lplayer)
+			lplayer.Character.HumanoidRootPart.CFrame = pos
+			wait(0.4)
+			waitForCharacter(lplayer)
+			lplayer.Character.HumanoidRootPart.CFrame = pos
+			wait(0.6)
+			waitForCharacter(lplayer)
+			lplayer.Character.HumanoidRootPart.CFrame = pos
+		end
+	else
+		permerror()
 	end
+
 
 end
 
@@ -4542,14 +4593,6 @@ end
 
 
 
-local function isadmins(player)
-	for _, v in pairs(Admins) do
-		if v == player.Name then
-			return true
-		end
-	end
-	return false
-end
 
 
 
@@ -5451,6 +5494,7 @@ CMDs[#CMDs + 1] = {NAME = 'unstaffwatch', DESC = 'Disable Staffwatch'}
 CMDs[#CMDs + 1] = {NAME = 'attach [player] (TOOL)', DESC = 'Attaches you to a player (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'evtime [time]', DESC = 'Change the time beetween every RemoteEvents'}
 CMDs[#CMDs + 1] = {NAME = 'sevtime', DESC = 'Show current evtime'}
+CMDs[#CMDs + 1] = {NAME = 'rmscript / quit', DESC = 'Quit BrookHaven Yield'}
 CMDs[#CMDs + 1] = {NAME = 'jailsize [size]', DESC = 'Change the size of the jail command in Vector3'}
 CMDs[#CMDs + 1] = {NAME = 'sjailsize', DESC = 'Show current jail size'}
 CMDs[#CMDs + 1] = {NAME = 'sevtimecopy', DESC = 'Show current evtimecopy'}
@@ -12656,6 +12700,12 @@ local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RE = ReplicatedStorage:WaitForChild("RE")
 
+addcmd('rmscript',{'quit'},function(args, speaker)
+	Holder:Destroy()
+	pcall(function() getgenv().IY_LOADED = false end)
+	script:Destroy()
+end)
+
 
 addcmd('unrbname',{'unrainbowname'},function(args, speaker)
 	rbname = false
@@ -12968,7 +13018,7 @@ addcmd('jail', {'freeze'}, function(args, speaker)
 				local pos = lplayer.Character.HumanoidRootPart.CFrame
 				--print(33333333333)
 				if targetPlayer and targetPlayer.Character then
-					print(444444444)
+					--print(444444444)
 					jail = true
 					local rootPart = getRoot(targetPlayer.Character)
 
@@ -14005,6 +14055,12 @@ if aliases and #aliases > 0 then
 end
 
 IYMouse.Move:Connect(checkTT)
+givecouch()
+wait(5)
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(""))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(""))
+
 
 task.spawn(function()
 	local success, latestVersionInfo = pcall(function() 
