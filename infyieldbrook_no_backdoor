@@ -17,7 +17,7 @@ if not game:IsLoaded() then
 	notLoaded:Destroy()
 end
 
-currentVersion = "6.3"
+currentVersion = "6.31"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -2390,7 +2390,7 @@ function chase_player(victim, pos)
 	end
 	chasing = false
 	stop_spin()
-	
+
 end
 
 
@@ -6526,7 +6526,7 @@ function ESP(plr)
 					if COREGUI:FindFirstChild(plr.Name..'_ESP') then
 						if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
 							local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos
+							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos..' | UserID: '..plr.UserId
 						end
 					else
 						teamChange:Disconnect()
@@ -12961,7 +12961,7 @@ addcmd('jail', {'freeze'}, function(args, speaker)
 		else
 			-- Récupérer les joueurs ciblés
 			local targetPlayers = getPlayer(victim, speaker)
-			
+
 			for _, targetName in pairs(targetPlayers) do
 				--print(2222222222)
 				local targetPlayer = game.Players:FindFirstChild(targetName)
@@ -12997,7 +12997,7 @@ addcmd('jail', {'freeze'}, function(args, speaker)
 					connection = game:GetService("RunService").Heartbeat:Connect(function()
 						if not jail then
 							connection:Disconnect() -- Arrête la connexion si jail est faux
-					
+
 							stop_spin()
 							lplayer.Character.HumanoidRootPart.CFrame = pos
 							return
@@ -13007,13 +13007,13 @@ addcmd('jail', {'freeze'}, function(args, speaker)
 							local rootPart = targetPlayer.Character.HumanoidRootPart
 							if not isInZone(rootPart.Position) and not chasing then
 								-- Ramène le joueur dans la zone
-								
-								
-								
+
+
+
 								local victim = targetPlayer
 
 								if (victim and victim.Character and getRoot(victim.Character) and getRoot(victim.Character).CFrame) then
-		
+
 									getRoot(lplayer.Character).CFrame = (getRoot(victim.Character).CFrame) + Vector3.new(0,-0.5,0.3)
 									couch_on()
 									waitForCharacter(lplayer)
@@ -13028,10 +13028,10 @@ addcmd('jail', {'freeze'}, function(args, speaker)
 									lplayer.Character.HumanoidRootPart.CFrame = pos
 									wait(0.4)
 									antisit()
-									
+
 								end
 								wait(1)
-								
+
 							end
 						else
 							warn("Le personnage de ", targetPlayer.Name, " est introuvable ou mal formé.")
@@ -13180,7 +13180,7 @@ addcmd('bring',{'febring'},function(args, speaker)
 					couch_off()
 					antisit()
 					wait(0.2)
-					
+
 					wait(0.5)
 				else
 					game.StarterGui:SetCore("SendNotification", {Title="Error"; Text="Player may be sit or in chase!"; Duration=showtime;})
