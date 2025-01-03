@@ -14113,6 +14113,10 @@ wait(3)
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring(""))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring(""))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",Color3.new(1, 1, 1))
+wait(0.2)
+game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",Color3.new(1, 1, 1))
 
 
 task.spawn(function()
