@@ -16,14 +16,14 @@ if not game:IsLoaded() then
 	game.Loaded:Wait()
 	notLoaded:Destroy()
 end
-game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring("BrookHaven Yield Loading..."))
+game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayName",tostring("🏡BrkYield Loading...🏡"))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer("RolePlayBio", tostring("Script by Amynuv"))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",Color3.new(0.054902, 0.87451, 1))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",Color3.new(1, 0, 0.0156863))
-currentVersion = "6.32"
+currentVersion = "6.33"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -2396,6 +2396,8 @@ function chase_player(victim, pos)
 		local exec_time = 0.2
 		local counter = maxch // exec_time
 		chasing = true
+		game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeDown",0.55000000001)
+		
 		while chasing and victim.Character.Humanoid.Sit == false do
 			waitForCharacter(lplayer)
 			waitForCharacter(victim)
@@ -2426,6 +2428,7 @@ function chase_player(victim, pos)
 			counter = counter - 1
 		end
 		chasing = false
+		game:GetService("ReplicatedStorage").RE["1Clothe1s"]:FireServer("CharacterSizeUp",1)
 		stop_spin()
 	else
 		permerror()
@@ -5552,6 +5555,7 @@ CMDs[#CMDs + 1] = {NAME = 'evtimecopy [time]', DESC = 'Change the time beetween 
 CMDs[#CMDs + 1] = {NAME = 'kill [player] (COUCH)', DESC = 'Kills a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'loopkill / lpk [player] (COUCH)', DESC = 'Loopkill a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopkill / unlpk', DESC = 'Stop loopkilling'}
+CMDs[#CMDs + 1] = {NAME = 'loadskin / loadsk [skin_name]', DESC = 'Load a skin in the script memory'}
 CMDs[#CMDs + 1] = {NAME = 'jail / freeze [player] (COUCH)', DESC = 'Jail a player (YOU NEED THE COUCH)'}
 CMDs[#CMDs + 1] = {NAME = 'unjail / unfreeze', DESC = 'Unjail'}
 CMDs[#CMDs + 1] = {NAME = 'name / setname [new_name]', DESC = 'Change your name to [new_name]'}
@@ -13048,6 +13052,205 @@ end)
 addcmd('unlpk',{'unloopkill'},function(args, speaker)
 	lpk = false
 end)
+
+
+
+addcmd('loadskin',{'loadsk'},function(args, speaker)
+	local skin = args[1]
+	if skin == "invisible" then
+		local function unequipelements(descelement)
+			local description = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+			--print(description.HatAccessory)
+	
+			local elements = {}
+	
+			-- Séparer la chaîne en éléments et les stocker dans une table
+			for element in description[(descelement)]:gmatch("[^,]+") do
+				table.insert(elements, element)
+			end
+	
+			-- Itérer sur chaque élément et faire quelque chose avec
+			for i, element in ipairs(elements) do
+				wait(evtimecopy)
+				print(element)
+				game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
+			end
+	
+		end
+	
+	
+	
+		wait(evtimecopy)
+		unequipelements("HatAccessory")
+		wait(evtimecopy)
+		unequipelements("HairAccessory")
+		wait(evtimecopy)
+		unequipelements("BackAccessory")
+		wait(evtimecopy)
+		unequipelements("FaceAccessory")
+		wait(evtimecopy)
+		unequipelements("FrontAccessory")
+		wait(evtimecopy)
+		unequipelements("NeckAccessory")
+		wait(evtimecopy)
+		unequipelements("ShouldersAccessory")
+		wait(evtimecopy)
+		unequipelements("WaistAccessory")
+		wait(evtimecopy)
+		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{15312911732,14532583477,14532583469,14532583517,14532583483,134082579},"ClassicMale")
+
+
+	elseif skin == "hitler" then
+		local function unequipelements(descelement)
+			local description = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+			--print(description.HatAccessory)
+	
+			local elements = {}
+	
+			-- Séparer la chaîne en éléments et les stocker dans une table
+			for element in description[(descelement)]:gmatch("[^,]+") do
+				table.insert(elements, element)
+			end
+	
+			-- Itérer sur chaque élément et faire quelque chose avec
+			for i, element in ipairs(elements) do
+				wait(evtimecopy)
+				print(element)
+				game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
+			end
+	
+		end
+	
+	
+	
+		wait(evtimecopy)
+		unequipelements("HatAccessory")
+		wait(evtimecopy)
+		unequipelements("HairAccessory")
+		wait(evtimecopy)
+		unequipelements("BackAccessory")
+		wait(evtimecopy)
+		unequipelements("FaceAccessory")
+		wait(evtimecopy)
+		unequipelements("FrontAccessory")
+		wait(evtimecopy)
+		unequipelements("NeckAccessory")
+		wait(evtimecopy)
+		unequipelements("ShouldersAccessory")
+		wait(evtimecopy)
+		unequipelements("WaistAccessory")
+		wait(evtimecopy)
+		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",6390393392)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",5163619571)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",9239978970)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",2857129387)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",7977651608)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",144075659)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.IdleAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.ClimbAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.FallAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.JumpAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.MoodAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.RunAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.SwimAnimation)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",descriptionClone.WalkAnimation)
+	
+
+	elseif skin == "einstein" then
+		local function unequipelements(descelement)
+			local description = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+			--print(description.HatAccessory)
+	
+			local elements = {}
+	
+			-- Séparer la chaîne en éléments et les stocker dans une table
+			for element in description[(descelement)]:gmatch("[^,]+") do
+				table.insert(elements, element)
+			end
+	
+			-- Itérer sur chaque élément et faire quelque chose avec
+			for i, element in ipairs(elements) do
+				wait(evtimecopy)
+				print(element)
+				game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",tonumber(element))
+			end
+	
+		end
+	
+	
+	
+		wait(evtimecopy)
+		unequipelements("HatAccessory")
+		wait(evtimecopy)
+		unequipelements("HairAccessory")
+		wait(evtimecopy)
+		unequipelements("BackAccessory")
+		wait(evtimecopy)
+		unequipelements("FaceAccessory")
+		wait(evtimecopy)
+		unequipelements("FrontAccessory")
+		wait(evtimecopy)
+		unequipelements("NeckAccessory")
+		wait(evtimecopy)
+		unequipelements("ShouldersAccessory")
+		wait(evtimecopy)
+		unequipelements("WaistAccessory")
+		wait(evtimecopy)
+		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,descriptionClone.RightLeg,descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",14762146135)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",5131952874)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",137431716074762)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",133483452467336)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",13379438954)
+		wait(evtimecopy)
+		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",5542358490)
+	
+
+	elseif skin == "plush" then
+		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{18865136555,14579959062,14579959191,14579959249,14579963667,0},"ClassicMale")
+		wait(evtimecopy)
+	end
+
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
