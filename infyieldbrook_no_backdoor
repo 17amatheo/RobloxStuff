@@ -13232,7 +13232,7 @@ addcmd('loadskin',{'loadsk'},function(args, speaker)
 		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
 		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{18865136555,14579959062,14579959191,14579959249,14579963667,0},"ClassicMale")
 		wait(evtimecopy)
-	end
+	
 
 	elseif skin == "small" then
 		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
