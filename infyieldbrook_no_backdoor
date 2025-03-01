@@ -2,7 +2,7 @@ if IY_LOADED and not _G.IY_DEBUG == true then
 	-- error("Infinite Yield is already running!", 0)
 	return
 end
---v 1.0
+--v 2.0
 pcall(function() getgenv().IY_LOADED = true end)
 
 local cloneref = cloneref or function(o) return o end
@@ -23,7 +23,7 @@ wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",Color3.new(0.054902, 0.87451, 1))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",Color3.new(1, 0, 0.0156863))
-currentVersion = "6.33"
+currentVersion = "6.34"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -5577,6 +5577,7 @@ CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
 CMDs[#CMDs + 1] = {NAME = 'headless / nohead', DESC = 'Give you headless'}
 CMDs[#CMDs + 1] = {NAME = 'korblox', DESC = 'Give you korblox'}
+CMDs[#CMDs + 1] = {NAME = 'skleg/skeletonleg', DESC = 'Give you skeleton leg'}
 CMDs[#CMDs + 1] = {NAME = 'large / huge', DESC = 'Make you very large'}
 CMDs[#CMDs + 1] = {NAME = 'propesp', DESC = 'Show props on map and their oner'}
 CMDs[#CMDs + 1] = {NAME = 'unpropesp', DESC = 'Hide prop esp.'}
@@ -12934,6 +12935,10 @@ addcmd('korblox',{},function(args, speaker)
 	game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,tonumber(139607718),descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
 end)
 
+addcmd('skleg',{'skeletonleg'},function(args, speaker)
+	local descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{descriptionClone.Torso,descriptionClone.RightArm,descriptionClone.LeftArm,tonumber(37754710),descriptionClone.LeftLeg,descriptionClone.Head},"ClassicMale")
+end)
 
 addcmd('propesp',{'propowneresp'},function(args, speaker)
 	propesp()
@@ -13218,12 +13223,6 @@ addcmd('loadskin',{'loadsk'},function(args, speaker)
 		wait(evtimecopy)
 		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",14762146135)
 		wait(evtimecopy)
-		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",5131952874)
-		wait(evtimecopy)
-		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",137431716074762)
-		wait(evtimecopy)
-		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",133483452467336)
-		wait(evtimecopy)
 		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",13379438954)
 		wait(evtimecopy)
 		game:GetService("ReplicatedStorage").RE["1Updat1eAvata1r"]:FireServer("wear",5542358490)
@@ -13232,6 +13231,12 @@ addcmd('loadskin',{'loadsk'},function(args, speaker)
 	elseif skin == "plush" then
 		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
 		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{18865136555,14579959062,14579959191,14579959249,14579963667,0},"ClassicMale")
+		wait(evtimecopy)
+	end
+
+	elseif skin == "small" then
+		descriptionClone = game.Players.LocalPlayer.Character.Humanoid:GetAppliedDescription()
+		game:GetService("ReplicatedStorage").RE["1Avata1rOrigina1l"]:FireServer("CharacterChange",{102327064703750,83579895214527,91483486056708,128152931567320,114015216329728,0},"ClassicMale")
 		wait(evtimecopy)
 	end
 
