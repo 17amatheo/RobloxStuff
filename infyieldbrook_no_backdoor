@@ -23,7 +23,7 @@ wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPNameColor",Color3.new(0.054902, 0.87451, 1))
 wait(0.2)
 game:GetService("ReplicatedStorage").RE["1RPNam1eColo1r"]:FireServer("PickingRPBioColor",Color3.new(1, 0, 0.0156863))
-currentVersion = "6.34"
+currentVersion = "6.35"
 
 Holder = Instance.new("Frame")
 Title = Instance.new("TextLabel")
@@ -5574,6 +5574,8 @@ CMDs[#CMDs + 1] = {NAME = 'rbjob / rainbowjob', DESC = 'Turn your job into rainb
 CMDs[#CMDs + 1] = {NAME = 'unrbjob / unrainbowjob', DESC = 'Bring job to normal'}
 CMDs[#CMDs + 1] = {NAME = 'unrb / unrainbow', DESC = 'Disable rainbow'}
 CMDs[#CMDs + 1] = {NAME = 'copy / copyavatar', DESC = 'Copy a player avatar'}
+CMDs[#CMDs + 1] = {NAME = 'omnilog / oml [time beetween clones] [lifetime of clones]', DESC = 'Let you see the past.'}
+CMDs[#CMDs + 1] = {NAME = 'unomnilog / unoml', DESC = 'Bring you back to present.'}
 CMDs[#CMDs + 1] = {NAME = 'tiny / small', DESC = 'Make you very very small'}
 CMDs[#CMDs + 1] = {NAME = 'headless / nohead', DESC = 'Give you headless'}
 CMDs[#CMDs + 1] = {NAME = 'korblox', DESC = 'Give you korblox'}
@@ -7405,6 +7407,201 @@ addcmd('keepiy', {}, function(args, speaker)
 		notify('Incompatible Exploit','Your exploit does not support this command (missing queue_on_teleport)')
 	end
 end)
+
+
+
+
+isTracking = false
+
+addcmd('omnilog', {'oml'}, function(args, speaker)
+	
+	time_btwn_capt = tonumber(args[1]) or 60
+	time_to_live = tonumber(args[2]) or 300
+	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
+	local UserInputService = game:GetService("UserInputService")
+
+
+	local playerHistory = {} -- Stocke les positions passées des joueurs
+	local allClones = {} -- Stocke tous les clones actifs
+	isTracking = true -- Active ou désactive le tracking
+	local CLONE_LIFETIME = time_to_live -- Temps avant qu'un clone disparaisse
+	local POSITION_INTERVAL = time_btwn_capt -- Temps entre chaque sauvegarde de position (évite trop de clones)
+
+	local function createFrozenClone(player, position, messageText)
+		if not isTracking then 
+			for _, clone in ipairs(allClones) do
+				if clone and clone.Parent then
+					clone:Destroy()
+				end
+			end
+			allClones = {}
+			return 
+		end
+		
+		local character = player.Character
+		if not character then return end
+		character.Archivable = true
+
+		local clone = character:Clone()
+		if not clone then return end
+
+		local creationTime = tick() -- Temps actuel de création du clone
+		clone.Parent = workspace
+		clone.Name = player.Name .. "_Clone_" .. creationTime
+
+		-- Désactiver les scripts dans le clone
+		for _, obj in ipairs(clone:GetDescendants()) do
+			if obj:IsA("Script") or obj:IsA("LocalScript") then
+				obj:Destroy()
+			end
+		end
+
+		-- Positionner le clone à l'endroit passé
+		local rootPart = clone:FindFirstChild("HumanoidRootPart")
+		if rootPart then
+			rootPart.CFrame = position
+			rootPart.Transparency = 1
+		end
+
+		-- Modifier l'apparence et figer le clone
+		for _, part in ipairs(clone:GetDescendants()) do
+			if part:IsA("BasePart") or part:IsA("MeshPart") and part ~= rootPart   then
+				part.Transparency = 0.5
+				part.Anchored = true
+				part.CanCollide = false
+			end
+		end
+
+		-- Ajouter un BillboardGui au clone pour afficher la date et le message
+		local billboard = Instance.new("BillboardGui")
+		billboard.Parent = clone:FindFirstChild("Head") -- Afficher au-dessus de la tête du clone
+		billboard.Adornee = clone:FindFirstChild("Head")
+		billboard.Size = UDim2.new(0, 300, 0, 50)
+		billboard.StudsOffset = Vector3.new(0, 3, 0) -- Positionner un peu au-dessus de la tête
+
+		local textLabel = Instance.new("TextLabel")
+		textLabel.Parent = billboard
+		textLabel.Size = UDim2.new(0.7, 0, 0.7, 0)
+		textLabel.Text = "Clone de: "..player.Name.."\nCréé à: " .. os.date("%H:%M:%S", creationTime) .. "\nMsg: " .. (messageText or "None")
+		textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+		textLabel.BackgroundTransparency = 1
+		textLabel.TextScaled = true
+		textLabel.TextWrap = true
+		textLabel.TextTransparency = 0.5
+
+		-- Ajouter à la liste et supprimer après CLONE_LIFETIME secondes
+		table.insert(allClones, clone)
+		task.delay(CLONE_LIFETIME, function()
+			if clone and clone.Parent then
+				clone:Destroy()
+			end
+		end)
+	end
+
+	local lastUpdate = 0 -- Pour espacer les enregistrements de position
+
+	local function trackPlayers(deltaTime)
+		
+		if not isTracking then 
+			for _, clone in ipairs(allClones) do
+				if clone and clone.Parent then
+					clone:Destroy()
+				end
+			end
+			allClones = {}
+			return 
+		end
+
+		lastUpdate = lastUpdate + deltaTime
+		if lastUpdate < POSITION_INTERVAL then return end -- Limite la fréquence
+		lastUpdate = 0
+
+		for _, player in ipairs(Players:GetPlayers()) do
+			local character = player.Character
+			if character and character:FindFirstChild("HumanoidRootPart") then
+				local rootPart = character.HumanoidRootPart
+
+				-- Stocker les positions passées
+				if not playerHistory[player] then
+					playerHistory[player] = {}
+				end
+
+				table.insert(playerHistory[player], rootPart.CFrame)
+
+				-- Limiter la taille de l'historique pour éviter la surcharge mémoire
+				if #playerHistory[player] > 20 then
+					table.remove(playerHistory[player], 1)
+				end
+
+				-- Créer un clone basé sur une position passée (si dispo)
+				if #playerHistory[player] > 5 then
+					local pastPosition = table.remove(playerHistory[player], 1)
+					createFrozenClone(player, pastPosition, nil)
+				end
+
+				
+			end
+		end
+	end
+
+	-- Fonction pour effacer tous les clones
+	local function clearClones()
+		for _, clone in ipairs(allClones) do
+			if clone and clone.Parent then
+				clone:Destroy()
+			end
+		end
+		allClones = {} -- Réinitialiser la liste
+	end
+
+	
+
+
+
+
+
+	for _, player in ipairs(Players:GetPlayers()) do
+		player.Chatted:Connect(function(message)
+			local character = player.Character
+			if character and character:FindFirstChild("HumanoidRootPart") then
+				local position = character.HumanoidRootPart.CFrame
+				createFrozenClone(player, position, message) -- Inclure le message du joueur dans le clone
+			end
+		end)
+	end
+
+	RunService.Heartbeat:Connect(trackPlayers)
+
+end)
+
+
+
+
+
+
+addcmd('unomnilog', {'unoml'}, function(args, speaker)
+	isTracking = false
+	for _, clone in ipairs(allClones) do
+		if clone and clone.Parent then
+			clone:Destroy()
+		end
+	end
+	allClones = {}
+	print("❌ Tracking désactivé et clones supprimés.")
+end)
+
+
+
+
+
+
+
+
+
+
+
+
 
 addcmd('unkeepiy', {}, function(args, speaker)
 	if queueteleport then
